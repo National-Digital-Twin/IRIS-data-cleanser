@@ -1,17 +1,4 @@
-"""Coefficient C477 Data Cleanser - int_epc_certificates.
-
-Run from dbt:
-    dbt run --select int_epc_certificates --threads 8
-
-Run from CLI using Typer:
-    # `SELECT * FROM stg_epc_certificates` -> `stg_epc_certificates.csv`
-    # `SELECT * FROM stg_os_places` -> `stg_os_places.csv`
-    cd ./c477_data_cleansing/
-    python ./models/int_epc_certificates.py \
-        ../data/raw/stg_epc_certificates.csv \
-        ../data/raw/stg_os_places.csv \
-        ../data/interim/int_epc_certificates.csv
-"""
+"""Module for processing and cleansing EPC certificates data."""
 
 import re
 
@@ -130,7 +117,7 @@ def pipeline(epc: pd.DataFrame, os: pd.DataFrame) -> pd.DataFrame:
 
     # Merge in OS (DPA) data for epc_ok
     epc_ok = epc_ok.merge(
-        os.query('os_api_source == "DPA"')[["uprn", "udprn", "address", "postcode"]],
+        os.query('os_source == "DPA"')[["uprn", "udprn", "address", "postcode"]],
         on="uprn",
         how="left",
     ).rename(
@@ -147,7 +134,7 @@ def pipeline(epc: pd.DataFrame, os: pd.DataFrame) -> pd.DataFrame:
 
     # Merge in OS (LPI) data for epc_ok as fallback
     epc_ok = epc_ok.merge(
-        os.query('os_api_source == "LPI"')[["uprn", "udprn", "address", "postcode"]].rename(
+        os.query('os_source == "LPI"')[["uprn", "udprn", "address", "postcode"]].rename(
             columns={
                 "udprn": "udprn_os_lpi",
                 "address": "address_os_lpi",
@@ -192,9 +179,19 @@ def pipeline(epc: pd.DataFrame, os: pd.DataFrame) -> pd.DataFrame:
 
 def model(dbt, fal):
     """dbt-fal model."""
-    epc = dbt.ref("stg_epc_certificates")
+    dbt.config(materialized="table")
+
+    epc = dbt.ref("stg_uk_epc_certificates")
     epc["uprn"] = epc["uprn"].apply(lambda x: np.nan if x == "" else x)
 
+    ############################################################
+    # TODO: THIS IS EMMANUEL CODE
+    # os = dbt.ref("stg_uk_os")
+    ############################################################
+
+    ############################################################
+    # TODO: This is East Riding code
+    ############################################################
     # Filter to IoW postcodes only
     epc["district"] = epc.postcode.str.split(" ").str[0]
     isle_of_wight_districts = [
@@ -249,6 +246,8 @@ def model(dbt, fal):
     )
 
     os = dbt.ref("stg_os_places")
+    ############################################################
+
     os["address"] = os["address"].str.lower()
     os["udprn"] = os["udprn"].apply(lambda x: np.nan if x in ["", "N/A"] else x)
 

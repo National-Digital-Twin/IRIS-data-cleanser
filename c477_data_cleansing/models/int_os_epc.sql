@@ -1,4 +1,5 @@
-{{ config(materialized='table') }}
+{{ config(materialized = 'table')}}
+
 SELECT
     epc.uprn,
     os.udprn,
@@ -35,7 +36,7 @@ SELECT
     rec.improvement_id_text AS "MeasureOutcomeName",
     epc.fuzzy_matched AS "FuzzyMatched"
 FROM {{ ref("int_epc_certificates") }} AS epc
-LEFT JOIN {{ ref("stg_epc_recommendations") }} AS rec
+LEFT JOIN {{ ref("stg_uk_epc_recommendations") }} AS rec
     ON epc.lmk_key = rec.lmk_key
-LEFT JOIN {{ ref("stg_os_places") }} AS os
-    ON epc.uprn = os.uprn AND os.os_api_source = 'DPA'
+LEFT JOIN {{ ref("stg_uk_os") }} AS os
+    ON epc.uprn = os.uprn AND os.os_source = 'DPA'

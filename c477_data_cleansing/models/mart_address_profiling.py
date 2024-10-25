@@ -586,7 +586,7 @@ def pipeline(df):
         "FloorInsulationThickness",
         "RealisticFuelBill(Regional)",
         "SAPVersion",
-        # "HeatingCost(£/yr)",  # noqa: ERA001
+        # "HeatingCost(£/yr)",
         "FlatLocation",
         "LowestFloorArea",
         "DerivedSAPMainHeatingCode",

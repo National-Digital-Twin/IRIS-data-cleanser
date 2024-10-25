@@ -1,0 +1,1246 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+
+
+
+
+
+        <link rel="next" href="python_airbyte.html">
+
+
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.36">
+
+
+
+        <title>Using Python with dbt - site-name</title>
+
+
+
+      <link rel="stylesheet" href="assets/stylesheets/main.06209087.min.css">
+
+
+        <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
+
+
+
+
+
+
+
+        <script src="https://unpkg.com/iframe-worker/shim"></script>
+
+
+
+
+
+
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+
+
+
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+
+
+
+
+
+
+  </head>
+
+
+
+
+
+
+
+
+
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+
+
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+
+
+        <a href="#using-python-with-dbt" class="md-skip">
+          Skip to content
+        </a>
+
+    </div>
+    <div data-md-component="announce">
+
+    </div>
+
+
+
+
+
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="." title="site-name" class="md-header__button md-logo" aria-label="site-name" data-md-component="logo">
+
+
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            site-name
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+
+              Using Python with dbt
+
+          </span>
+        </div>
+      </div>
+    </div>
+
+
+        <form class="md-header__option" data-md-component="palette">
+
+
+
+
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+
+
+
+
+
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6m0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4M7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3"/></svg>
+      </label>
+
+
+</form>
+
+
+
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+
+
+
+      <label class="md-header__button md-icon" for="__search">
+
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  </nav>
+
+</header>
+
+    <div class="md-container" data-md-component="container">
+
+
+
+
+
+
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+
+
+
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="." title="site-name" class="md-nav__button md-logo" aria-label="site-name" data-md-component="logo">
+
+
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    site-name
+  </label>
+
+  <ul class="md-nav__list" data-md-scrollfix>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+
+
+
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+
+
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+
+
+  <span class="md-ellipsis">
+    How To Guides
+  </span>
+
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            How To Guides
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item md-nav__item--active">
+
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+
+
+
+
+
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+
+
+  <span class="md-ellipsis">
+    Using Python with dbt
+  </span>
+
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+
+      <a href="python_dbt.html" class="md-nav__link md-nav__link--active">
+
+
+  <span class="md-ellipsis">
+    Using Python with dbt
+  </span>
+
+
+      </a>
+
+
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+
+
+
+
+
+
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+
+</li>
+
+        <li class="md-nav__item">
+  <a href="#general-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      General Steps
+    </span>
+  </a>
+
+</li>
+
+        <li class="md-nav__item">
+  <a href="#adapter-specific-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Adapter Specific Steps
+    </span>
+  </a>
+
+    <nav class="md-nav" aria-label="Adapter Specific Steps">
+      <ul class="md-nav__list">
+
+          <li class="md-nav__item">
+  <a href="#snowflake" class="md-nav__link">
+    <span class="md-ellipsis">
+      Snowflake
+    </span>
+  </a>
+
+</li>
+
+          <li class="md-nav__item">
+  <a href="#databricks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Databricks
+    </span>
+  </a>
+
+</li>
+
+          <li class="md-nav__item">
+  <a href="#google-bigquery" class="md-nav__link">
+    <span class="md-ellipsis">
+      Google BigQuery
+    </span>
+  </a>
+
+</li>
+
+          <li class="md-nav__item">
+  <a href="#dbt-fal" class="md-nav__link">
+    <span class="md-ellipsis">
+      dbt-fal
+    </span>
+  </a>
+
+</li>
+
+          <li class="md-nav__item">
+  <a href="#best-practicesbest-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      Best practices:(#best-practices)
+    </span>
+  </a>
+
+</li>
+
+      </ul>
+    </nav>
+
+</li>
+
+    </ul>
+
+</nav>
+
+    </li>
+
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item">
+      <a href="python_airbyte.html" class="md-nav__link">
+
+
+  <span class="md-ellipsis">
+    How to create custom connectors in Airbyte using Python
+  </span>
+
+
+      </a>
+    </li>
+
+
+
+
+          </ul>
+        </nav>
+
+    </li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item md-nav__item--nested">
+
+
+
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+
+
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+
+
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Tutorials
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+
+
+
+
+
+
+
+    <li class="md-nav__item">
+      <a href="getting_started.html" class="md-nav__link">
+
+
+  <span class="md-ellipsis">
+    Getting started
+  </span>
+
+
+      </a>
+    </li>
+
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item">
+      <a href="aws_deployment.html" class="md-nav__link">
+
+
+  <span class="md-ellipsis">
+    Deploying the data cleaner to AWS
+  </span>
+
+
+      </a>
+    </li>
+
+
+
+
+          </ul>
+        </nav>
+
+    </li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item md-nav__item--nested">
+
+
+
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+
+
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+
+
+  <span class="md-ellipsis">
+    Explanations
+  </span>
+
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Explanations
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+
+
+
+
+
+
+
+    <li class="md-nav__item">
+      <a href="airbyte.html" class="md-nav__link">
+
+
+  <span class="md-ellipsis">
+    Why Airbyte?
+  </span>
+
+
+      </a>
+    </li>
+
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item">
+      <a href="postgreSQL.html" class="md-nav__link">
+
+
+  <span class="md-ellipsis">
+    Why PostgreSQL?
+  </span>
+
+
+      </a>
+    </li>
+
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item">
+      <a href="dbt.html" class="md-nav__link">
+
+
+  <span class="md-ellipsis">
+    Why dbt?
+  </span>
+
+
+      </a>
+    </li>
+
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item">
+      <a href="python.html" class="md-nav__link">
+
+
+  <span class="md-ellipsis">
+    Why Python?
+  </span>
+
+
+      </a>
+    </li>
+
+
+
+
+          </ul>
+        </nav>
+
+    </li>
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item">
+      <a href="references.html" class="md-nav__link">
+
+
+  <span class="md-ellipsis">
+    References
+  </span>
+
+
+      </a>
+    </li>
+
+
+
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+
+
+
+
+
+
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+
+</li>
+
+        <li class="md-nav__item">
+  <a href="#general-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      General Steps
+    </span>
+  </a>
+
+</li>
+
+        <li class="md-nav__item">
+  <a href="#adapter-specific-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Adapter Specific Steps
+    </span>
+  </a>
+
+    <nav class="md-nav" aria-label="Adapter Specific Steps">
+      <ul class="md-nav__list">
+
+          <li class="md-nav__item">
+  <a href="#snowflake" class="md-nav__link">
+    <span class="md-ellipsis">
+      Snowflake
+    </span>
+  </a>
+
+</li>
+
+          <li class="md-nav__item">
+  <a href="#databricks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Databricks
+    </span>
+  </a>
+
+</li>
+
+          <li class="md-nav__item">
+  <a href="#google-bigquery" class="md-nav__link">
+    <span class="md-ellipsis">
+      Google BigQuery
+    </span>
+  </a>
+
+</li>
+
+          <li class="md-nav__item">
+  <a href="#dbt-fal" class="md-nav__link">
+    <span class="md-ellipsis">
+      dbt-fal
+    </span>
+  </a>
+
+</li>
+
+          <li class="md-nav__item">
+  <a href="#best-practicesbest-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      Best practices:(#best-practices)
+    </span>
+  </a>
+
+</li>
+
+      </ul>
+    </nav>
+
+</li>
+
+    </ul>
+
+</nav>
+                  </div>
+                </div>
+              </div>
+
+
+
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+
+
+
+
+<h1 id="using-python-with-dbt">Using Python with dbt</h1>
+<p>This how-to guide shows you how to integrate Python with dbt's structured data modelling approach to improve your data transformation processes. It assumes that you have a good understanding of how dbt functions to execute all the steps outlined below. You should also have access to one of the data warehouse supported by dbt, which is either of Snowflake, Databricks, BigQuery, or fal.</p>
+<h2 id="prerequisites"><a href="#prerequisites">Prerequisites</a></h2>
+<ul>
+<li>
+<p>Ensure that Python is installed by running the following command in your command line interface (CLI):
+<code>python --version</code> If you need to install Python, visit the official Python website for your operating system's installation instructions.</p>
+</li>
+<li>
+<p>Verify your access to a data warehouse that dbt supports, such as Snowflake, Databricks, BigQuery, or one compatible with 'dbt-fal' by logging into the respective service.</p>
+</li>
+<li>
+<p>To confirm your understanding of dbt, consider reviewing the dbt documentation or completing a beginner's tutorial to familiarise yourself with its core concepts and functionalities.</p>
+</li>
+</ul>
+<h2 id="general-steps"><a href="#general_steps">General Steps</a></h2>
+<p>This section shows you how to set up a virtual environment for dbt and initialise a new project tailored for Python-based data transformations.</p>
+<p><b>Installation and setup </b></p>
+<ul>
+<li>
+<p>(Optional) If you want to isolate your dbt project's dependencies, create a virtual environment using Python's venv module and activate it before installing dbt.</p>
+</li>
+<li>
+<p>Once your virtual environment is active, install dbt core by running pip install dbt. To begin setting up your dbt project, use the command dbt init and then navigate to the project directory that has been created.</p>
+</li>
+<li>
+<p>Define Python models: To define a Python model for your data transformations, write a Python function. For example, a simple Python model might look like this: </p>
+</li>
+</ul>
+<pre><code class="language-python">def model(dbt, session):
+…
+return transformed_dataframe
+
+</code></pre>
+<ul>
+<li>
+<p>If you need to reference other models (SQL or Python) or sources in your Python code, use <code>dbt.ref('model_name')</code></p>
+</li>
+<li>
+<p>If you want to read directly from a raw source table, use <code>dbt.source('source_name', 'table_name')</code> to refer to a source table. </p>
+</li>
+</ul>
+<p>These methods return a DataFrame pointing to the upstream source:</p>
+<pre><code>def model(dbt, session):
+    upstream_model = dbt.ref(“upstream_model_name”)
+    upstream_source = dbt.source(“upstream_source_name”, “table_name”)
+    …
+</code></pre>
+<p>There are three ways to configure Python models:</p>
+<ul>
+<li>
+<p>Option 1: In <code>dbt_project.yml</code> file, where you can configure many models at once.</p>
+</li>
+<li>
+<p>Option 2: In a dedicated <code>&lt;model-name&gt;.yml</code> file corresponding to <code>&lt;model-name&gt;.sql</code>, within the <code>models/</code> directory. Example:</p>
+</li>
+</ul>
+<pre><code class="language-yaml">models:
+ - name: &lt;model-name&gt; #change this
+   description: &quot;A dbt model for ...&quot;
+
+
+   config:
+     materialized: table
+     tags: ['python']
+</code></pre>
+<ul>
+<li>Option 3: Within the model’s .py file, using the dbt.config() method. Example:</li>
+</ul>
+<pre><code>def model(dbt, session):
+   # setting configuration
+   dbt.config(materialized=&quot;table&quot;)
+</code></pre>
+<p>Remember, ‘table’ and ‘incremental’ are the only materialization options available for Python models in dbt.</p>
+<p>Choose a data warehouse that fits your project requirements, such as Snowflake, Databricks, or BigQuery. Your choice will determine the specific dbt adapter to install, so make sure to refer to the dbt documentation for guidance on installing the appropriate adapter for your selected warehouse.</p>
+<p><b>Integrating Python with dbt:</b> </p>
+<p><b>Cloud </b></p>
+<p>Cloud platforms like BigQuery, Snowflake, and Databricks offer their own unique connectors or integrations to execute Python code right within the data warehouse environment.</p>
+<p>How it works: To use Python with these platforms, you configure dbt to operate with the data warehouse's specific Python runtime. This could involve using proprietary features like User-Defined Functions (UDFs) or external scripts.</p>
+<p><b>Local  </b></p>
+<p>The dbt-fal library is a dbt package built specifically to run Python scripts locally as part of the dbt workflow.</p>
+<p>How it works: With dbt-fal, data is downloaded from the database to your local system, manipulated using Python, and then the transformed data is uploaded back to the database. This gives you the versatility to use all of Python's capabilities, including any libraries and modules that might not be supported by your cloud service's environment.</p>
+<p>So, while cloud services provide ease of use within their controlled environments, dbt-fal offers the freedom to use the expansive Python ecosystem right from your local machine.</p>
+<h2 id="adapter-specific-steps"><a href="#adapter-specific-steps">Adapter Specific Steps</a></h2>
+<p>This section shows you how to install and configure the specific dbt adapters (Snowflake, Databricks, BigQuery and dbt-fal) that connect dbt to your chosen data warehouse.</p>
+<p><br></br></p>
+<h3 id="snowflake"><a href="#snowflake">Snowflake</a></h3>
+<p><br></br></p>
+<p><b>Account Setup </b></p>
+<ul>
+<li>Begin by creating or logging into an account on Snowflake.
+After logging in, change your role to ‘ORGADMIN’. This role is required to modify account-level settings, including enabling features such as Anaconda Python packages.</li>
+<li>Navigate to the Billing &amp; Terms tab to enable Anaconda Python packages. This step allows you to use Python packages in Snowflake - a prerequisite for using dbt with Python.  </li>
+<li>Use the Worksheets tab to create your working environment. This involves creating a database, a schema within that database, and a warehouse to perform computations:</li>
+</ul>
+<pre><code>create database epc;
+create schema epc.coefficient;
+create warehouse epc_wh;
+</code></pre>
+<p>These resources are important for organising your data and providing the computational resources to execute your queries and transformations.</p>
+<p><b>dbt configuration for Snowflake</b></p>
+<ul>
+<li>
+<p>With your virtual environment activated, install the Snowflake adapter for dbt using <code>pip install dbt-snowflake</code></p>
+</li>
+<li>
+<p>Set up your dbt profile by editing the <b>~/.dbt/profiles.yml</b> file. This file tells dbt how to connect to your data warehouse with the correct credentials and connection details. The profile should match the structure expected by dbt for Snowflake connections. Example:</p>
+</li>
+</ul>
+<pre><code>epc:
+  outputs:
+    dev:
+      account: &lt;your-account-id&gt; #change this
+      database: epc
+      password: &lt;your-password&gt; #change this
+      role: ACCOUNTADMIN
+      schema: coefficient
+      threads: 1
+      type: snowflake
+      user: &lt;your-user&gt; #change this
+      warehouse: epc_wh
+  target: dev
+</code></pre>
+<p>Change <code>&lt;your-user&gt;</code> and <code>&lt;your-password&gt;</code> to the user and password of your snowflake account. You can find <code>&lt;your-account-id&gt;</code> in accounts inside the admin tab.</p>
+<ul>
+<li>In the <b>models</b> directory, create Python files to define your data models. Remember, Snowflake defaults to Snowpark DataFrames (similar to Apache Spark, but within Snowflake), so import the necessary library before writing functions.</li>
+</ul>
+<pre><code>import snowflake.snowpark.functions as F
+# Define your Python dbt model here
+</code></pre>
+<ul>
+<li>Run <code>dbt build</code></li>
+</ul>
+<p><br></br></p>
+<h3 id="databricks"><a href="#databricks">Databricks</a></h3>
+<p><br></br></p>
+<p><b>Environment Setup</b></p>
+<ul>
+<li>
+<p>Start by creating an account with a cloud provider that supports Databricks, such as GCP, AWS, or Azure. You will use their infrastructure to run your Databricks instance.</p>
+</li>
+<li>
+<p>With the cloud provider selected, sign up for a Databricks account, opting for the Premium plan to ensure access to all the features.</p>
+</li>
+<li>
+<p>In the workspace setup, assign a name to your workspace, select the appropriate region, and click the "quickstart" button.
+On the following page, create a strong password, acknowledge the terms, and click "create stack" to finalize the workspace setup.</p>
+</li>
+<li>
+<p>After creating your workspace, there are three key pieces of information you need <b> to note down</b>:</p>
+</li>
+<li>
+<ul>
+<li>Server hostname and HTTP path: These warehouse connection details are required to establish a connection with dbt and execute commands in your Databricks workspace. This is located under the SQL Warehouses section.</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>Cluster ID: Required to define where dbt jobs will run. Create a cluster under the Data Science &amp; Engineering tab and record the cluster ID from the URL. </li>
+</ul>
+</li>
+<li>
+<ul>
+<li>Account Token: A secure way for dbt to authenticate with Databricks. This is generated in the User Settings section. Remember to store this securely as it's required for dbt configuration and cannot be retrieved once created.</li>
+</ul>
+</li>
+</ul>
+<p><b>dbt Configuration for Databricks</b></p>
+<ul>
+<li>
+<p>With your virtual environment activated, install the Databricks adapter for dbt using <code>pip install dbt-databricks.</code></p>
+</li>
+<li>
+<p>Edit or create the <b>~/.dbt/profiles.yml</b> file to include the Databricks connection details. </p>
+</li>
+</ul>
+<pre><code>epc:
+  outputs:
+    dev:
+      catalog: null
+      host: [your-host-name]
+      http_path: [your-http-path]
+      schema: coefficient
+      threads: 1
+      token: [your-access-token]
+      type: databricks
+  target: dev
+</code></pre>
+<ul>
+<li>In the <b>models</b> directory, create Python files to define your data models. Remember, Databricks defaults to Apache Spark DataFrames, so import the necessary library before writing functions.</li>
+</ul>
+<pre><code>import pyspark.sql.functions as F
+# Define your Python dbt model here
+</code></pre>
+<ul>
+<li>
+<p>Choose one of the following submission methods for your models:</p>
+</li>
+<li>
+<ul>
+<li>All_purpose_cluster (default):  Uses a constant cluster that's always available, leading to quicker execution times. </li>
+</ul>
+</li>
+<li>
+<ul>
+<li>Job Cluster: This option only creates a cluster when it's needed for a job. It's a cost-effective approach as it doesn't maintain a constant cluster, however the job execution time can be delayed as clusters need to be set up and terminated each time.</li>
+</ul>
+</li>
+<li>
+<p>For each model, configure the submission method using either of the submission methods mentioned previously, to define how your model runs on Databricks:</p>
+</li>
+</ul>
+<pre><code>def model(dbt, session):
+    dbt.config(
+      submission_method=&quot;all_purpose_cluster&quot;,
+      create_notebook=True,
+      cluster_id=&quot;abcd-1234-wxyz&quot;
+    )
+    # Model logic here
+</code></pre>
+<p>or  in <b>dbt_project.yml</b></p>
+<pre><code>models:
+ project_name:
+   subfolder:
+     # set defaults for all .py models defined in this subfolder
+     +submission_method: all_purpose_cluster
+     +create_notebook: False
+     +cluster_id: abcd-1234-wxyz
+</code></pre>
+<pre><code>models:
+  - name: my_python_model
+    config:
+      submission_method: job_cluster
+      job_cluster_config:
+      spark_version: ...
+      node_type_id: ...
+</code></pre>
+<ul>
+<li>Run <code>dbt build</code></li>
+</ul>
+<p><br></br></p>
+<h3 id="google-bigquery"><a href="#google_bigquery">Google BigQuery</a></h3>
+<p><br></br></p>
+<p><b> Account Setup </b></p>
+<ul>
+<li>
+<p>Sign up to the Google Cloud Platform (GCP) and create a new project within the GCP console. This project will contain all your related cloud resources.</p>
+</li>
+<li>
+<p>Navigate to IAM &amp; Admin &gt; Service Accounts and create a Service Account (SA) for dbt. The SA acts as an identity for dbt to interact with GCP services securely. </p>
+</li>
+<li>
+<p>Assigning roles and creating keys: </p>
+</li>
+<li>
+<ul>
+<li>While you can give the SA broad permissions with roles like Resource Admin, it is recommended to assign only the necessary permissions for increased security. To follow the principle of least privilege, you can check what are the exact needed permissions <a href="https://docs.getdbt.com/guides/bigquery?step=1">here</a>.</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>Navigate to Actions &gt; Manage keys &gt; Add Key &gt; Create new key, select JSON, and download the file. This key file will authenticate dbt with GCP and should be kept safe.
+Create a cloud storage bucket to store temporary data and other artifacts. Choose the same region as your future resources to optimise access speeds and costs.</li>
+</ul>
+</li>
+<li>
+<p>Find the Dataproc API in the Marketplace and enable it. Dataproc will run and manage your Spark jobs for dbt’s Python models.</p>
+</li>
+<li>
+<p>Create a new cluster in Dataproc, choosing the same region as your storage bucket to minimize latency and costs. Opt for machine types such as <b>n1-standard-2</b> to stay within default quotas and control expenses.</p>
+</li>
+</ul>
+<p>Remember: When initializing your cluster, include connector scripts that allow Dataproc to work with BigQuery. You can do this by inserting the provided initialization action and metadata into the respective fields. While Google suggests storing this info in a bucket for production environments, for the sake of this how-to guide, we input them directly into the cluster properties.</p>
+<p><b>dbt Configuration for BigQuery</b></p>
+<ul>
+<li>
+<p>With your virtual environment activated, install the BigQuery adapter for dbt using <code>pip install dbt-bigquery</code></p>
+</li>
+<li>
+<p>Edit or create the <b>~/.dbt/profiles.yml</b> file to contain your GCP project ID, the SA key file’s path, and the details about the Dataproc cluster. This profile acts as dbt’s roadmap for connecting to your data warehouse and executing models. Example:</p>
+</li>
+</ul>
+<pre><code>epc:
+  target: dev
+  outputs:
+    dev:
+      type: bigquery
+      method: service-account-json
+      project: [your-project-id]
+      dataset: epc
+      threads: 1
+
+
+
+
+      # These fields come from the service account json keyfile
+      keyfile_json:
+        type: xxx
+        project_id: xxx
+        private_key_id: xxx
+        private_key: xxx
+        client_email: xxx
+        client_id: xxx
+        auth_uri: xxx
+        token_uri: xxx
+        auth_provider_x509_cert_url: xxx
+        client_x509_cert_url: xxx
+
+
+
+
+      # for dbt Python models
+      gcs_bucket: [the-name-of-your-bucket]
+      dataproc_region: [your-region] #e.g.: us-east1
+</code></pre>
+<ul>
+<li>In the <b>models</b> directory, write Python files where you will define your data models. As these models will run as PySpark jobs, you need to ensure they are compatible with the BigQuery and Dataproc platforms by importing this function:</li>
+</ul>
+<pre><code>import pyspark.sql.functions as F
+# Define your Python dbt model here
+</code></pre>
+<ul>
+<li>
+<p>Choose one of the submission methods for your models:</p>
+</li>
+<li>
+<ul>
+<li><u>serverless</u>: This doesn't need a pre-existing cluster, however, it may have startup delays and limited Python package availability.</li>
+</ul>
+</li>
+<li>
+<ul>
+<li><u>cluster</u>: Configuring a Dataproc cluster beforehand gives you control over its settings and allows installation of custom Python packages, ensuring a more responsive system.</li>
+</ul>
+</li>
+<li>
+<p>Specify the submission_method either within individual Python models. Example:</p>
+</li>
+</ul>
+<pre><code>def model(dbt, session):
+    dbt.config(
+      submission_method=&quot;cluster&quot;,
+      dataproc_cluster_name=&quot;my-dataproc-cluster&quot;
+    )
+    # Python model code
+
+</code></pre>
+<p>or globally in the <b>dbt_project.yml</b> file</p>
+<ul>
+<li>Run <code>dbt build</code></li>
+</ul>
+<p><br></br></p>
+<h3 id="dbt-fal"><a href="#dbt-fal">dbt-fal</a></h3>
+<p><br></br></p>
+<p><b> Setup</b></p>
+<p>Since ‘fal’ uses existing dbt adapters, pick one that matches your data warehouse. For this guide, we assume that you are using the BigQuery adapter, which means that you should have a GCP project and a service account set up. Refer to the initial steps in the BigQuery setup section information on setting this up</p>
+<p><b> dbt Configuration for fal</b></p>
+<ul>
+<li>With your virtual environment active, we first install the fal adapter for dbt by running the command <code>pip install dbt-fal</code></li>
+</ul>
+<p>Note: Starting from version 1.8, installing an adapter like dbt-fal does not automatically include dbt-core. We need to install dbt-core separately to ensure our versions are aligned.</p>
+<ul>
+<li>
+<p>After installing dbt-fal, proceed to <code>pip install dbt-bigquery</code>and <code>pip install pyarrow</code> to ensure all necessary components for the BigQuery integration are in place.</p>
+</li>
+<li>
+<p>Next, we need to edit or create the <b>~/.dbt/profiles.yml</b> file to configure our dbt environment. This setup will be similar to a standard BigQuery profile but will specify an output type of 'fal', which then points to BigQuery. Example:</p>
+</li>
+</ul>
+<pre><code>Epc:
+  target: dev_with_fal
+  Outputs:
+      Dev_with_fal:
+        type: fal
+        db_profile: dev_bq # This points to your main adapter
+      Dev_bq:
+        type: bigquery
+        ...
+</code></pre>
+<ul>
+<li>
+<p>The key file generated during the GCP setup will authenticate dbt with BigQuery. We must secure this key as it's essential for our dbt project to communicate with GCP services.</p>
+</li>
+<li>
+<p>In the <b>models</b> directory, create Python files to define your data models.
+Unlike SQL models, the use of fal allows us to harness the flexibility of Pandas dataframes. Example code:</p>
+</li>
+</ul>
+<pre><code>def model(dbt, fal):
+    &quot;&quot;&quot;dbt-fal model.&quot;&quot;&quot;
+    epc = dbt.ref(&quot;stg_uk_epc_certificates&quot;)
+    epc[&quot;uprn&quot;] = epc[&quot;uprn&quot;].apply(lambda x: np.nan if x == &quot;&quot; else x)
+
+
+    os = dbt.ref(&quot;stg_uk_os&quot;)
+    os[&quot;address&quot;] = os[&quot;address&quot;].str.lower()
+    os[&quot;udprn&quot;] = os[&quot;udprn&quot;].apply(lambda x: np.nan if x in [&quot;&quot;, &quot;N/A&quot;] else x)
+
+
+    return pipeline(epc=epc, os=os)
+</code></pre>
+<ul>
+<li>Run <code>dbt build</code></li>
+</ul>
+<h3 id="best-practicesbest-practices"><b>Best practices:(#best-practices)</b></h3>
+<ul>
+<li>
+<p><u>Organising your Python Models in dbt</u>: To use Python for data transformations, place your Python files in the 'models' directory of your dbt project. Remember to translate any SQL logic into Python, considering syntax and function differences that are specific to the libraries used by your data warehouse's adapter.</p>
+</li>
+<li>
+<p><u>Executing your Python Models in dbt</u>: After adding your Python scripts to the dbt 'models' directory, perform data transformations by running dbt build from your project directory. To ensure everything is working correctly, keep an eye on the dbt logs for any errors. Once the dbt run is successful, your data will be updated in your warehouse as per your transformations.</p>
+</li>
+</ul>
+<p><b>Need more help?</b>
+For troubleshooting or to understand the process in greater detail, refer to the official dbt documentation. Additionally, for adapter-specific instructions and options, consult the <a href="https://docs.getdbt.com/">documentation</a> for the dbt adapter you're using.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </article>
+            </div>
+
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+
+      </main>
+
+        <footer class="md-footer">
+
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+
+
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+
+</div>
+
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+
+
+    <script id="__config" type="application/json">{"base": ".", "features": ["search.suggest", "navigation.instant.preview"], "search": "assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+
+
+      <script src="assets/javascripts/bundle.56dfad97.min.js"></script>
+
+
+  </body>
+</html>

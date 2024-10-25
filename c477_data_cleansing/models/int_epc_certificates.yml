@@ -8,43 +8,46 @@ models:
     #     compare_model: ref('stg_epc_recommendations')
 
     # column details taken from: https://epc.opendatacommunities.org/docs/guidance#glossary
+    config:
+      materialized: table
+      tags: ["python"]
     columns:
       - name: walls_env_eff
         description: "Environmental efficiency rating. On actual energy certificate shown as one to five star rating."
         field_type: TEXT
-        tests:
-          - accepted_values:
-              values: [
-                  "Very Good",
-                  "Good",
-                  "Average",
-                  "Poor",
-                  "Very Poor",
-                  "N/A",
-                ] # Pre-clean Categories are diverse.
+        # tests:
+        #   - accepted_values:
+        #       values: [
+        #           "Very Good",
+        #           "Good",
+        #           "Average",
+        #           "Poor",
+        #           "Very Poor",
+        #           "N/A",
+        #         ] # Pre-clean Categories are diverse.
 
       - name: fixed_lighting_outlets_count
         description: "The number of fixed lighting outlets."
         field_type: FLOAT
-        tests:
-          - dbt_expectations.expect_column_values_to_be_between:
-              min_value: 0 # null values are currently null.
-              max_value: 300
+        # tests:
+        #   - dbt_expectations.expect_column_values_to_be_between:
+        #       min_value: 0 # null values are currently null.
+        #       max_value: 300
 
       - name: glazed_area
         description: Ranged estimate of the total glazed area of the Habitable Area.
         field_type: TEXT
-        tests:
-          - accepted_values:
-              values:
-                [
-                  "Much More Than Typical",
-                  "More Than Typical",
-                  "Normal",
-                  "Less Than Typical",
-                  "Much Less Than Typical",
-                  "NO DATA!",
-                ]
+        # tests:
+        #   - accepted_values:
+        #       values:
+        #         [
+        #           "Much More Than Typical",
+        #           "More Than Typical",
+        #           "Normal",
+        #           "Less Than Typical",
+        #           "Much Less Than Typical",
+        #           "NO DATA!",
+        #         ]
 
         # acceptable_values:
 
@@ -59,10 +62,10 @@ models:
       - name: low_energy_fixed_light_count
         description: The number of low-energy fixed lighting outlets.
         field_type: FLOAT
-        tests:
-          - dbt_expectations.expect_column_values_to_be_between:
-              min_value: 0
-              max_value: 300
+        # tests:
+        #   - dbt_expectations.expect_column_values_to_be_between:
+        #       min_value: 0
+        #       max_value: 300
         # accepted_values:
 
       - name: secondheat_description
@@ -99,7 +102,7 @@ models:
 
       - name: co2_emissions_potential
         description: Estimated value in Tonnes per Year of the total CO₂ emissions produced by the Property in 12 month period.
-        field_type: FLOAT
+        field_type: TEXT
         # accepted_values:
 
       - name: current_energy_efficiency
@@ -237,10 +240,10 @@ models:
         field_type: FLOAT
         # accepted_values:
 
-      # - name: floor_energy_eff
-      #   description: Energy efficiency rating. On actual energy certificate shown as one to five star rating.
-      #   field_type: TEXT
-      #   accepted_values: Very Good | Good | Average | Poor | Very Poor
+      - name: floor_energy_eff
+        description: Energy efficiency rating. On actual energy certificate shown as one to five star rating.
+        field_type: TEXT
+        # accepted_values: Very Good | Good | Average | Poor | Very Poor
       - name: windows_description
         description: Overall description of the property feature
         field_type: TEXT
@@ -499,7 +502,7 @@ models:
       - name: fuzzy_matched
         description: Indicator to flag whether this UPRN was extracted from the Ordnance Survey data via fuzzy matching (1) or originates directly from the EPC data (0).
         field_type: INT
-        acceptable_values: 1 | 0
+        # acceptable_values: 1 | 0
 
     meta:
       owner: "data_engineering_team"

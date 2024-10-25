@@ -167,6 +167,31 @@ def pipeline(df):
     df["Address"] = df["Address"].apply(format_address)
 
     # Filter to IoW postcodes only
+    ############################################################
+    # TODO: This is Emmanuel's code
+    ############################################################
+
+    # df["district"] = df.PostcodeLocator.str.split(" ").str[0]
+    # isle_of_wight_districts = [
+    #     "PO30",
+    #     "PO31",
+    #     "PO32",
+    #     "PO33",
+    #     "PO34",
+    #     "PO35",
+    #     "PO36",
+    #     "PO37",
+    #     "PO38",
+    #     "PO39",
+    #     "PO40",
+    #     "PO41",
+    # ]
+    # df = df[df.district.isin(isle_of_wight_districts)].copy().drop(columns=["district"])
+    ############################################################
+
+    ############################################################
+    # TODO: This is East Riding code
+    ############################################################
     df["district"] = df.PostcodeLocator.str.split(" ").str[0]
     isle_of_wight_districts = [
         "PO30",
@@ -218,13 +243,14 @@ def pipeline(df):
         .copy()
         .drop(columns=["district"])
     )
+    ############################################################
 
     return df
 
 
 def model(dbt, fal):
     """dbt-fal model."""
-    return dbt.ref("stg_os_places").query("os_api_source == 'DPA'").pipe(pipeline)
+    return dbt.ref("stg_uk_os").query("os_api_source == 'DPA'").pipe(pipeline)
 
 
 def main(input_csv: str, output_csv: str, to_excel: bool):

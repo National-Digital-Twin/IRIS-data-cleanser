@@ -8,15 +8,15 @@ cachedir/
 
 # Data
 data/
+*.zip
 notebooks/*.csv
 notebooks/*.json
 notebooks/bays/*.csv
 notebooks/bays/*.xlsx
 license_report.csv
+test.html
 !**/data/**/README.md
 !**/data/**/*.gitkeep
-*.zip
-*.html
 
 # Secrets
 .env

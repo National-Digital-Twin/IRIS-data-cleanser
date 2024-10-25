@@ -1,0 +1,5 @@
+documentationUrl: https://find-energy-certificate.service.gov.uk/
+connectionSpecification:
+  $schema: http://json-schema.org/draft-07/schema#
+  title: Northern Ireland Domestic EPC certificates & recommendations spec
+  type: object

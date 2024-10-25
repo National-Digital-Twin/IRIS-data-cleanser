@@ -144,36 +144,6 @@ poetry up --latest
     command whenever you change `.env`)
 
 
-## 8. Initialise the `detect-secrets` pre-commit hook
-
-We use [`detect-secrets`](https://github.com/Yelp/detect-secrets) to check that no secrets are
-accidentally committed. Please read [docs/detect_secrets.md](docs/detect_secrets.md) for more information.
-
-
-```shell
-# Generate a baseline
-detect-secrets scan > .secrets.baseline
-
-# You may want to check/amend the exclusions in `.pre-commit-config.yaml` e.g.
-detect-secrets --verbose scan \
-    --exclude-files 'poetry\.lock' \
-    --exclude-files '\.secrets\.baseline' \
-    --exclude-files '\.env\.template' \
-    --exclude-files '\.ipynb' \
-    --exclude-secrets 'password|ENTER_PASSWORD_HERE|INSERT_API_KEY_HERE' \
-    --exclude-lines 'integrity=*sha' \
-    > .secrets.baseline
-
-# Audit the generated baseline
-detect-secrets audit .secrets.baseline
-```
-
-When you run this command, you'll enter an interactive console. This will present you with a list
-of high-entropy string and/or anything which could be a secret. It will then ask you to verify
-whether this is the case. This allows the hook to remember false positives in the future, and alert
-you to new secrets.
-
-
-## 9. Project-specific setup
+## 8. Project-specific setup
 
 Please check [docs/project_specific_setup.md](docs/project_specific_setup.md) for further instructions.

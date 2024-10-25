@@ -1,0 +1,1635 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+
+
+
+
+        <link rel="prev" href="python_airbyte.html">
+
+
+        <link rel="next" href="aws_deployment.html">
+
+
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.36">
+
+
+
+        <title>Getting started - site-name</title>
+
+
+
+      <link rel="stylesheet" href="assets/stylesheets/main.06209087.min.css">
+
+
+        <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
+
+
+
+
+
+
+
+        <script src="https://unpkg.com/iframe-worker/shim"></script>
+
+
+
+
+
+
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+
+
+
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+
+
+
+
+
+
+  </head>
+
+
+
+
+
+
+
+
+
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+
+
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+
+
+        <a href="#installation-prerequisites-before-you-begin" class="md-skip">
+          Skip to content
+        </a>
+
+    </div>
+    <div data-md-component="announce">
+
+    </div>
+
+
+
+
+
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="." title="site-name" class="md-header__button md-logo" aria-label="site-name" data-md-component="logo">
+
+
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            site-name
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+
+              Getting started
+
+          </span>
+        </div>
+      </div>
+    </div>
+
+
+        <form class="md-header__option" data-md-component="palette">
+
+
+
+
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+
+
+
+
+
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6m0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4M7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3"/></svg>
+      </label>
+
+
+</form>
+
+
+
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+
+
+
+      <label class="md-header__button md-icon" for="__search">
+
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  </nav>
+
+</header>
+
+    <div class="md-container" data-md-component="container">
+
+
+
+
+
+
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+
+
+
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="." title="site-name" class="md-nav__button md-logo" aria-label="site-name" data-md-component="logo">
+
+
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    site-name
+  </label>
+
+  <ul class="md-nav__list" data-md-scrollfix>
+
+
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item md-nav__item--nested">
+
+
+
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+
+
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+
+
+  <span class="md-ellipsis">
+    How To Guides
+  </span>
+
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            How To Guides
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+
+
+
+
+
+
+
+    <li class="md-nav__item">
+      <a href="python_dbt.html" class="md-nav__link">
+
+
+  <span class="md-ellipsis">
+    Using Python with dbt
+  </span>
+
+
+      </a>
+    </li>
+
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item">
+      <a href="python_airbyte.html" class="md-nav__link">
+
+
+  <span class="md-ellipsis">
+    How to create custom connectors in Airbyte using Python
+  </span>
+
+
+      </a>
+    </li>
+
+
+
+
+          </ul>
+        </nav>
+
+    </li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+
+
+
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+
+
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+
+
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Tutorials
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item md-nav__item--active">
+
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+
+
+
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+
+
+  <span class="md-ellipsis">
+    Getting started
+  </span>
+
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+
+      <a href="getting_started.html" class="md-nav__link md-nav__link--active">
+
+
+  <span class="md-ellipsis">
+    Getting started
+  </span>
+
+
+      </a>
+
+
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+
+
+
+
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+
+        <li class="md-nav__item">
+  <a href="#installation-prerequisites-before-you-begin" class="md-nav__link">
+    <span class="md-ellipsis">
+      Installation / prerequisites (“Before you begin”)
+    </span>
+  </a>
+
+    <nav class="md-nav" aria-label="Installation / prerequisites (“Before you begin”)">
+      <ul class="md-nav__list">
+
+          <li class="md-nav__item">
+  <a href="#technical-installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Technical Installation
+    </span>
+  </a>
+
+</li>
+
+          <li class="md-nav__item">
+  <a href="#endpoint-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Endpoint requirements
+    </span>
+  </a>
+
+</li>
+
+          <li class="md-nav__item">
+  <a href="#airbyte-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Airbyte Setup
+    </span>
+  </a>
+
+</li>
+
+      </ul>
+    </nav>
+
+</li>
+
+        <li class="md-nav__item">
+  <a href="#building-your-airbyte-to-sqlite-connection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Building Your Airbyte to SQLite Connection
+    </span>
+  </a>
+
+    <nav class="md-nav" aria-label="Building Your Airbyte to SQLite Connection">
+      <ul class="md-nav__list">
+
+          <li class="md-nav__item">
+  <a href="#understanding-the-builder-panels-to-modify-and-test-configurations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Understanding the Builder Panels to modify and test configurations
+    </span>
+  </a>
+
+</li>
+
+      </ul>
+    </nav>
+
+</li>
+
+        <li class="md-nav__item">
+  <a href="#retrieve-database-file-from-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      Retrieve Database file from Docker
+    </span>
+  </a>
+
+</li>
+
+        <li class="md-nav__item">
+  <a href="#dbt-configuration-with-sqlite" class="md-nav__link">
+    <span class="md-ellipsis">
+      dbt Configuration with SQLite
+    </span>
+  </a>
+
+</li>
+
+        <li class="md-nav__item">
+  <a href="#running-dbt-models-with-sqlite" class="md-nav__link">
+    <span class="md-ellipsis">
+      Running dbt Models with SQLite
+    </span>
+  </a>
+
+</li>
+
+        <li class="md-nav__item">
+  <a href="#checking-the-sqlite-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      Checking the SQLite Database
+    </span>
+  </a>
+
+</li>
+
+    </ul>
+
+</nav>
+
+    </li>
+
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item">
+      <a href="aws_deployment.html" class="md-nav__link">
+
+
+  <span class="md-ellipsis">
+    Deploying the data cleaner to AWS
+  </span>
+
+
+      </a>
+    </li>
+
+
+
+
+          </ul>
+        </nav>
+
+    </li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item md-nav__item--nested">
+
+
+
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+
+
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+
+
+  <span class="md-ellipsis">
+    Explanations
+  </span>
+
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Explanations
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+
+
+
+
+
+
+
+    <li class="md-nav__item">
+      <a href="airbyte.html" class="md-nav__link">
+
+
+  <span class="md-ellipsis">
+    Why Airbyte?
+  </span>
+
+
+      </a>
+    </li>
+
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item">
+      <a href="postgreSQL.html" class="md-nav__link">
+
+
+  <span class="md-ellipsis">
+    Why PostgreSQL?
+  </span>
+
+
+      </a>
+    </li>
+
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item">
+      <a href="dbt.html" class="md-nav__link">
+
+
+  <span class="md-ellipsis">
+    Why dbt?
+  </span>
+
+
+      </a>
+    </li>
+
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item">
+      <a href="python.html" class="md-nav__link">
+
+
+  <span class="md-ellipsis">
+    Why Python?
+  </span>
+
+
+      </a>
+    </li>
+
+
+
+
+          </ul>
+        </nav>
+
+    </li>
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item">
+      <a href="references.html" class="md-nav__link">
+
+
+  <span class="md-ellipsis">
+    References
+  </span>
+
+
+      </a>
+    </li>
+
+
+
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+
+
+
+
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+
+        <li class="md-nav__item">
+  <a href="#installation-prerequisites-before-you-begin" class="md-nav__link">
+    <span class="md-ellipsis">
+      Installation / prerequisites (“Before you begin”)
+    </span>
+  </a>
+
+    <nav class="md-nav" aria-label="Installation / prerequisites (“Before you begin”)">
+      <ul class="md-nav__list">
+
+          <li class="md-nav__item">
+  <a href="#technical-installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Technical Installation
+    </span>
+  </a>
+
+</li>
+
+          <li class="md-nav__item">
+  <a href="#endpoint-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Endpoint requirements
+    </span>
+  </a>
+
+</li>
+
+          <li class="md-nav__item">
+  <a href="#airbyte-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Airbyte Setup
+    </span>
+  </a>
+
+</li>
+
+      </ul>
+    </nav>
+
+</li>
+
+        <li class="md-nav__item">
+  <a href="#building-your-airbyte-to-sqlite-connection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Building Your Airbyte to SQLite Connection
+    </span>
+  </a>
+
+    <nav class="md-nav" aria-label="Building Your Airbyte to SQLite Connection">
+      <ul class="md-nav__list">
+
+          <li class="md-nav__item">
+  <a href="#understanding-the-builder-panels-to-modify-and-test-configurations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Understanding the Builder Panels to modify and test configurations
+    </span>
+  </a>
+
+</li>
+
+      </ul>
+    </nav>
+
+</li>
+
+        <li class="md-nav__item">
+  <a href="#retrieve-database-file-from-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      Retrieve Database file from Docker
+    </span>
+  </a>
+
+</li>
+
+        <li class="md-nav__item">
+  <a href="#dbt-configuration-with-sqlite" class="md-nav__link">
+    <span class="md-ellipsis">
+      dbt Configuration with SQLite
+    </span>
+  </a>
+
+</li>
+
+        <li class="md-nav__item">
+  <a href="#running-dbt-models-with-sqlite" class="md-nav__link">
+    <span class="md-ellipsis">
+      Running dbt Models with SQLite
+    </span>
+  </a>
+
+</li>
+
+        <li class="md-nav__item">
+  <a href="#checking-the-sqlite-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      Checking the SQLite Database
+    </span>
+  </a>
+
+</li>
+
+    </ul>
+
+</nav>
+                  </div>
+                </div>
+              </div>
+
+
+
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+
+
+
+
+  <h1>Getting started</h1>
+
+<h2 id="installation-prerequisites-before-you-begin"><a href="#installation">Installation / prerequisites (“Before you begin”)</a></h2>
+<h3 id="technical-installation">Technical Installation</h3>
+<p>We understand that setting up a development environment can be intimidating, but fear not! In this tutorial, we will guide you through the process step by step, ensuring that you can easily follow along and get started with your project.</p>
+<p>First and foremost, let's ensure that your system is ready for the task at hand. You do not require a virtual environment setup for this project, as applications are downloaded directly to your computer.
+<br>
+</br>
+<b> Step 1: Download SQLite</b></p>
+<p>SQLite is the chosen database for this project. You can download the respective version for your machine from the official SQLite website <a href="https://www.sqlite.org/download.html">here</a>. </p>
+<p>Once downloaded, unzip the file and follow the guides to start the database in your terminal.</p>
+<p>For guidance on using SQLite in the terminal, you can refer to the official documentation <a href="https://www.sqlite.org/cli.html">here</a> or simply type <code>.help</code> in your terminal for a quick overview of available commands.</p>
+<p><b> Step 2: Download Docker </b></p>
+<p>Next, you'll need to download Docker, which will be used to manage containers for your project. You can download Docker from the official website <a href="https://docs.docker.com/get-docker/">here</a>.</p>
+<p><b>Step 3: Sign Up for Airbyte </b></p>
+<p>To integrate Airbyte into your project, you'll need to create an account. Head over to the Airbyte website and sign up, creating a username and password <a href="https://airbyte.com/">here</a>.</p>
+<p><b>Step 4: Set Up Airbyte Locally</b></p>
+<p>Finally, you'll want to follow the official, up-to-date instructions provided by Airbyte to set up the platform locally. You can find these instructions in the documentation <a href="https://docs.airbyte.com/deploying-airbyte/local-deployment">here</a>. </p>
+<p>This guide will walk you through the process of deploying Airbyte on your machine, ensuring that everything is configured correctly.
+<br></br></p>
+<h3 id="endpoint-requirements"><a href="#endpoint-requirements">Endpoint requirements</a></h3>
+<p>Let's ensure that you have everything set up correctly to extract data from the Energy Performance Certificates (EPC) endpoint using Airbyte.</p>
+<p><b>Step 1: Get your API access Key</b></p>
+<p>Create an account <a href="https://epc.opendatacommunities.org/login">here</a>. After registration, you should receive an email containing your access key. If you don't see the email in your inbox, remember to check your spam folder.</p>
+<p><b>Step 2: Understand the API Endpoint Structure</b></p>
+<p>Review the structure of the EPC API endpoint by visiting the documentation <a href="https://epc.opendatacommunities.org/docs/api">here</a>. This will help you understand how to construct queries to retrieve the desired data.</p>
+<p>First step is complete, pat yourself on the back, you now have the setup required to perform an efficient data extraction task of Energy performance certificates from Open data communities. Remember to take your time, and don't hesitate to refer back to this section if you encounter any challenges along the way.</p>
+<p>Now, let's get started on building this project!</p>
+<p><br></br></p>
+<h3 id="airbyte-setup">Airbyte Setup</h3>
+<ul>
+<li>
+<p>Make sure that Docker is installed and running on your computer.</p>
+</li>
+<li>
+<p>Confirm that you have setup airbyte locally as in Step 4 of the technical installation section. </p>
+</li>
+<li>
+<p>If you have done this, visit <a href="localhost:8000">here</a> and sign in with your airbyte username and password, your screen should be similar to screenshot below</p>
+</li>
+</ul>
+<p><img alt="Connection complete" src="connection_successful.jpg" /></p>
+<p><b> Troubleshooting Tips: </b></p>
+<ul>
+<li>
+<p>If Airbyte isn't functioning properly, try to restart the Docker application manually and re-execute the command ./run-ab-platform.sh in terminal to startup airbyte.</p>
+</li>
+<li>
+<p>Review and adjust settings in the .env file and docker-compose.yml if needed, considering database connections, memory, and network, and port parameters.</p>
+</li>
+<li>
+<p>Remember to document any configuration changes you make for future reference and to ease troubleshooting.</p>
+</li>
+</ul>
+<!-- ****** -->
+
+<p><br> </br></p>
+<h2 id="building-your-airbyte-to-sqlite-connection"><a href="#building-your-airbyte-to-sqlite-connection">Building Your Airbyte to SQLite Connection</a></h2>
+<p>To initiate the data extraction process, we need to define a connection in Airbyte. This will involve: </p>
+<ul>
+<li>
+<p>Source Configuration: This is a low-code configuration file written in YAML syntax, specifying the details of the EPC endpoint, such as the API key and any required parameters for querying the data.</p>
+</li>
+<li>
+<p>Destination Configuration: In this case, the destination is your SQLite database file. You'll need to provide the necessary connection details, such as the file path.</p>
+</li>
+</ul>
+<p><b> Source Configuration </b></p>
+<p>First, let's define the source from which Airbyte will extract data:</p>
+<ul>
+<li>
+<p>Go to the Airbyte interface and select "Builder."</p>
+</li>
+<li>
+<p>Choose "Start from scratch" to begin configuring from a blank slate.</p>
+</li>
+</ul>
+<p><img alt="start_from_scratch.jpg" src="start_from_scratch.jpg" /></p>
+<ul>
+<li>In the configuration screen, input your YAML settings tailored to the EPC endpoint. This includes replacing placeholder tags such as <access-key> and <stream-name> with actual values. It's crucial to use correct indentation in your YAML file to prevent unexpected errors.</li>
+</ul>
+<pre><code class="language-yaml">spec:
+  type: Spec
+  connection_specification:
+    type: object
+    $schema: http://json-schema.org/draft-07/schema#
+    required: []
+    properties: {}
+    additionalProperties: true
+type: DeclarativeSource
+check:
+  type: CheckStream
+  stream_names:
+    - ==&lt;stream-name&gt;== #change &lt;stream-name&gt;
+streams:
+  - name: ==&lt;stream-name&gt;== #change &lt;stream-name&gt;
+    type: DeclarativeStream
+    retriever:
+      type: SimpleRetriever
+      paginator:
+        type: DefaultPaginator
+        page_size_option:
+          type: RequestOption
+          field_name: size
+          inject_into: request_parameter
+        page_token_option:
+          type: RequestOption
+          field_name: search-after
+          inject_into: request_parameter
+        pagination_strategy:
+          type: CursorPagination
+          page_size: 100
+          cursor_value: '{{ headers[''X-Next-Search-After''] }}'
+      requester:
+        path: search
+        type: HttpRequester
+        url_base: https://epc.opendatacommunities.org/api/v1/domestic/
+        http_method: GET
+        authenticator:
+          type: NoAuth
+        request_headers:
+          Accept: application/json
+          Authorization:   &lt;access-key&gt;
+        request_body_json: {}
+        request_parameters: {}
+      record_selector:
+        type: RecordSelector
+        extractor:
+          type: DpathExtractor
+          field_path:
+            - rows
+      partition_router:
+        - type: ListPartitionRouter
+          values:
+            - E14000534
+          cursor_field: constituency
+          request_option:
+            type: RequestOption
+            field_name: constituency
+            inject_into: request_parameter
+    primary_key: []
+    schema_loader:
+      type: InlineSchemaLoader
+      schema:
+        type: object
+        $schema: http://json-schema.org/schema#
+        properties:
+          uprn:
+            type:
+              - string
+              - 'null'
+          county:
+            type:
+              - string
+              - 'null'
+          tenure:
+            type:
+              - string
+              - 'null'
+          address:
+            type:
+              - string
+              - 'null'
+          lmk-key:
+            type:
+              - string
+              - 'null'
+          address1:
+            type:
+              - string
+              - 'null'
+          address2:
+            type:
+              - string
+              - 'null'
+          address3:
+            type:
+              - string
+              - 'null'
+          postcode:
+            type:
+              - string
+              - 'null'
+          posttown:
+            type:
+              - string
+              - 'null'
+          main-fuel:
+            type:
+              - string
+              - 'null'
+          built-form:
+            type:
+              - string
+              - 'null'
+          floor-level:
+            type:
+              - string
+              - 'null'
+          glazed-area:
+            type:
+              - string
+              - 'null'
+          glazed-type:
+            type:
+              - string
+              - 'null'
+          uprn-source:
+            type:
+              - string
+              - 'null'
+          constituency:
+            type:
+              - string
+              - 'null'
+          floor-height:
+            type:
+              - string
+              - 'null'
+          photo-supply:
+            type:
+              - string
+              - 'null'
+          roof-env-eff:
+            type:
+              - string
+              - 'null'
+          energy-tariff:
+            type:
+              - string
+              - 'null'
+          floor-env-eff:
+            type:
+              - string
+              - 'null'
+          property-type:
+            type:
+              - string
+              - 'null'
+          walls-env-eff:
+            type:
+              - string
+              - 'null'
+          lodgement-date:
+            type:
+              - string
+              - 'null'
+          mains-gas-flag:
+            type:
+              - string
+              - 'null'
+          extension-count:
+            type:
+              - string
+              - 'null'
+          flat-top-storey:
+            type:
+              - string
+              - 'null'
+          inspection-date:
+            type:
+              - string
+              - 'null'
+          local-authority:
+            type:
+              - string
+              - 'null'
+          roof-energy-eff:
+            type:
+              - string
+              - 'null'
+          windows-env-eff:
+            type:
+              - string
+              - 'null'
+          floor-energy-eff:
+            type:
+              - string
+              - 'null'
+          lighting-env-eff:
+            type:
+              - string
+              - 'null'
+          mainheat-env-eff:
+            type:
+              - string
+              - 'null'
+          roof-description:
+            type:
+              - string
+              - 'null'
+          sheating-env-eff:
+            type:
+              - string
+              - 'null'
+          total-floor-area:
+            type:
+              - string
+              - 'null'
+          transaction-type:
+            type:
+              - string
+              - 'null'
+          walls-energy-eff:
+            type:
+              - string
+              - 'null'
+          flat-storey-count:
+            type:
+              - string
+              - 'null'
+          floor-description:
+            type:
+              - string
+              - 'null'
+          hot-water-env-eff:
+            type:
+              - string
+              - 'null'
+          mainheatc-env-eff:
+            type:
+              - string
+              - 'null'
+          walls-description:
+            type:
+              - string
+              - 'null'
+          constituency-label:
+            type:
+              - string
+              - 'null'
+          heat-loss-corridor:
+            type:
+              - string
+              - 'null'
+          lodgement-datetime:
+            type:
+              - string
+              - 'null'
+          wind-turbine-count:
+            type:
+              - string
+              - 'null'
+          windows-energy-eff:
+            type:
+              - string
+              - 'null'
+          lighting-energy-eff:
+            type:
+              - string
+              - 'null'
+          low-energy-lighting:
+            type:
+              - string
+              - 'null'
+          mainheat-energy-eff:
+            type:
+              - string
+              - 'null'
+          number-heated-rooms:
+            type:
+              - string
+              - 'null'
+          sheating-energy-eff:
+            type:
+              - string
+              - 'null'
+          windows-description:
+            type:
+              - string
+              - 'null'
+          heating-cost-current:
+            type:
+              - string
+              - 'null'
+          hot-water-energy-eff:
+            type:
+              - string
+              - 'null'
+          hotwater-description:
+            type:
+              - string
+              - 'null'
+          lighting-description:
+            type:
+              - string
+              - 'null'
+          mainheat-description:
+            type:
+              - string
+              - 'null'
+          mainheatc-energy-eff:
+            type:
+              - string
+              - 'null'
+          co2-emissions-current:
+            type:
+              - string
+              - 'null'
+          construction-age-band:
+            type:
+              - string
+              - 'null'
+          current-energy-rating:
+            type:
+              - string
+              - 'null'
+          lighting-cost-current:
+            type:
+              - string
+              - 'null'
+          local-authority-label:
+            type:
+              - string
+              - 'null'
+          main-heating-controls:
+            type:
+              - string
+              - 'null'
+          heating-cost-potential:
+            type:
+              - string
+              - 'null'
+          hot-water-cost-current:
+            type:
+              - string
+              - 'null'
+          mechanical-ventilation:
+            type:
+              - string
+              - 'null'
+          multi-glaze-proportion:
+            type:
+              - string
+              - 'null'
+          number-habitable-rooms:
+            type:
+              - string
+              - 'null'
+          number-open-fireplaces:
+            type:
+              - string
+              - 'null'
+          secondheat-description:
+            type:
+              - string
+              - 'null'
+          co2-emissions-potential:
+            type:
+              - string
+              - 'null'
+          lighting-cost-potential:
+            type:
+              - string
+              - 'null'
+          potential-energy-rating:
+            type:
+              - string
+              - 'null'
+          hot-water-cost-potential:
+            type:
+              - string
+              - 'null'
+          mainheatcont-description:
+            type:
+              - string
+              - 'null'
+          solar-water-heating-flag:
+            type:
+              - string
+              - 'null'
+          unheated-corridor-length:
+            type:
+              - string
+              - 'null'
+          building-reference-number:
+            type:
+              - string
+              - 'null'
+          current-energy-efficiency:
+            type:
+              - string
+              - 'null'
+          energy-consumption-current:
+            type:
+              - string
+              - 'null'
+          environment-impact-current:
+            type:
+              - string
+              - 'null'
+          potential-energy-efficiency:
+            type:
+              - string
+              - 'null'
+          energy-consumption-potential:
+            type:
+              - string
+              - 'null'
+          environment-impact-potential:
+            type:
+              - string
+              - 'null'
+          fixed-lighting-outlets-count:
+            type:
+              - string
+              - 'null'
+          low-energy-fixed-light-count:
+            type:
+              - string
+              - 'null'
+          co2-emiss-curr-per-floor-area:
+            type:
+              - string
+              - 'null'
+version: 0.73.0
+metadata:
+  autoImportSchema:
+   ==&lt;stream-name&gt;==: true #change &lt;stream-name&gt;
+</code></pre>
+<pre><code># Note: Airbyte's yaml configuration allows for flexible, structured requests to be sent to the EPC endpoint.
+
+# More information on the structure of Airbyte's yaml configuration can be found [here](https://docs.airbyte.com/connector-development/config-based/understanding-the-yaml-file/yaml-overview)*
+</code></pre>
+<h6 id="understanding-the-builder-panels-to-modify-and-test-configurations">Understanding the Builder Panels to modify and test configurations</h6>
+<p><img alt="Panel image" src="builder_pane.jpg" /></p>
+<pre><code class="language-markdown">Panel 1: Test: Here, we test our configuration. If the test passes, we're ready to move to the next step.
+
+Panel 2: HTTP Requests and Responses: This panel gives insights into the requests we're making and structure responses we get back.
+
+Panel 3: Configuration Modification: Choose between a YAML or UI view for making changes.
+
+Panel 4: Publish to Workspace or Export: After finalizing our configurations, we either publish our source or export the YAML file.
+</code></pre>
+<ul>
+<li>Now that you have your source configured, Add it as a custom source within Airbyte, as highlighted on the platform. </li>
+</ul>
+<p><img alt="Airbyte_source" src="airbyte-source.jpg" /></p>
+<p><b> Destination Configuration </b></p>
+<ul>
+<li>
+<p>Click on <b>Destination</b>, Search <b>“Local SQLite”.</b> </p>
+</li>
+<li>
+<p>Ensure the destination_path is starts with <code>/local</code>, and ends with name of your intended database file, in this case we chose <code>tutorial</code>, which makes our destination path <code>/local/tutorial</code></p>
+</li>
+<li>
+<p>Click <b>Set up destination</b> after which a prompt should appear which confirms successful connection to database.</p>
+</li>
+</ul>
+<p><img alt="Destination_connector_image" src="destination_connector_image.jpg" /></p>
+<p><b> Define and Run the Connection </b></p>
+<p>Once your custom source and destination are added :</p>
+<ul>
+<li>
+<p>Create a new connection by selecting <b>"Connections"</b> and <b>"Set up a new source."</b></p>
+</li>
+<li>
+<p>Locate your source by the name (default is <code>&lt;stream-name&gt;</code>) and set it up along with the SQLite destination you've defined.</p>
+</li>
+</ul>
+<p><img alt="&quot;Define connection&quot;" src="define_connection.jpg" /></p>
+<ul>
+<li>Choose <b>Manual</b> as a schedule type and proceed to set up the connection.</li>
+</ul>
+<p><img alt="&quot;Schedule type&quot;" src="schedule_type.jpg" />
+- Start data synchronization with <b>Sync now<img alt="&quot;Schedule Type&quot;" src="schedule_type.jpg" /></b> and monitor the process via <b>Job History</b>
+- From Job history, you can <b>view the logs</b>, which provide information on the running process. </p>
+<p><img alt="Start of Ingestion" src="start_of_ingestion.jpg" /></p>
+<p><em>Image below indicates successful data ingestion</em>
+<br></br></p>
+<p><img alt="&quot;Successful ingestion&quot;" src="successful_ingestion.jpg" />
+￼￼￼￼￼￼￼￼</p>
+<h2 id="retrieve-database-file-from-docker"><a href="#retrieve-database-file-from-docker">Retrieve Database file from Docker</a></h2>
+<p>Now that you have completed the data ingestion process, let's retrieve the database file from Docker:</p>
+<ul>
+<li>Run the below command to copy the database file from the container to your local directory.</li>
+</ul>
+<pre><code>cd &lt;path/to/preferred directory&gt;
+</code></pre>
+<pre><code>docker cp airbyte-server:/tmp/airbyte_local/&lt;database_filename&gt; .
+</code></pre>
+<p>or </p>
+<pre><code>docker cp airbyte-server:/tmp/airbyte_local/&lt;database_filename&gt; &lt;path/to/preferred directory&gt;
+</code></pre>
+<ul>
+<li>The data table will be named <code>_airbyte_raw_&lt;table-name&gt;</code> , while the schema will include Airbyte default columns, with the data of interest nested in the "airbyte_data" column.</li>
+</ul>
+<p><br></br></p>
+<p><img alt="&quot;DataGrip view&quot;" src="data_grip_view_ingestion.jpg" /></p>
+<p>"You have built a connection from Airbyte to SQLite and successfully extracted the data </p>
+<h2 id="dbt-configuration-with-sqlite"><a href="#dbt-configuration-with-sqlite">dbt Configuration with SQLite</a></h2>
+<!-- ### <u> Step 1: Dbt Setup</u> -->
+
+<p>We start by setting up a virtual environment within your IDE, providing an isolated space for our dbt project.</p>
+<ul>
+<li>
+<p>We <b>install dbt-sqlite</b> using the command <code>pip install dbt-sqlite==1.4.0</code> or, with Poetry <code>poetry add dbt-sqlite@1.4.0</code></p>
+</li>
+<li>
+<p>Next, we <b>install dbt-core</b> with the command <code>pip install dbt-core==1.4.0</code>or with Poetry, <code>poetry add dbt-core==1.4.0</code>.</p>
+</li>
+<li>
+<p>We must always ensure that the <b> versions of dbt-sqlite and dbt-core match</b> because they need to work in tandem eg: dbt-sqlite 1.4.0 is compatible with dbt-core 1.4.0.</p>
+</li>
+<li>
+<p>Now either create or modify existing profiles.yml file following the instructions provided <a href="https://docs.getdbt.com/docs/core/connect-data-platform/sqlite-setup">here</a>.</p>
+</li>
+<li>
+<p>Depending on your setup, we may need to install the <b>pytz</b> package manually. Do this by running <code>pip install pytz</code> or <code>poetry add pytz</code>.</p>
+</li>
+<li>
+<p>Start a new dbt project called "dbt_tutorial, </p>
+</li>
+</ul>
+<pre><code>dbt init &lt;dbt_project_name&gt;
+</code></pre>
+<ul>
+<li>It is expected that you have modified your “project.yml file, usually present in “<root>/.dbt” directory with the code block below</li>
+</ul>
+<pre><code class="language-yaml">&lt;dbt_project_name&gt;:
+  target: dev
+  outputs:
+    dev:
+      type: sqlite
+      threads: 1
+      database: &quot;database&quot; #do not change
+      schema: 'main' #do not change
+      schemas_and_paths:
+        main: '&lt;path-to-database-file&gt;'
+      schema_directory: '&lt;path-to-database-directory&gt;'
+</code></pre>
+<ul>
+<li>
+<p>Navigate to the new <code>&lt;dbt_project_name&gt;</code> directory in terminal with <code>cd &lt;dbt_project_name&gt;.</code> Inside this directory, you're now ready to define models, write SQL queries, and tailor your dbt project to your data needs.</p>
+</li>
+<li>
+<p>The output in the directory should look like dbt's template structure, showcasing various folders such as <b>models</b> and files like <b>dbt_project.yml</b></p>
+</li>
+<li>
+<p>We’ll focus on the <b>models</b> folder. Remove the existing sample model SQL files and create a new file named <b>first_transformation.sql</b> for our custom SQL code.</p>
+</li>
+</ul>
+<pre><code> {{ config( materialized=’table’) }}
+
+select
+   json_extract(_airbyte_data,'$.address') as address,
+   json_extract(_airbyte_data,'$.low-energy-fixed-light-count') as low_energy_fixed_light_count,
+   json_extract(_airbyte_data,'$.uprn-source') as uprn_source,
+   json_extract(_airbyte_data,'$.floor-height') as floor_height,
+   json_extract(_airbyte_data,'$.heating-cost-potential') as heating_cost_potential,
+   json_extract(_airbyte_data,'$.unheated-corridor-length') as unheated_corridor_length,
+   json_extract(_airbyte_data,'$.hot-water-cost-potential') as hot_water_cost_potential,
+   json_extract(_airbyte_data,'$.construction-age-band') as construction_age_band,
+   json_extract(_airbyte_data,'$.potential-energy-rating') as potential_energy_rating,
+   json_extract(_airbyte_data,'$.mainheat-energy-eff') as mainheat_energy_eff,
+   json_extract(_airbyte_data,'$.windows-env-eff') as windows_env_eff,
+   json_extract(_airbyte_data,'$.lighting-energy-eff') as lighting_energy_eff,
+   json_extract(_airbyte_data,'$.environment-impact-potential') as environment_impact_potential,
+   json_extract(_airbyte_data,'$.glazed-type') as glazed_type,
+   json_extract(_airbyte_data,'$.heating-cost-current') as heating_cost_current,
+   json_extract(_airbyte_data,'$.address3') as address3,
+   json_extract(_airbyte_data,'$.mainheatcont-description') as mainheatcont_description,
+   json_extract(_airbyte_data,'$.sheating-energy-eff') as sheating_energy_eff,
+   json_extract(_airbyte_data,'$.property-type') as property_type,
+   json_extract(_airbyte_data,'$.local-authority-label') as local_authority_label,
+   json_extract(_airbyte_data,'$.fixed-lighting-outlets-count') as fixed_lighting_outlets_count,
+   json_extract(_airbyte_data,'$.energy-tariff') as energy_tariff,
+   json_extract(_airbyte_data,'$.mechanical-ventilation') as mechanical_ventilation,
+   json_extract(_airbyte_data,'$.hot-water-cost-current') as hot_water_cost_current,
+   json_extract(_airbyte_data,'$.county') as county,
+   json_extract(_airbyte_data,'$.postcode') as postcode,
+   json_extract(_airbyte_data,'$.solar-water-heating-flag') as solar_water_heating_flag,
+   json_extract(_airbyte_data,'$.constituency') as constituency
+
+from {{ source(‘main’, '&lt;table-name&gt;’) }}
+</code></pre>
+<ul>
+<li>Additionally, create a <b>sources.yml</b> file within the <b>models</b> folder using the template provided.</li>
+</ul>
+<pre><code class="language-yaml">    version: 2
+sources:
+  - name: main
+    tables:
+      - name: &lt;table-name&gt; #change this
+</code></pre>
+<ul>
+<li>Do not forget to replace <code>&lt;table-name&gt;</code> with <code>_airbyte_raw_&lt;table_name&gt;</code></li>
+</ul>
+<p><br></br></p>
+<h2 id="running-dbt-models-with-sqlite"><a href="#running-dbt-models">Running dbt Models with SQLite</a></h2>
+<ul>
+<li>To run your SQL queries, go back to the terminal, navigate to the dbt project directory, and execute dbt run.</li>
+</ul>
+<pre><code>cd &lt;dbt_project_name&gt;
+</code></pre>
+<pre><code>dbt run
+</code></pre>
+<p>The output should look something like:
+<br></br>
+<img alt="completed_successfully" src="getting_started_completed.jpg" /></p>
+<p>A <span style="color:green">“Completed successfully” </span> message in the terminal, signals a successful run of your dbt model.</p>
+<p><u>Troubleshooting</u>: </p>
+<ul>
+<li>
+<p>If you face issues, it may be due to mismatched versions of dbt-sqlite and dbt-core or incorrect paths in your profiles.yml file. </p>
+</li>
+<li>
+<p>Ensure the "schemas_and_paths" and "schema_directory" both correctly direct to the database file and directory.</p>
+</li>
+<li>
+<p>Check this <a href="https://docs.getdbt.com/docs/core/connect-data-platform/sqlite-setup">link</a> again for errors in configuration.</p>
+</li>
+</ul>
+<p>Pat yourself on the back, You have built a structured dbt project ready for running transformations on your SQLite database !</b></p>
+<p><br></br></p>
+<h2 id="checking-the-sqlite-database"><a href="#checking-the-sqlite-database">Checking the SQLite Database</a></h2>
+<p><b>Command-line</b></p>
+<p>Let’s verify the new table creation by dbt:</p>
+<ul>
+<li>We start the sqlite3 command-line tool in terminal.</li>
+</ul>
+<pre><code>sqlite3
+</code></pre>
+<ul>
+<li>Open your existing database file</li>
+</ul>
+<pre><code>.open &lt;path/to/existing/database/file&gt;
+
+</code></pre>
+<ul>
+<li>Check the existing tables  </li>
+</ul>
+<pre><code>.tables
+</code></pre>
+<ul>
+<li>
+<p>You should see the newly created <code>first_transformation</code> table. </p>
+</li>
+<li>
+<p>View the first 10 rows with  </p>
+</li>
+</ul>
+<pre><code>Select * from first_transformation limit 10;
+</code></pre>
+<p><img alt="&quot;Terminal View&quot;" src="terminal_view.jpg" /></p>
+<p><b>DataGrip</b></p>
+<ul>
+<li>
+<p>For those who prefer a Graphical User Interface (GUI), you can download DataGrip from <a href="https://www.jetbrains.com/help/datagrip/installation-guide.html">here</a></p>
+</li>
+<li>
+<p>After installation, set up a connection to your SQLite database file you transformed with Dbt.</p>
+</li>
+<li>
+<p>DataGrip's visual interface is intuitive and makes it easy to analyze the transformed data in the database.</p>
+</li>
+</ul>
+<p><img alt="&quot;Data Grip View&quot;" src="data_grip_view.jpg" /></p>
+<p>By completing these steps, you've successfully integrated dbt with SQLite and started manipulating data, ready for further analysis or integration into your workflows.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </article>
+            </div>
+
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+
+      </main>
+
+        <footer class="md-footer">
+
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+
+
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+
+</div>
+
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+
+
+    <script id="__config" type="application/json">{"base": ".", "features": ["search.suggest", "navigation.instant.preview"], "search": "assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+
+
+      <script src="assets/javascripts/bundle.56dfad97.min.js"></script>
+
+
+  </body>
+</html>

@@ -39,24 +39,6 @@ poetry install --no-root --sync
 cp .env.template .env
 direnv allow
 
-# Create and audit secrets baseline
-# N.B. Adjust the exclusions here depending on your needs (check .pre-commit-config.yaml)
-detect-secrets --verbose scan \
-    --exclude-files 'poetry\.lock' \
-    --exclude-files '\.secrets\.baseline' \
-    --exclude-files '\.env\.template' \
-    --exclude-files '.*/seeds/.*\.csv' \
-    --exclude-files 'certificates\.yaml' \
-    --exclude-files 'os_places_api\.yaml' \
-    --exclude-files 'config\.json' \
-    --exclude-files '*\.ipynb' \
-    --exclude-secrets 'password|ENTER_PASSWORD_HERE|INSERT_API_KEY_HERE' \
-    --exclude-lines 'integrity=*sha' \
-    > .secrets.baseline
-
-detect-secrets audit .secrets.baseline
-```
-
 
 ## Part 2: Project-specific setup
 

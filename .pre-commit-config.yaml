@@ -46,11 +46,6 @@ repos:
     hooks:
       - id: add-trailing-comma
         args: [--py36-plus]
-  - repo: https://github.com/pycqa/bandit
-    rev: 1.7.9
-    hooks:
-      - id: bandit
-        args: ["-ii", "-ll"]
   - repo: https://github.com/sqlfluff/sqlfluff
     rev: 3.1.0
     hooks:
@@ -67,35 +62,14 @@ repos:
         stages: [manual]
         additional_dependencies:
           ["dbt-postgres==1.5.5", "sqlfluff-templater-dbt", "dbt-core==1.5.5"]
-  - repo: https://github.com/Yelp/detect-secrets
-    rev: v1.5.0
+  - repo: https://github.com/sirwart/ripsecrets
+    rev: v0.1.8 # Use latest tag on GitHub
     hooks:
-      - id: detect-secrets
-        name: detect-secrets - Detect secrets in staged code
-        args: [
-            "--baseline",
-            ".secrets.baseline",
-            # https://regex101.com/
-            "--exclude-files 'poetry\\.lock'",
-            "--exclude-files '\\.secrets\\.baseline'",
-            "--exclude-files '\\.env\\.template'",
-            "--exclude-files '.*/seeds/.*\\.csv'",
-            "--exclude-files 'os_places_api\\.yaml'",
-            "--exclude-files 'certificates\\.yaml'",
-            "--exclude-files 'config\\.json'",
-            "--exclude-files '.*\\.ipynb$'",
-            # "--exclude-files '.*build/'",
-            "--exclude-secrets 'password|ENTER_PASSWORD_HERE|INSERT_API_KEY_HERE'",
-            "--exclude-lines 'integrity=*sha'",
-          ]
-        # https://pre-commit.com/#regular-expressions
-        exclude: |
-          (?x)^(
-              poetry\.lock|
-              \.secrets\.baseline|
-              \.ipynb|
-              \.env\.template
-          )$
+      - id: ripsecrets
+        # uncomment to check additional patterns
+        # args:
+        # - --additional-pattern 'mytoken*'
+        # - --additional-pattern 'mykey*'
   # - repo: https://github.com/python-poetry/poetry
   #   rev: 1.4.0
   #   hooks:

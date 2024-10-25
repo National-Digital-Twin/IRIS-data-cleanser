@@ -1,0 +1,210 @@
+spec:
+  type: Spec
+  documentation_url: https://epc.opendatacommunities.org/
+  connection_specification:
+    type: object
+    $schema: http://json-schema.org/draft-07/schema#
+    required: []
+    properties: {}
+    additionalProperties: true
+type: DeclarativeSource
+check:
+  type: CheckStream
+  stream_names:
+    - scotland_nondomestic_certificates
+streams:
+  - name: scotland_nondomestic_certificates
+    type: DeclarativeStream
+    retriever:
+      type: SimpleRetriever
+      paginator:
+        type: DefaultPaginator
+        page_size_option:
+          type: RequestOption
+          field_name: size
+          inject_into: request_parameter
+        page_token_option:
+          type: RequestOption
+          field_name: search-after
+          inject_into: request_parameter
+        pagination_strategy:
+          type: CursorPagination
+          page_size: 1000
+          cursor_value: '{{ headers.get("X-Next-Search-After", {}) }}'
+          stop_condition: '{{ not headers.get("X-Next-Search-After", {}) }}'
+      requester:
+        path: search
+        type: HttpRequester
+        url_base: https://epc.opendatacommunities.org/api/v1/non-domestic/
+        http_method: GET
+        authenticator:
+          type: NoAuth
+        request_headers:
+          Accept: application/json
+          Authorization: >-
+            Basic
+            amFtaWVAY29lZmZpY2llbnQuYWk6OTgwY2YxZTJiZGI4ZDhlMmY2M2M2YTU2ZjllMGY5ZTc3YzA2MzlmNw==
+        request_body_json: {}
+        request_parameters: {}
+      record_selector:
+        type: RecordSelector
+        extractor:
+          type: DpathExtractor
+          field_path:
+            - rows
+      partition_router:
+        - type: ListPartitionRouter
+          values:
+            # Scotland
+            - S12000005
+            - S12000006
+            - S12000008
+            - S12000010
+            - S12000011
+            - S12000013
+            - S12000014
+            - S12000017
+            - S12000018
+            - S12000019
+            - S12000020
+            - S12000021
+            - S12000023
+            - S12000026
+            - S12000027
+            - S12000028
+            - S12000029
+            - S12000030
+            - S12000033
+            - S12000034
+            - S12000035
+            - S12000036
+            - S12000038
+            - S12000039
+            - S12000040
+            - S12000041
+            - S12000042
+            - S12000045
+            - S12000047
+            - S12000048
+            - S12000049
+            - S12000050
+          cursor_field: local-authority
+          request_option:
+            type: RequestOption
+            field_name: local-authority
+            inject_into: request_parameter
+    primary_key: []
+    schema_loader:
+      type: InlineSchemaLoader
+      schema:
+        type: object
+        $schema: http://json-schema.org/schema#
+        properties:
+          uprn:
+            type: string
+          county:
+            type: string
+          address:
+            type: string
+          lmk-key:
+            type: string
+          address1:
+            type: string
+          address2:
+            type: string
+          address3:
+            type: string
+          postcode:
+            type: string
+          posttown:
+            type: string
+          floor-area:
+            type: string
+          uprn-source:
+            type: string
+          asset-rating:
+            type: string
+          constituency:
+            type: string
+          property-type:
+            type: string
+          aircon-present:
+            type: string
+          building-level:
+            type: string
+          lodgement-date:
+            type: string
+          inspection-date:
+            type: string
+          local-authority:
+            type: string
+          other-fuel-desc:
+            type: string
+          aircon-kw-rating:
+            type: string
+          target-emissions:
+            type: string
+          transaction-type:
+            type: string
+          asset-rating-band:
+            type: string
+          main-heating-fuel:
+            type: string
+          renewable-sources:
+            type: string
+          typical-emissions:
+            type: string
+          building-emissions:
+            type: string
+          constituency-label:
+            type: string
+          lodgement-datetime:
+            type: string
+          standard-emissions:
+            type: string
+          new-build-benchmark:
+            type: string
+          special-energy-uses:
+            type: string
+          building-environment:
+            type: string
+          primary-energy-value:
+            type: string
+          local-authority-label:
+            type: string
+          existing-stock-benchmark:
+            type: string
+          building-reference-number:
+            type: string
+          ac-inspection-commissioned:
+            type: string
+          estimated-aircon-kw-rating:
+            type: string
+    incremental_sync:
+      step: P1Y
+      type: DatetimeBasedCursor
+      cursor_field: from-year
+      end_datetime:
+        type: MinMaxDatetime
+        datetime: "{{ now_utc().strftime('%Y-%m-%dT%H:%M:%SZ') }}"
+        datetime_format: "%Y-%m-%dT%H:%M:%SZ"
+      start_datetime:
+        type: MinMaxDatetime
+        datetime: "2008"
+        datetime_format: "%Y"
+      datetime_format: "%Y"
+      end_time_option:
+        type: RequestOption
+        field_name: to-year
+        inject_into: request_parameter
+      start_time_option:
+        type: RequestOption
+        field_name: from-year
+        inject_into: request_parameter
+      cursor_granularity: PT1S
+      cursor_datetime_formats:
+        - "%Y"
+version: 0.51.41
+metadata:
+  autoImportSchema:
+    scotland_nondomestic_certificates: true

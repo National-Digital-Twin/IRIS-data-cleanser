@@ -94,22 +94,23 @@ UNION
         'LPI' AS os_api_source
 
     FROM {{ source('postgres', 'os_places_lpi') }}
-    WHERE classification_code_description NOT IN (
-        'Street Record',
-        'Property Shell',
-        'Static Water',
-        'Electricity Sub-Station',
-        'Postal Box',
-        'Bus Shelter',
-        'Additional Mail / Packet Addressee',
-        'Hopper / Silo / Cistern / Tank',
-        'General Storage Land',
-        'Telecommunication',
-        'House Boat',
-        'Equestrian',
-        'Telephone Box',
-        'PO Box',
-        'Advertising Hoarding',
-        'Allocated Parking'
-    )
+    WHERE
+        classification_code_description NOT IN (
+            'Street Record',
+            'Property Shell',
+            'Static Water',
+            'Electricity Sub-Station',
+            'Postal Box',
+            'Bus Shelter',
+            'Additional Mail / Packet Addressee',
+            'Hopper / Silo / Cistern / Tank',
+            'General Storage Land',
+            'Telecommunication',
+            'House Boat',
+            'Equestrian',
+            'Telephone Box',
+            'PO Box',
+            'Advertising Hoarding',
+            'Allocated Parking'
+        )
 )

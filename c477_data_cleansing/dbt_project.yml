@@ -18,6 +18,9 @@ seed-paths: ["seeds"]
 macro-paths: ["macros"]
 snapshot-paths: ["snapshots"]
 
+# vars:
+#   fal-models-paths: ["fal_models"]
+
 clean-targets: # directories to be removed by `dbt clean`
   - "target"
   - "dbt_packages"

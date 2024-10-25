@@ -65,7 +65,7 @@
 # Connect
 chmod 400 ~/.ssh/coefficient-c477-key-pair.pem
 ssh-add ~/.ssh/coefficient-c477-key-pair.pem
-ssh ubuntu@ec2-18-170-118-116.eu-west-2.compute.amazonaws.com
+ssh ubuntu@ec2-13-42-15-24.eu-west-2.compute.amazonaws.com
 screen
 sudo apt-get update
 sudo apt-get upgrade
@@ -114,6 +114,7 @@ cat ~/.ssh/id_ed25519.pub
 
 # Grab the repo
 git clone git@github.com:National-Digital-Twin/IRIS-data-cleanser.git
+
 
 # Install Python with pyenv
 sudo apt update -y
@@ -271,14 +272,14 @@ dbt seed --threads 8
 
 # Developing Airbyte Custom Python Source
 ## The Python module that queries the EPC Recommendations ZIP endpoint can be executed directly via CLI
-cd ./airbyte/source-epc-recommendations/
+cd ./airbyte/england_wales/source-epc-recommendations/
 python ./source_epc_recommendations/utils.py --help
 python ./source_epc_recommendations/utils.py
 
 ## The Airbyte Custom Python Source code wraps and calls utils.py
 ## The four commands built in are as follows
 ## Reference: https://docs.airbyte.com/connector-development/tutorials/building-a-python-source/
-cd ./airbyte/source-epc-recommendations/
+cd ./airbyte/england_wales/source-epc-recommendations/
 python main.py spec
 python main.py check --config secrets/config.json
 python main.py discover --config secrets/config.json
@@ -288,7 +289,7 @@ python main.py read --config secrets/config.json --catalog integration_tests/con
 ## This can be done locally to test. Deployment requires updating this code via git
 ## before running the following commands on the AWS EC2 instance.
 ## First build the container
-docker build . -t airbyte/source-epc-recommendations:dev
+docker build . -t airbyte/england_wales/source-epc-recommendations:dev
 ## Then use the following commands to run it
 docker run --rm airbyte/source-epc-recommendations:dev spec
 docker run --rm -v $(pwd)/secrets:/secrets airbyte/source-epc-recommendations:dev check --config /secrets/config.json

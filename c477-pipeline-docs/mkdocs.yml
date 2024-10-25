@@ -1,0 +1,54 @@
+site_name: site-name
+# site_url: <site-url>
+nav:
+  - How To Guides:
+      Using Python with dbt: python_dbt.md
+      How to create custom connectors in Airbyte using Python: python_airbyte.md
+      How to deploy a fullstack application with Docker and Kubernetes: docker_kubernetes.md
+  - Tutorials:
+      Getting started: getting_started.md
+      Deploying the data cleaner to AWS: aws_deployment.md
+      Deploy a fullstack application to AWS: fullstack_aws.md
+  - Explanations:
+      Why Airbyte?: airbyte.md
+      Why PostgreSQL?: postgreSQL.md
+      Why dbt?: dbt.md
+      Why Python?: python.md
+  - References: references.md
+  # - Misc:
+
+# theme:
+#   name: mkdocs
+#   highlightjs: true
+#   hljs_style: github
+#   hljs_languages:
+#     - yaml
+#   locale: en
+
+theme:
+  name: material
+  features:
+    - search.suggest
+    - navigation.instant.preview
+    # - navigation.sections
+    # - navigation.expand
+  palette:
+    # Palette toggle for light mode
+    - scheme: default
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - scheme: slate
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to light mode
+plugins:
+  - offline
+  - search
+  # - optimize
+# extra:
+#   analytics:
+#     provider: google
+#     property: G-XXXXXXXXXX

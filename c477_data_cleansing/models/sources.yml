@@ -1,11 +1,17 @@
 version: 2
-
 sources:
   - name: postgres
     schema: public
     tables:
+      # - name: int_epc_certificates_1
+      - name: england_wales_domestic_certificates
+      - name: england_wales_nondomestic_certificates
+      # - name: recommendations
+      - name: scotland_certificates_domestic
+      - name: scotland_certificates_non_domestic
+      # # - name: northern_ireland_epc
+      # # - name: northern_ireland_recommendations
+      # - name: scotland_recommendations_domestic
+      # - name: scotland_recommendations_non_domestic
       - name: os_places_dpa
       - name: os_places_lpi
-      - name: domestic_certificates_search
-      - name: non_domestic_certificates_search
-      - name: recommendations

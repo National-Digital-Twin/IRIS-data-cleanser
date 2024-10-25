@@ -255,7 +255,7 @@ filename = "CHANGELOG.md"
 directory = ".changelog/"
 template = ".changelog/template.md"
 title_format = "## [{version}] - {project_date}"
-issue_format = "[#{issue}](https://github.com/CoefficientSystems/c477-dbt/issues{issue})"
+issue_format = "[#{issue}](https://github.com/National-Digital-Twin/IRIS-data-cleanser/issues{issue})"
 start_string = "<!-- TOWNCRIER -->\n"
 underlines = ["", ""]
 

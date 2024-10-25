@@ -1,6 +1,6 @@
 # C477
 
-[![CI](https://github.com/CoefficientSystems/c477-dbt/actions/workflows/main.yaml/badge.svg)](https://github.com/CoefficientSystems/c477-dbt/actions/workflows/main.yaml)
+[![CI](https://github.com/National-Digital-Twin/IRIS-data-cleanser/actions/workflows/main.yaml/badge.svg)](https://github.com/National-Digital-Twin/IRIS-data-cleanser/actions/workflows/main.yaml)
 
 C477 - Data Cleansing Solution using dbt Core.
 

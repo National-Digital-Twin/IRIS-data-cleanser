@@ -113,8 +113,7 @@ cat ~/.ssh/id_ed25519.pub
 # Upload to Github repo as a deploy key
 
 # Grab the repo
-git clone git@github.com:CoefficientSystems/c477-dbt.git
-
+git clone git@github.com:National-Digital-Twin/IRIS-data-cleanser.git
 
 # Install Python with pyenv
 sudo apt update -y
@@ -123,7 +122,7 @@ sudo apt install -y build-essential libssl-dev zlib1g-dev libbz2-dev \
     libreadline-dev libsqlite3-dev wget curl llvm gettext libncurses5-dev \
     libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev
 
-cd ./c477-dbt/
+cd ./IRIS-data-cleanser/
 pyenv install $(cat .python-version)
 pyenv shell $(cat .python-version)
 python -m pip install --upgrade pip
@@ -147,7 +146,7 @@ export PATH="/home/ubuntu/.local/bin:$PATH"
 
 # Setup
 workon c477
-cd ~/c477-dbt/
+cd ~/IRIS-data-cleanser/
 ```
 source ~/.bash_profile
 poetry --version
@@ -245,7 +244,7 @@ update connector_builder_project set tombstone=true where "id"='<CONNECTOR_ID>';
 
 
 # dbt
-cd ~/c477-dbt/c477_data_cleansing/
+cd ~/IRIS-data-cleanser/c477_data_cleansing/
 mkdir ~/.dbt/
 nano ~/.dbt/profiles.yml
 ```

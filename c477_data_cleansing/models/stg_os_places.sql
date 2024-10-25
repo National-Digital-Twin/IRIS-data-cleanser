@@ -11,7 +11,7 @@
         classification_code_description,
         organisation_name,
         udprn,
-        "status",
+        status,
         parent_uprn,
         postal_address_code,
         local_custodian_code_description,
@@ -31,7 +31,7 @@
         postal_address_code_description,
         uprn,
         topography_layer_toid,
-        "address" AS address,
+        address,
         y_coordinate,
         match_description,
         classification_code,
@@ -41,7 +41,7 @@
         _airbyte_ab_id,
         _airbyte_emitted_at,
         _airbyte_normalized_at,
-        _airbyte_os_places_dpa_hashid AS "_airbyte_hashid",
+        _airbyte_os_places_dpa_hashid AS _airbyte_hashid,
         'DPA' AS os_api_source
 
     FROM {{ source('postgres', 'os_places_dpa') }}
@@ -60,7 +60,7 @@ UNION
         classification_code_description,
         'N/A' AS organisation_name,
         'N/A' AS udprn,
-        "status" AS status,
+        status,
         parent_uprn,
         postal_address_code,
         local_custodian_code_description,
@@ -80,7 +80,7 @@ UNION
         postal_address_code_description,
         uprn,
         topography_layer_toid,
-        "address",
+        address,
         y_coordinate,
         match_description,
         classification_code,
@@ -90,7 +90,7 @@ UNION
         _airbyte_ab_id,
         _airbyte_emitted_at,
         _airbyte_normalized_at,
-        "_airbyte_os_places_lpi_hashid" AS _airbyte_hashid,
+        _airbyte_os_places_lpi_hashid AS _airbyte_hashid,
         'LPI' AS os_api_source
 
     FROM {{ source('postgres', 'os_places_lpi') }}

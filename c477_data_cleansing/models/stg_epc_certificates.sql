@@ -95,7 +95,7 @@ SELECT
     _airbyte_ab_id,
     _airbyte_emitted_at,
     _airbyte_normalized_at,
-    "_airbyte_domestic_ce__ficates_search_hashid" AS _airbyte_hashid,
+    _airbyte_domestic_ce__ficates_search_hashid AS _airbyte_hashid,
     'domestic' AS certificate_type
 FROM
     {{ source('postgres', 'domestic_certificates_search') }}
@@ -195,10 +195,10 @@ SELECT
     CAST("uprn-source" AS TEXT) AS uprn_source,
     CAST("lodgement-date" AS DATE) AS lodgement_date,
     CAST(NULL AS INT) AS number_habitable_rooms,
-    "_airbyte_ab_id",
-    "_airbyte_emitted_at",
-    "_airbyte_normalized_at",
-    "_airbyte_non_domesti__ficates_search_hashid" AS _airbyte_hashid,
+    _airbyte_ab_id,
+    _airbyte_emitted_at,
+    _airbyte_normalized_at,
+    _airbyte_non_domesti__ficates_search_hashid AS _airbyte_hashid,
     'non_domestic' AS certificate_type
 FROM
     {{ source('postgres', 'non_domestic_certificates_search') }}

@@ -1,4 +1,4 @@
-{{ config(materialized = 'table')}}
+{{ config(materialized = 'table') }}
 (
     SELECT
         CAST(NULL AS BIGINT) AS uprn,
@@ -12,7 +12,7 @@
         address1,
         address2,
         posttown,
-        CAST("postcode" AS TEXT) AS postcode,
+        CAST(postcode AS TEXT) AS postcode,
         CONCAT(address1, ',', address2) AS address,
         inspection_date,
         lodgement_date,
@@ -78,8 +78,8 @@
         air_tightness_description,
         air_tightness_energy_eff,
         air_tightness_env_eff,
-        CAST("co2_emissions_current" AS TEXT) AS co2_emissions_current,
-        CAST("co2_emissions_potential" AS TEXT) AS co2_emissions_potential,
+        CAST(co2_emissions_current AS TEXT) AS co2_emissions_current,
+        CAST(co2_emissions_potential AS TEXT) AS co2_emissions_potential,
         heating_cost_current,
         heating_cost_potential,
         hot_water_cost_current,
@@ -277,7 +277,7 @@ UNION
         CAST(NULL AS INT) AS ac_inspection_commissioned,
         CAST(NULL AS TEXT) AS building_level,
         CAST(NULL AS TEXT) AS certificate_type
-    FROM {{ source('postgres', 'northern_ireland_epc')}}
+    FROM {{ source('postgres', 'northern_ireland_epc') }}
 
 )
 
@@ -289,7 +289,7 @@ UNION
         lmk_key,
         county,
         flat_storey_count,
-        CAST("lodgement_datetime" AS TEXT) AS lodgement_datetime,
+        CAST(lodgement_datetime AS TEXT) AS lodgement_datetime,
         building_reference_number,
         CAST(NULL AS TEXT) AS osg_reference_number,
         address1,
@@ -301,11 +301,11 @@ UNION
         lodgement_date,
         property_type,
         total_floor_area,
-        "current_energy_rating" AS current_energy_performance_band,
+        current_energy_rating AS current_energy_performance_band,
         CAST(NULL AS TEXT) AS current_energy_performance_rating,
         current_energy_efficiency,
         CAST(NULL AS TEXT) AS potential_energy_performance_rating,
-        "potential_energy_rating" AS potential_energy_performance_band,
+        potential_energy_rating AS potential_energy_performance_band,
         CAST(NULL AS TEXT) AS potential_energy_efficiency,
         CAST(NULL AS INT) AS new_build_energy_performance_rating,
         CAST(NULL AS TEXT) AS new_build_energy_performance_band,
@@ -331,9 +331,9 @@ UNION
         CAST(NULL AS FLOAT) AS target_emissions,
         CAST(NULL AS TEXT) AS data_zone_2011,
         CAST(NULL AS TEXT) AS created_at,
-        "walls_description" AS wall_description,
-        "walls_energy_eff" AS wall_energy_eff,
-        "walls_env_eff" AS wall_env_eff,
+        walls_description AS wall_description,
+        walls_energy_eff AS wall_energy_eff,
+        walls_env_eff AS wall_env_eff,
         roof_description,
         roof_energy_eff,
         roof_env_eff,
@@ -361,8 +361,8 @@ UNION
         CAST(NULL AS TEXT) AS air_tightness_env_eff,
         CAST(NULL AS TEXT) AS air_tightness_description,
         CAST(NULL AS TEXT) AS air_tightness_energy_eff,
-        CAST("co2_emissions_current" AS TEXT) AS co2_emissions_current,
-        CAST("co2_emissions_potential" AS TEXT) AS co2_emissions_potential,
+        CAST(co2_emissions_current AS TEXT) AS co2_emissions_current,
+        CAST(co2_emissions_potential AS TEXT) AS co2_emissions_potential,
         heating_cost_current,
         heating_cost_potential,
         hot_water_cost_current,

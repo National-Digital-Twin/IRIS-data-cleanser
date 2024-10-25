@@ -5,7 +5,7 @@ default_language_version:
   python: python3.11
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.6.0
+    rev: v5.0.0
     hooks:
       - id: end-of-file-fixer
         name: Check for a blank line at the end of scripts (auto-fixes)
@@ -32,7 +32,7 @@ repos:
       - id: name-tests-test
         args: ["--django"]
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.5.7
+    rev: v0.7.1
     hooks:
       # Run the linter.
       - id: ruff
@@ -47,7 +47,7 @@ repos:
       - id: add-trailing-comma
         args: [--py36-plus]
   - repo: https://github.com/sqlfluff/sqlfluff
-    rev: 3.1.0
+    rev: 3.2.5
     hooks:
       - id: sqlfluff-lint
         # For dbt projects, this installs the dbt "extras".

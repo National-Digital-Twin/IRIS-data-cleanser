@@ -67,7 +67,7 @@ UNION
         CAST(NULL AS TEXT) AS indicative_cost,
         CAST(NULL AS TEXT) AS typical_savings,
         'nondomestic' AS recommendation_type
-    FROM {{ source('postgres', 'scotland_nondomestic_recommendations')}}
+    FROM {{ source('postgres', 'scotland_nondomestic_recommendations') }}
 )
 
 UNION
@@ -91,7 +91,7 @@ UNION
         "INDICATIVE_COST" AS indicative_cost,
         CAST(NULL AS TEXT) AS typical_savings,
         'domestic' AS recommendation_type
-    FROM {{ source('postgres', 'eng_wales_domestic_recommendations')}}
+    FROM {{ source('postgres', 'eng_wales_domestic_recommendations') }}
 )
 
 UNION
@@ -115,5 +115,5 @@ UNION
         CAST(NULL AS TEXT) AS indicative_cost,
         CAST(NULL AS TEXT) AS typical_savings,
         'nondomestic' AS recommendation_type
-    FROM {{ source('postgres', 'eng_wales_nondomestic_recommendations')}}
+    FROM {{ source('postgres', 'eng_wales_nondomestic_recommendations') }}
 )

@@ -123,7 +123,7 @@
         CAST(NULL AS TEXT) AS type_of_assessment,
         'non-domestic' AS certificate_type
 
-    FROM {{ source('postgres', 'scotland_nondomestic_certificates')}}
+    FROM {{ source('postgres', 'scotland_nondomestic_certificates') }}
     -- WHERE LOWER(CAST("POST_TOWN" AS TEXT)) LIKE '%aberdeen'
 )
 UNION
@@ -248,6 +248,6 @@ UNION
         CAST("3_YR_ENERGY_COST_CURRENT" AS FLOAT) AS three_year_energy_cost_current,
         "TYPE_OF_ASSESSMENT" AS type_of_assessment,
         'domestic' AS certificate_type
-    FROM {{ source('postgres', 'scotland_domestic_certificates')}}
+    FROM {{ source('postgres', 'scotland_domestic_certificates') }}
     -- WHERE LOWER(CAST("ADDRESS3" AS TEXT)) LIKE '%aberdeen'
 )

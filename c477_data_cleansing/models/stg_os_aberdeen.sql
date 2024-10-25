@@ -40,7 +40,7 @@
         "COUNTRY_CODE" AS country_code,
         _airbyte_raw_id,
         _airbyte_extracted_at,
-        'DPA' AS "os_source"
+        'DPA' AS os_source
     FROM {{ source('postgres', 'os_aberdeen_dpa') }}
 )
 
@@ -86,7 +86,7 @@ UNION
         "COUNTRY_CODE" AS country_code,
         _airbyte_raw_id,
         _airbyte_extracted_at,
-        'LPI' AS "os_source"
+        'LPI' AS os_source
     FROM {{ source('postgres', 'os_aberdeen_lpi') }}
     WHERE "CLASSIFICATION_CODE_DESCRIPTION" NOT IN (
         'Street Record',

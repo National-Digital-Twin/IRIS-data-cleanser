@@ -11,7 +11,7 @@ repos:
         name: Check for a blank line at the end of scripts (auto-fixes)
         exclude: |
           (?x)^(
-              repository-configuration/|
+              repository-configuration/.*|
           )$
       - id: trailing-whitespace
       - id: check-builtin-literals

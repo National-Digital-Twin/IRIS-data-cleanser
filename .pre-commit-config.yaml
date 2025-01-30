@@ -12,6 +12,7 @@ repos:
         exclude: |
           (?x)^(
               repository-configuration/.*|
+              \.github/.*|
           )$
       - id: trailing-whitespace
       - id: check-builtin-literals

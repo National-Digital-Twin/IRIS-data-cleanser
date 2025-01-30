@@ -9,6 +9,10 @@ repos:
     hooks:
       - id: end-of-file-fixer
         name: Check for a blank line at the end of scripts (auto-fixes)
+        exclude: |
+          (?x)^(
+              repository-configuration/|
+          )$
       - id: trailing-whitespace
       - id: check-builtin-literals
       - id: check-byte-order-marker
@@ -93,7 +97,6 @@ repos:
           (?x)^(
               poetry\.lock|
               \.secrets\.baseline|
-              \repository-configuration|
               \.ipynb|
               \.env\.template
           )$

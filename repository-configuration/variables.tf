@@ -15,3 +15,9 @@ variable "repository_description" {
   type        = string
   default     = "Private repo for the IRIS data cleanser, developed for NDTP, by Coefficient Systems."
 }
+
+variable "jira_project_id" {
+  description = "Atlassian JIRA project identifier to be used for autolinking commit messages. This ID should match those which prefix issue identifiers, for example DPAV."
+  type        = string
+  default     = "DPAV"
+}

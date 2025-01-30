@@ -93,6 +93,7 @@ repos:
           (?x)^(
               poetry\.lock|
               \.secrets\.baseline|
+              \repository-configuration|
               \.ipynb|
               \.env\.template
           )$

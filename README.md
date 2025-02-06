@@ -26,3 +26,6 @@ C477 - Data Cleansing Solution using dbt Core.
    file using [detect-secrets](https://github.com/Yelp/detect-secrets).
 5. See [docs/using_towncrier.md](docs/using_towncrier.md) for how to update the `CHANGELOG.md`
    using [towncrier](https://github.com/twisted/towncrier).
+
+## Contributors
+The development of these works has been made possible with thanks to our [contributors](https://github.com/National-Digital-Twin/IRIS-data-cleanser/graphs/contributors).

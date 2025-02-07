@@ -15,6 +15,11 @@ C477 - Data Cleansing Solution using dbt Core.
   - **run license check:** `liccheck -s pyproject.toml -r requirements.txt > liccheck_report.txt && python -m convert_liccheck_report`
 
 
+## Running local code development tools
+
+See [RUNNING_CODE_DEV_TOOLS.md](./developer_docs/RUNNING_CODE_DEV_TOOLS.md) for more information.
+
+
 ## Initial project setup
 
 1. See [docs/getting_started.md](docs/getting_started.md) or [docs/quickstart.md](docs/quickstart.md)

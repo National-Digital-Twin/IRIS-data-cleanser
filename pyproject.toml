@@ -5,7 +5,6 @@
 name = "c477"
 version = "0.1.0"
 description = "C477 - Data Cleansing Solution using dbt Core."
-authors = ["Coefficient Systems Ltd <contact@coefficient.ai>"]
 license = "UNLICENSED"
 classifiers = ["Private :: Do Not Upload"]
 packages = [

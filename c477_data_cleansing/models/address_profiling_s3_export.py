@@ -1,5 +1,4 @@
-"""Export the final address profiling dataset to the Coefficientingestbucket S3.
-
+"""
 Example Usage:
 
 python -m address_profiling_s3_export --input_file mart_parity_address_profiling_with_sap.csv
@@ -21,9 +20,9 @@ def export(df):
 
     s3_client = boto3.client(
         "s3",
-        aws_access_key_id=os.environ.get("TELICENT_AWS_ACCESS_KEY_ID"),
-        aws_secret_access_key=os.environ.get("TELICENT_AWS_SECRET_ACCESS_KEY"),
-        region_name=os.environ.get("TELICENT_AWS_REGION_NAME"),
+        aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"),
+        aws_secret_access_key=os.environ.get("AWS_SECRET_ACCESS_KEY"),
+        region_name=os.environ.get("AWS_REGION_NAME"),
     )
     bucket_name = os.environ.get("S3_BUCKET_NAME")
 

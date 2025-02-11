@@ -1,5 +1,4 @@
-"""Coefficient C477 Data Cleanser - Address Profiling.
-
+"""
 Run from dbt:
     dbt run --select mart_address_profiling --threads 8
 

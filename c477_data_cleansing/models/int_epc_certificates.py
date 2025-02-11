@@ -1,5 +1,4 @@
-"""Coefficient C477 Data Cleanser - int_epc_certificates.
-
+"""
 Run from dbt:
     dbt run --select int_epc_certificates --threads 8
 

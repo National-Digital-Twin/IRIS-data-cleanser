@@ -1,5 +1,4 @@
-"""Coefficient C477 Data Cleanser - Address Base Plus.
-
+"""
 Run from dbt:
     dbt run --select mart_address_base_plus --threads 8
 

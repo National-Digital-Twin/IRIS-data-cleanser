@@ -8,7 +8,7 @@
 #       - Engine Version        `PostgreSQL 15.3-R2`
 #       - Template              `Dev/Test`
 #       - Multi-AZ Deployment   `No` or `Single DB instance` (not needed for now, backups will be fine)
-#       - Instance Identifier   `euwest2-postgres-c477`
+#       - Instance Identifier   `euwest2-postgres-iris-data-cleanser`
 #       - Master Username       `postgres`
 #       - Master Password       [8-41 ASCII chars, not /"@]
 #       - DB Instance Class     Either `db.t3.small` (2 vCPU, 2 GiB Memory, $0.041/hr, ~£24/mo)

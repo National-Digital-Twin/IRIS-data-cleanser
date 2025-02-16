@@ -145,7 +145,7 @@ nano ~/.bash_profile
 export PATH="/home/ubuntu/.local/bin:$PATH"
 
 # Setup
-workon c477
+workon IRIS
 cd ~/IRIS-data-cleanser/
 ```
 source ~/.bash_profile
@@ -175,11 +175,11 @@ aws configure
 # List buckets
 aws s3api list-buckets
 # Read from a Bucket
-aws s3api list-objects --bucket c477-testbucket
+aws s3api list-objects --bucket iris-data-cleanser-bucket
 # Get object
-aws s3api get-object --bucket c477-testbucket --key test.txt outputfile.txt
+aws s3api get-object --bucket iris-data-cleanser-bucket --key test.txt outputfile.txt
 # Write to a bucket
-aws s3api put-object --bucket c477-testbucket --key myfile.txt --body myfile.txt
+aws s3api put-object --bucket iris-data-cleanser-bucket --key myfile.txt --body myfile.txt
 
 
 # Install Docker
@@ -215,7 +215,7 @@ wget https://raw.githubusercontent.com/airbytehq/airbyte/master/run-ab-platform.
 chmod +x run-ab-platform.sh
 nano .env
 ```
-BASIC_AUTH_USERNAME=airbyte-c477
+BASIC_AUTH_USERNAME=airbyte-iris-data-cleanser
 BASIC_AUTH_PASSWORD=secure-password-in-1password-vault
 ```
 ./run-ab-platform.sh -b
@@ -248,7 +248,7 @@ cd ~/IRIS-data-cleanser/c477_data_cleansing/
 mkdir ~/.dbt/
 nano ~/.dbt/profiles.yml
 ```
-c477_data_cleansing:
+iris_data_cleansing:
   target: dev_with_fal
   outputs:
     dev_with_fal:

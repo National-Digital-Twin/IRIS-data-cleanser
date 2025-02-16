@@ -1,12 +1,12 @@
 # Name your project! Project names should contain only lowercase characters
 # and underscores. A good package name should reflect your organization's
 # name or the intended use of these models
-name: "c477_data_cleansing"
+name: "iris_data_cleansing"
 version: "1.0.0"
 config-version: 2
 
 # This setting configures which "profile" dbt uses for this project.
-profile: "c477_data_cleansing"
+profile: "iris_data_cleansing"
 
 # These configurations specify where dbt should look for different types of files.
 # The `model-paths` config, for example, states that models in this project can be
@@ -29,7 +29,7 @@ clean-targets: # directories to be removed by `dbt clean`
 # files using the `{{ config(...) }}` macro.
 
 # models:
-#   c477_data_cleansing:
+#   iris_data_cleansing:
 #     # Config indicated by + and applies to all files under models/example/
 #     example:
 #       +materialized: view

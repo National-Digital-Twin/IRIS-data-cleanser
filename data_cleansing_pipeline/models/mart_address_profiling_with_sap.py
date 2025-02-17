@@ -1,5 +1,4 @@
-"""Coefficient C477 Data Cleanser - Address Profiling with SAP calculations.
-
+"""
 Run from dbt:
     dbt run --select mart_address_profiling_with_sap --threads 8
 

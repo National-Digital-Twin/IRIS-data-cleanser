@@ -1,5 +1,4 @@
-"""Coefficient C477 Data Cleanser - Reduced CO2 Measures.
-
+"""
 Run from dbt:
     dbt run --select mart_reduced_co2_measures --threads 8
 
@@ -89,8 +88,6 @@ def model(dbt, fal):
 
 def main(input_csv: str, output_csv: str, to_excel: bool):
     """Process input CSV and save cleansed CSV file.
-
-    Coefficient C477 Data Cleanser - Reduced CO2 Measures.
 
     Run from dbt:
         dbt run --select mart_reduced_co2_measures --threads 8

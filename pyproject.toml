@@ -2,16 +2,15 @@
 # 📜 Poetry
 ###########
 [tool.poetry]
-name = "c477"
+name = "IRIS Data Cleanser"
 version = "0.1.0"
-description = "C477 - Data Cleansing Solution using dbt Core."
-authors = ["Coefficient Systems Ltd <contact@coefficient.ai>"]
+description = "IRIS Data Cleanser - ETL pipeline using Airbyte, dbt (targeting Postgres), loading into S3."
 license = "UNLICENSED"
 classifiers = ["Private :: Do Not Upload"]
 packages = [
-  { include = "c477", from = "c477" },
+  { include = "IRIS Data Cleanser", from = "IRIS Data Cleanser" },
   # Add more packages here, e.g.
-  # { include = "module_name", from = "c477" },
+  # { include = "module_name", from = "IRIS Data Cleanser" },
 ]
 
 [tool.poetry.dependencies]
@@ -250,7 +249,7 @@ unauthorized_licenses = [
 # 📣 Towncrier
 ##############
 [tool.towncrier]
-package = "c477"
+package = "IRIS Data Cleanser"
 package_dir = "."
 filename = "CHANGELOG.md"
 directory = ".changelog/"

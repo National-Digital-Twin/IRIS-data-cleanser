@@ -11,7 +11,7 @@
     "python.languageServer": "Pylance",
 
     // python - linting & static analysis
-    "python.analysis.extraPaths": ["c477"],
+    "python.analysis.extraPaths": ["IRIS Data Cleanser"],
     "python.analysis.typeCheckingMode": "off",
 
     // Python files only

@@ -1,9 +1,8 @@
-"""Export the final improvement measures dataset to the Coefficientingestbucket S3.
-
+"""
 Example Usage:
 
-python -m improvement_measures_s3_export --input_file mart_parity_address_profiling.csv
-dbt run -s improvement_measures_s3_export
+python -m address_profiling_s3_export --input_file mart_parity_address_profiling_with_sap.csv
+dbt run -s address_profiling_s3_export
 """
 
 import os
@@ -21,15 +20,15 @@ def export(df):
 
     s3_client = boto3.client(
         "s3",
-        aws_access_key_id=os.environ.get("TELICENT_AWS_ACCESS_KEY_ID"),
-        aws_secret_access_key=os.environ.get("TELICENT_AWS_SECRET_ACCESS_KEY"),
-        region_name=os.environ.get("TELICENT_AWS_REGION_NAME"),
+        aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"),
+        aws_secret_access_key=os.environ.get("AWS_SECRET_ACCESS_KEY"),
+        region_name=os.environ.get("AWS_REGION_NAME"),
     )
     bucket_name = os.environ.get("S3_BUCKET_NAME")
 
     timestamp = datetime.now().strftime("%Y-%m-%d_%H%M%S")
     user_string = f"{user}_" if (user := os.environ.get("S3_FILENAME_USER")) else ""
-    object_key = f"improvement_measures_{user_string}{timestamp}.csv"
+    object_key = f"address_profiling_{user_string}{timestamp}.csv"
 
     csv_buffer = StringIO()
     df.to_csv(csv_buffer, index=False)
@@ -44,7 +43,7 @@ def export(df):
 
 def model(dbt, fal):
     """Interoperate with dbt fal's dbt run command."""
-    df = dbt.ref("mart_reduced_co2_measures")
+    df = dbt.ref("mart_address_profiling_with_sap")
     export(df)
     return df
 
@@ -55,5 +54,4 @@ def main(input_file: str):
 
 
 if __name__ == "__main__":
-    typer.run(main)
     typer.run(main)

@@ -3,11 +3,11 @@
 # 	Sign in via root or IAM user
 #   Go to https://eu-west-2.console.aws.amazon.com/ec2/v2/home?region=eu-west-2#LaunchInstances:
 # 	EC2 > Instances > Launch an instance
-#   - Name: `c477-coefficient-ec2`
+#   - Name: `iris-data-cleansing-ec2`
 # 	- Quick Start Image: `Ubuntu`
 #   - AMI: `Ubuntu Server 22.04 LTS (HVM), SSD Volume Type (64-bit)`
 # 	- Instance type: `t3.large` (2 vCPU, 8 GiB RAM, EBS storage, $0.0944 per hour, $2.2656/day, £12.69/week, £54.97/month)
-# 	- Key pair: `coefficient-c477-key-pair`
+# 	- Key pair: `iris-cleanser-key-pair`
 #   - Security group: Select existing default security group (HTTP/HTTPS open anywhere, SSH open to my IP only)
 #   - Storage: `50 GiB SSD (gb3) with 3000 IOPS` (storage type EBS, device name `/dev/sda1`, delete on termination, not encrypted, 125 throughput)
 
@@ -20,7 +20,7 @@
   "MinCount": 1,
   "ImageId": "ami-0eb260c4d5475b901",
   "InstanceType": "t3.medium",
-  "KeyName": "coefficient-c477-key-pair",
+  "KeyName": "iris-cleanser-key-pair",
   "EbsOptimized": true,
   "BlockDeviceMappings": [
     {
@@ -49,7 +49,7 @@
       "Tags": [
         {
           "Key": "Name",
-          "Value": "c477-coefficient-ec2"
+          "Value": "iris-data-cleansing-ec2"
         }
       ]
     }
@@ -63,9 +63,9 @@
 ```
 
 # Connect
-chmod 400 ~/.ssh/coefficient-c477-key-pair.pem
-ssh-add ~/.ssh/coefficient-c477-key-pair.pem
-ssh ubuntu@ec2-18-170-118-116.eu-west-2.compute.amazonaws.com
+chmod 400 ~/.ssh/iris-cleanser-key-pair.pem
+ssh-add ~/.ssh/iris-cleanser-key-pair.pem
+ssh {username@public-ipv4-dns.com}
 screen
 sudo apt-get update
 sudo apt-get upgrade
@@ -106,7 +106,7 @@ source ~/.bashrc
 sudo apt-get install git
 
 # Create deploy key
-ssh-keygen -t ed25519 -C "contact@coefficient.ai"
+ssh-keygen -t ed25519 -C "{deployment_email}"
 eval "$(ssh-agent -s)"
 ssh-add ~/.ssh/id_ed25519
 cat ~/.ssh/id_ed25519.pub
@@ -145,7 +145,7 @@ nano ~/.bash_profile
 export PATH="/home/ubuntu/.local/bin:$PATH"
 
 # Setup
-workon c477
+workon IRIS
 cd ~/IRIS-data-cleanser/
 ```
 source ~/.bash_profile
@@ -175,11 +175,11 @@ aws configure
 # List buckets
 aws s3api list-buckets
 # Read from a Bucket
-aws s3api list-objects --bucket c477-testbucket
+aws s3api list-objects --bucket iris-data-cleanser-bucket
 # Get object
-aws s3api get-object --bucket c477-testbucket --key test.txt outputfile.txt
+aws s3api get-object --bucket iris-data-cleanser-bucket --key test.txt outputfile.txt
 # Write to a bucket
-aws s3api put-object --bucket c477-testbucket --key myfile.txt --body myfile.txt
+aws s3api put-object --bucket iris-data-cleanser-bucket --key myfile.txt --body myfile.txt
 
 
 # Install Docker
@@ -215,7 +215,7 @@ wget https://raw.githubusercontent.com/airbytehq/airbyte/master/run-ab-platform.
 chmod +x run-ab-platform.sh
 nano .env
 ```
-BASIC_AUTH_USERNAME=airbyte-c477
+BASIC_AUTH_USERNAME=airbyte-iris-data-cleanser
 BASIC_AUTH_PASSWORD=secure-password-in-1password-vault
 ```
 ./run-ab-platform.sh -b
@@ -248,7 +248,7 @@ cd ~/IRIS-data-cleanser/c477_data_cleansing/
 mkdir ~/.dbt/
 nano ~/.dbt/profiles.yml
 ```
-c477_data_cleansing:
+iris_data_cleansing:
   target: dev_with_fal
   outputs:
     dev_with_fal:

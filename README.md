@@ -1,8 +1,8 @@
-# C477
+# IRIS Data Cleanser
 
 [![CI](https://github.com/National-Digital-Twin/IRIS-data-cleanser/actions/workflows/main.yaml/badge.svg)](https://github.com/National-Digital-Twin/IRIS-data-cleanser/actions/workflows/main.yaml)
 
-C477 - Data Cleansing Solution using dbt Core.
+IRIS Data Cleanser - ETL pipeline using Airbyte, dbt (targeting Postgres), loading into S3.
 
 ## Project cheatsheet
 

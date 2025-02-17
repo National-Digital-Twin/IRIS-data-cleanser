@@ -1,5 +1,4 @@
-"""Coefficient C477 Data Cleanser - Recommendations.
-
+"""
 Run from CLI using Typer:
     python utils.py --help
     python utils.py

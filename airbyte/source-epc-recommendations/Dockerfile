@@ -1,14 +1,14 @@
-FROM python:3.11 as base
+FROM python:3.11 AS base
 
 # build and load all requirements
-FROM base as builder
+FROM base AS builder
 WORKDIR /airbyte/integration_code
 
 # upgrade pip to the latest version
 RUN apt-get update \
     && apt-get -y upgrade \
     && pip install --upgrade pip \
-    && apt-get install -y tzdata build-essential libstdc++6
+    && apt-get install -y build-essential libstdc++6 tzdata
 
 COPY setup.py ./
 # install necessary packages to a temporary folder
@@ -26,7 +26,9 @@ COPY --from=builder /install /usr/local
 # RUN echo "Etc/UTC" > /etc/timezone
 
 # bash is installed for more convenient debugging.
-RUN apt-get update && apt-get -y install bash
+RUN apt-get update && apt-get -y install bash \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # copy payload code only
 COPY main.py ./

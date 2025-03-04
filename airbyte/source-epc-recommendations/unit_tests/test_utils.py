@@ -149,7 +149,7 @@ class TestUtils:
         assert len(result) == 2
 
         mock_requests_cached.assert_called_once()
-        args, kwargs = mock_requests_cached.call_args
+        _, kwargs = mock_requests_cached.call_args
         params = kwargs["params"]
         assert params["local-authority"] == "E06000046"
         assert params["from-year"] == 2020

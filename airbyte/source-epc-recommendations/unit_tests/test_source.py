@@ -155,7 +155,7 @@ class TestSourceEpcRecommendations:
 
         # Verify utils.main was called with correct parameters
         mock_utils_main.assert_called_once()
-        args, kwargs = mock_utils_main.call_args
+        _, kwargs = mock_utils_main.call_args
         assert kwargs["local_authority_list"] == config["local_authority_list"].split(",")
         assert kwargs["start_year"] == config["start_year"]
         assert kwargs["end_year"] == config["end_year"]

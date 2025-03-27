@@ -21,7 +21,15 @@ This project follows **Semantic Versioning (SemVer)** ([semver.org](https://semv
  Since this release is **pre-1.0.0**, changes may still occur that are **not fully backward-compatible**.
 
  #### Initial Features
- - Key functionality for [feature/module name].
+ - View a choropleth map, summarising average EPC ratings per ward
+ - Search for a property via address
+ - Filter properties based on EPC rating, building type, postcode, drawn area and flagged status
+ - Filter properties based on further attributes (roof type, insulation type etc)
+ - View details (roof type, EPC rating, insulation type etc) of properties
+ - Download details of properties
+ - Flag a property to signal it's under investigation
+ - Unflagging a property with a rationale
+ - Viewing the reason why a property was unflagged
 
  #### Known Limitations
  - Some components are subject to change before `1.0.0`.

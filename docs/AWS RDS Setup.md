@@ -1,3 +1,10 @@
+**Repository:** `IRIS-data-cleanser`
+
+**Description:** `Details steps to set up an RDS instance to support a deployment of the pipeline`
+
+**SPDX-License-Identifier:** OGL-UK-3.0
+
+
 # RDS Initial Setup
 # 	https://eu-west-2.console.aws.amazon.com/
 # 	Sign in via root or IAM user

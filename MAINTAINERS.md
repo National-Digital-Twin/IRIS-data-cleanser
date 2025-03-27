@@ -1,7 +1,9 @@
 # Maintainers
 
 **Repository:** `IRIS-data-cleanser`
+
 **Description:** `Lists maintainers responsible for reviewing issues, security, and documentation updates.`
+
 **SPDX-License-Identifier:** OGL-UK-3.0
 
 ## Introduction
@@ -32,9 +34,9 @@ NDTP does not accept public code contributions, but we welcome **bug reports and
 
 | Name | Organisation | Role | Contact |
 |------|-------------|------|---------|
-| Alice King | Informed Solutions | Lead Maintainer | [alice.king@informed.com] |
-| Alice King | Informed Solutions | Security Contact | [alice.king@informed.com] |
-| Alice King | Informed Solutions | Documentation Lead | [alice.king@informed.com] |
+| Alice King | Informed Solutions | Lead Maintainer | NDTP-OSS@informed.com |
+| Alice King | Informed Solutions | Security Contact | NDTP-OSS@informed.com |
+| Alice King | Informed Solutions | Documentation Lead | NDTP-OSS@informed.com |
 
 For general issues, please **open a GitHub issue** rather than contacting maintainers directly.
 
@@ -45,7 +47,7 @@ For general issues, please **open a GitHub issue** rather than contacting mainta
 If you need to escalate an issue that has not been addressed within a reasonable time:
 
 1. **Security vulnerabilities** – Follow the responsible disclosure process in [SECURITY.md](SECURITY.md).
-2. **Governance and policy queries** – Contact NDTP at **[ndtp@businessandtrade.gov.uk]**.
+2. **Governance and policy queries** – Contact NDTP at **ndtp@businessandtrade.gov.uk**.
 3. **Urgent operational issues** – If an issue affects critical systems, contact the **Lead Maintainer** listed above.
 
 ---

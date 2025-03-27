@@ -1,0 +1,16 @@
+Metadata-Version: 2.1
+Name: source_epc_recommendations
+Version: 0.0.0
+Summary: Source implementation for Epc Recommendations.
+Author: Airbyte
+Author-email: contact@airbyte.io
+Requires-Dist: airbyte-cdk~=0.2
+Requires-Dist: requests~=2.31.0
+Requires-Dist: numpy~=1.25.2
+Requires-Dist: pandas<2.0
+Requires-Dist: typer~=0.9.0
+Provides-Extra: tests
+Requires-Dist: requests-mock~=1.9.3; extra == "tests"
+Requires-Dist: pytest-mock~=3.6.1; extra == "tests"
+Requires-Dist: pytest~=6.2; extra == "tests"
+Requires-Dist: connector-acceptance-test; extra == "tests"

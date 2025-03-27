@@ -1,3 +1,10 @@
+**Repository:** `IRIS-data-cleanser`
+
+**Description:** `Detailed steps for managing dependencies using Poetry`
+
+**SPDX-License-Identifier:** OGL-UK-3.0
+
+
 # Updating Python requirements using Poetry
 
 This project uses Poetry to manage dependencies:

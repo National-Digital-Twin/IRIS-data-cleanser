@@ -1,3 +1,9 @@
+**Repository:** `IRIS-data-cleanser`
+
+**Description:** `Details steps and information required to request new features within the software`
+
+**SPDX-License-Identifier:** OGL-UK-3.0
+
 ---
 name: Feature request
 about: Suggest an idea for this project

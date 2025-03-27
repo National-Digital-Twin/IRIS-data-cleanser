@@ -40,9 +40,7 @@ streams:
           type: NoAuth
         request_headers:
           Accept: application/json
-          Authorization: >-
-            Basic
-            amFtaWVAY29lZmZpY2llbnQuYWk6OTgwY2YxZTJiZGI4ZDhlMmY2M2M2YTU2ZjllMGY5ZTc3YzA2MzlmNw==
+          Authorization:
         request_body_json: {}
         request_parameters: {}
       record_selector:

@@ -1,3 +1,10 @@
+**Repository:** `IRIS-data-cleanser`
+
+**Description:** `Details steps and information required to use a pre-commit hook to detect credentials`
+
+**SPDX-License-Identifier:** OGL-UK-3.0
+
+
 # Using the `detect-secrets` pre-commit hook
 
 [We use `detect-secrets` to check that no secrets are accidentally committed](detect-secrets). The

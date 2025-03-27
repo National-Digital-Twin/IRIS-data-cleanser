@@ -1,3 +1,9 @@
+**Repository:** `IRIS-data-cleanser`
+
+**Description:** `Details steps to set up the pipeline on an EC2 instance`
+
+**SPDX-License-Identifier:** OGL-UK-3.0
+
 # AWS Initial Setup
 # 	https://eu-west-2.console.aws.amazon.com/
 # 	Sign in via root or IAM user

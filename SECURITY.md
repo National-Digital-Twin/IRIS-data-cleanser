@@ -1,7 +1,9 @@
 # Security Policy
 
 **Repository:** `IRIS-data-cleanser`
+
 **Description:** `Details the responsible disclosure process for security vulnerabilities.`
+
 **SPDX-License-Identifier:** OGL-UK-3.0
 
 ## Responsible Disclosure
@@ -63,7 +65,7 @@ To help maintain security across NDTP repositories, we follow these principles:
 - Sensitive credentials **must not be included** in public repositories.
 - Security patches are applied in a timely manner, with priority given to critical vulnerabilities.
 
-For more details, refer to our **Secure Development Guidelines** [Link to internal security policy, if available].
+For more details, refer to our **Secure Development Guidelines**.
 
 ---
 

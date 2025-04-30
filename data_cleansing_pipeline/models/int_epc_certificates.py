@@ -26,6 +26,12 @@ from pandarallel import pandarallel
 from rapidfuzz import fuzz, process
 from tqdm import tqdm
 
+# logging
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
+
 pandarallel.initialize(progress_bar=True)
 tqdm.pandas()
 
@@ -195,7 +201,12 @@ def pipeline(epc: pd.DataFrame, os: pd.DataFrame) -> pd.DataFrame:
 
 def model(dbt, fal):
     """dbt-fal model."""
+
+    # get validated EPC data
     epc = dbt.ref("stg_epc_certificates")
+    print("-"*50, "EPC COLUMNS", "-"*50)
+    print(epc.columns)
+    print(epc.shape)
     epc["uprn"] = epc["uprn"].apply(lambda x: np.nan if x == "" else x)
 
     # Filter to IoW postcodes only
@@ -252,6 +263,9 @@ def model(dbt, fal):
     )
 
     os = dbt.ref("stg_os_places")
+    print("-"*50, "OS COLUMNS", "-"*50)
+    print(os.columns)
+    print(os.shape)
     os["address"] = os["address"].str.lower()
     os["udprn"] = os["udprn"].apply(lambda x: np.nan if x in ["", "N/A"] else x)
 

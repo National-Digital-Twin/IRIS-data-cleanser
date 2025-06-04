@@ -1,7 +1,21 @@
+import logging
+import os
+import re
+
 import numpy as np
 import pandas as pd
-import typer
-import re
+from dotenv import load_dotenv
+
+# load credentials from .env
+load_dotenv(".env", verbose=True)
+
+DEBUG = os.environ.get("DEBUG", False)
+
+
+logging.basicConfig(
+    level=logging.DEBUG if DEBUG else logging.ERROR,
+    format="%(asctime)s - %(levelname)s %(message)s",
+)
 
 
 def format_address(input_str: str) -> str:
@@ -29,6 +43,7 @@ def format_address(input_str: str) -> str:
 
     return formatted_str
 
+
 def pipeline(epc: pd.DataFrame, os: pd.DataFrame) -> pd.DataFrame:
     """Cleanse and prepare raw data for address base plus dataset."""
 
@@ -51,7 +66,9 @@ def pipeline(epc: pd.DataFrame, os: pd.DataFrame) -> pd.DataFrame:
 
     # Merge in OS (LPI) data for epc_ok as fallback
     epc = epc.merge(
-        os.query('os_api_source == "LPI"')[["uprn", "udprn", "address", "postcode"]].rename(
+        os.query('os_api_source == "LPI"')[
+            ["uprn", "udprn", "address", "postcode"]
+        ].rename(
             columns={
                 "udprn": "udprn_os_lpi",
                 "address": "address_os_lpi",
@@ -64,15 +81,19 @@ def pipeline(epc: pd.DataFrame, os: pd.DataFrame) -> pd.DataFrame:
 
     # If udprn_os_dpa is not null, use DPA data for udprn/address/postcode
     epc["address_os"] = epc.apply(
-        lambda row: row["address_os_dpa"]
-        if pd.notna(row["udprn_os_dpa"])
-        else row["address_os_lpi"],
+        lambda row: (
+            row["address_os_dpa"]
+            if pd.notna(row["udprn_os_dpa"])
+            else row["address_os_lpi"]
+        ),
         axis=1,
     )
     epc["postcode_os"] = epc.apply(
-        lambda row: row["postcode_os_dpa"]
-        if pd.notna(row["udprn_os_dpa"])
-        else row["postcode_os_lpi"],
+        lambda row: (
+            row["postcode_os_dpa"]
+            if pd.notna(row["udprn_os_dpa"])
+            else row["postcode_os_lpi"]
+        ),
         axis=1,
     )
     epc["address_source"] = epc.apply(
@@ -81,7 +102,7 @@ def pipeline(epc: pd.DataFrame, os: pd.DataFrame) -> pd.DataFrame:
     )
     epc["fuzzy_matched"] = 0
 
-        # Use Ordnance Survey address & postcode going forwards
+    # Use Ordnance Survey address & postcode going forwards
     epc["address_os"] = epc["address_os"].apply(format_address)
     epc["address_epc"] = epc["address_epc"].apply(format_address)
 
@@ -89,6 +110,7 @@ def pipeline(epc: pd.DataFrame, os: pd.DataFrame) -> pd.DataFrame:
     epc["postcode"] = epc.postcode_os.combine_first(epc.postcode_epc)
 
     return epc
+
 
 def model(dbt, fal):
     """dbt-fal model."""
@@ -100,9 +122,9 @@ def model(dbt, fal):
     epc["uprn"] = epc["uprn"].apply(lambda x: np.nan if x == "" else x)
     epc_ok = epc[epc["uprn"].notna()].copy()
 
-    print("-"*50, "EPC (with UPRN) columns and shape", "-"*50)
-    print(epc.columns)
-    print(epc.shape)
+    logging.info("-" * 50, "EPC (with UPRN) columns and shape", "-" * 50)
+    logging.info(epc.columns)
+    logging.info(epc.shape)
 
     # Filter to IoW postcodes only
     epc_ok["district"] = epc_ok.postcode.str.split(" ").str[0]
@@ -152,16 +174,19 @@ def model(dbt, fal):
         "YO95",
     ]
     epc_ok = (
-        epc_ok[epc_ok.district.isin(isle_of_wight_districts) | epc_ok.district.isin(east_riding_districts)]
+        epc_ok[
+            epc_ok.district.isin(isle_of_wight_districts)
+            | epc_ok.district.isin(east_riding_districts)
+        ]
         .copy()
         .drop(columns=["district"])
     )
 
     # get OS data
     os = dbt.ref("stg_os_places")
-    print("-"*50, "OS COLUMNS", "-"*50)
-    print(os.columns)
-    print(os.shape)
+    logging.info("-" * 50, "OS COLUMNS", "-" * 50)
+    logging.info(os.columns)
+    logging.info(os.shape)
     os["address"] = os["address"].str.lower()
     os["udprn"] = os["udprn"].apply(lambda x: np.nan if x in ["", "N/A"] else x)
 

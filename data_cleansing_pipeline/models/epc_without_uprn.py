@@ -1,14 +1,28 @@
-import numpy as np
-import pandas as pd
-import typer
+import logging
+import os
 
 import fuzzymatcher
+import numpy as np
+import pandas as pd
+from dotenv import load_dotenv
 from pandarallel import pandarallel
 from rapidfuzz import fuzz, process
 from tqdm import tqdm
 
+# load credentials from .env
+load_dotenv(".env", verbose=True)
+
+DEBUG = os.environ.get("DEBUG", False)
+
+
+logging.basicConfig(
+    level=logging.DEBUG if DEBUG else logging.ERROR,
+    format="%(asctime)s - %(levelname)s %(message)s",
+)
+
 pandarallel.initialize(progress_bar=True)
 tqdm.pandas()
+
 
 def pipeline(epc: pd.DataFrame, os: pd.DataFrame) -> pd.DataFrame:
     """Cleanse and prepare raw data for address base plus dataset."""
@@ -24,7 +38,9 @@ def pipeline(epc: pd.DataFrame, os: pd.DataFrame) -> pd.DataFrame:
 
     def match_address(address, partial_postcode):
         """Function to get the closest match and its UPRN based on the address and postcode."""
-        addresses_in_district = os[os.postcode.str.contains(partial_postcode)].address.str.lower()
+        addresses_in_district = os[
+            os.postcode.str.contains(partial_postcode)
+        ].address.str.lower()
         if len(addresses_in_district) < 10:
             addresses_in_district = os[
                 os.postcode.str.contains(partial_postcode.split(" ")[0])
@@ -85,6 +101,7 @@ def pipeline(epc: pd.DataFrame, os: pd.DataFrame) -> pd.DataFrame:
 
     return epc
 
+
 def model(dbt, fal):
     """dbt-fal model."""
 
@@ -95,9 +112,9 @@ def model(dbt, fal):
     epc["uprn"] = epc["uprn"].apply(lambda x: np.nan if x == "" else x)
     epc_na = epc[epc["uprn"].isna()].copy()
 
-    print("-"*50, "EPC (without UPRN) columns and shape", "-"*50)
-    print(epc_na.columns)
-    print(epc_na.shape)
+    logging.info("-" * 50, "EPC (without UPRN) columns and shape", "-" * 50)
+    logging.info(epc_na.columns)
+    logging.info(epc_na.shape)
 
     # Filter to IoW postcodes only
     epc_na["district"] = epc_na.postcode.str.split(" ").str[0]
@@ -147,17 +164,21 @@ def model(dbt, fal):
         "YO95",
     ]
     epc_na = (
-        epc_na[epc_na.district.isin(isle_of_wight_districts) | epc_na.district.isin(east_riding_districts)]
+        epc_na[
+            epc_na.district.isin(isle_of_wight_districts)
+            | epc_na.district.isin(east_riding_districts)
+        ]
         .copy()
         .drop(columns=["district"])
     )
 
     # get OS data
     os = dbt.ref("stg_os_places")
-    print("-"*50, "OS COLUMNS", "-"*50)
-    print(os.columns)
-    print(os.shape)
+    logging.info("-" * 50, "OS COLUMNS", "-" * 50)
+    logging.info(os.columns)
+    logging.info(os.shape)
     os["address"] = os["address"].str.lower()
     os["udprn"] = os["udprn"].apply(lambda x: np.nan if x in ["", "N/A"] else x)
 
     return pipeline(epc=epc_na, os=os)
+

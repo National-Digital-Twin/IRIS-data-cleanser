@@ -1,10 +1,10 @@
-import logging
 import os
 
 import fuzzymatcher
 import numpy as np
 import pandas as pd
 from dotenv import load_dotenv
+from logging_config import setup_logger
 from pandarallel import pandarallel
 from rapidfuzz import fuzz, process
 from tqdm import tqdm
@@ -14,12 +14,7 @@ load_dotenv(".env", verbose=True)
 
 DEBUG = os.environ.get("DEBUG", False)
 
-
-logging.basicConfig(
-    level=logging.DEBUG if DEBUG else logging.ERROR,
-    format="%(asctime)s - %(levelname)s %(message)s",
-)
-
+logger = setup_logger(DEBUG)
 pandarallel.initialize(progress_bar=True)
 tqdm.pandas()
 
@@ -112,9 +107,9 @@ def model(dbt, fal):
     epc["uprn"] = epc["uprn"].apply(lambda x: np.nan if x == "" else x)
     epc_na = epc[epc["uprn"].isna()].copy()
 
-    logging.info("-" * 50, "EPC (without UPRN) columns and shape", "-" * 50)
-    logging.info(epc_na.columns)
-    logging.info(epc_na.shape)
+    logger.info("-" * 50, "EPC (without UPRN) columns and shape", "-" * 50)
+    logger.info(epc_na.columns)
+    logger.info(epc_na.shape)
 
     # Filter to IoW postcodes only
     epc_na["district"] = epc_na.postcode.str.split(" ").str[0]
@@ -174,11 +169,10 @@ def model(dbt, fal):
 
     # get OS data
     os = dbt.ref("stg_os_places")
-    logging.info("-" * 50, "OS COLUMNS", "-" * 50)
-    logging.info(os.columns)
-    logging.info(os.shape)
+    logger.info("-" * 50, "OS COLUMNS", "-" * 50)
+    logger.info(os.columns)
+    logger.info(os.shape)
     os["address"] = os["address"].str.lower()
     os["udprn"] = os["udprn"].apply(lambda x: np.nan if x in ["", "N/A"] else x)
 
     return pipeline(epc=epc_na, os=os)
-

@@ -16,8 +16,7 @@ Run from CLI using Typer:
         ../data/interim/int_epc_certificates.csv
 """
 
-# logging
-import logging
+# logger
 import os
 import re
 
@@ -26,6 +25,7 @@ import numpy as np
 import pandas as pd
 import typer
 from dotenv import load_dotenv
+from logging_config import setup_logger
 from pandarallel import pandarallel
 from rapidfuzz import fuzz, process
 from tqdm import tqdm
@@ -36,11 +36,7 @@ load_dotenv(".env", verbose=True)
 DEBUG = os.environ.get("DEBUG", False)
 
 
-logging.basicConfig(
-    level=logging.DEBUG if DEBUG else logging.ERROR,
-    format="%(asctime)s - %(levelname)s %(message)s",
-)
-
+logger = setup_logger(DEBUG)
 pandarallel.initialize(progress_bar=True)
 tqdm.pandas()
 
@@ -221,9 +217,9 @@ def model(dbt, fal):
 
     # get validated EPC data
     epc = dbt.ref("stg_epc_certificates")
-    logging.info("-" * 50, "EPC COLUMNS", "-" * 50)
-    logging.info(epc.columns)
-    logging.info(epc.shape)
+    logger.info("-" * 50, "EPC COLUMNS", "-" * 50)
+    logger.info(epc.columns)
+    logger.info(epc.shape)
     epc["uprn"] = epc["uprn"].apply(lambda x: np.nan if x == "" else x)
 
     # Filter to IoW postcodes only
@@ -283,9 +279,9 @@ def model(dbt, fal):
     )
 
     os = dbt.ref("stg_os_places")
-    logging.info("-" * 50, "OS COLUMNS", "-" * 50)
-    logging.info(os.columns)
-    logging.info(os.shape)
+    logger.info("-" * 50, "OS COLUMNS", "-" * 50)
+    logger.info(os.columns)
+    logger.info(os.shape)
     os["address"] = os["address"].str.lower()
     os["udprn"] = os["udprn"].apply(lambda x: np.nan if x in ["", "N/A"] else x)
 

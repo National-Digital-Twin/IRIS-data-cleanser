@@ -1,21 +1,17 @@
-import logging
 import os
 import re
 
 import numpy as np
 import pandas as pd
 from dotenv import load_dotenv
+from logging_config import setup_logger
 
 # load credentials from .env
 load_dotenv(".env", verbose=True)
 
 DEBUG = os.environ.get("DEBUG", False)
 
-
-logging.basicConfig(
-    level=logging.DEBUG if DEBUG else logging.ERROR,
-    format="%(asctime)s - %(levelname)s %(message)s",
-)
+logger = setup_logger(DEBUG)
 
 
 def format_address(input_str: str) -> str:
@@ -122,9 +118,9 @@ def model(dbt, fal):
     epc["uprn"] = epc["uprn"].apply(lambda x: np.nan if x == "" else x)
     epc_ok = epc[epc["uprn"].notna()].copy()
 
-    logging.info("-" * 50, "EPC (with UPRN) columns and shape", "-" * 50)
-    logging.info(epc.columns)
-    logging.info(epc.shape)
+    logger.info("-" * 50, "EPC (with UPRN) columns and shape", "-" * 50)
+    logger.info(epc.columns)
+    logger.info(epc.shape)
 
     # Filter to IoW postcodes only
     epc_ok["district"] = epc_ok.postcode.str.split(" ").str[0]
@@ -184,9 +180,9 @@ def model(dbt, fal):
 
     # get OS data
     os = dbt.ref("stg_os_places")
-    logging.info("-" * 50, "OS COLUMNS", "-" * 50)
-    logging.info(os.columns)
-    logging.info(os.shape)
+    logger.info("-" * 50, "OS COLUMNS", "-" * 50)
+    logger.info(os.columns)
+    logger.info(os.shape)
     os["address"] = os["address"].str.lower()
     os["udprn"] = os["udprn"].apply(lambda x: np.nan if x in ["", "N/A"] else x)
 

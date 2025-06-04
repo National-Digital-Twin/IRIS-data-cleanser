@@ -9,100 +9,55 @@ python -m address_profiling_s3_export --input_file mart_parity_address_profiling
 dbt run -s address_profiling_s3_export
 """
 
-import logging
 import os
-from datetime import datetime
-from io import StringIO
-from pathlib import Path
 
-import boto3
 import typer
-from botocore.exceptions import ClientError, NoCredentialsError, PartialCredentialsError
 from dotenv import load_dotenv
+from export import export_to_s3
+from logging_config import setup_logger
 
 # load credentials from .env
 load_dotenv(".env", verbose=True)
 
 SKIP_S3_UPLOAD = os.environ.get("SKIP_S3_UPLOAD", True)
 S3_BUCKET_NAME = os.environ.get("S3_BUCKET_NAME")
+S3_FILENAME_USER = os.environ.get("S3_FILENAME_USER")
 AWS_REGION_NAME = os.environ.get("AWS_REGION_NAME")
 DEBUG = os.environ.get("DEBUG", False)
 
-logging.basicConfig(
-    level=logging.DEBUG if DEBUG else logging.ERROR,
-    format="%(asctime)s - %(levelname)s %(message)s",
-)
-
-
-def export(df):
-    """Export final mart to s3."""
-
-    if SKIP_S3_UPLOAD:
-        logging.info("-" * 100, "SKIPPING S3 UPLOAD", "-" * 100)
-        return df
-
-    # Check for missing environment variables
-    logging.info("CHECKING FOR MISSING ENV VARIABLES")
-
-    # connect to s3
-    logging.info("CONNECTING TO S3")
-    try:
-        s3_client = boto3.client("s3", region_name=AWS_REGION_NAME)
-        logging.info("Successfully connected to s3")
-    except (NoCredentialsError, PartialCredentialsError) as e:
-        typer.echo(f"Error with AWS credentials: {str(e)}")
-        return None
-
-    bucket_name = os.environ.get("S3_BUCKET_NAME")
-    timestamp = datetime.now().strftime("%Y-%m-%d_%H%M%S")
-    user_string = f"{user}_" if (user := os.environ.get("S3_FILENAME_USER")) else ""
-    object_key = f"address_profiling_{user_string}{timestamp}.csv"
-
-    # check bucket exists
-    logging.info("CHECKING S3 BUCKET EXISTS")
-    try:
-        # Check if the bucket exists and is accessible
-        s3_client.head_bucket(Bucket=bucket_name)
-        logging.info("Successfully connected to bucket")
-    except ClientError as e:
-        typer.echo(f"Error: Could not access the S3 bucket: {e}")
-        return None
-
-    csv_buffer = StringIO()
-    df.to_csv(csv_buffer, index=False)
-
-    # upload file
-    logging.info("UPLOADING FILE")
-    try:
-        response = s3_client.put_object(
-            Bucket=bucket_name,
-            Key=object_key,
-            Body=csv_buffer.getvalue(),
-        )
-        # Log the successful upload
-        typer.echo(
-            f"Successfully uploaded `{object_key}` to S3 bucket `{bucket_name}`. ✨"
-        )
-        return response
-    except ClientError as e:
-        typer.echo(f"Error uploading file to S3: {e}")
-        return None
+logger = setup_logger(DEBUG)
 
 
 def model(dbt, fal):
     """Interoperate with dbt fal's dbt run command."""
-    logging.info("-" * 100, "s3 export model", "-" * 100)
+    logger.info("-" * 100, "s3 export model", "-" * 100)
     df = dbt.ref("mart_address_profiling_with_sap")
-    logging.info("-" * 100, "Address profiling data", "-" * 100)
-    logging.info(df.columns)
-    logging.info(df.shape)
-    export(df)
+    logger.info("-" * 100, "Address profiling data", "-" * 100)
+    logger.info(df.columns)
+    logger.info(df.shape)
+    export_to_s3(
+        logger,
+        df,
+        SKIP_S3_UPLOAD,
+        AWS_REGION_NAME,
+        S3_BUCKET_NAME,
+        "address_profiling",
+        S3_FILENAME_USER,
+    )
     return df
 
 
 def main(input_file: str):
     """Interoperate with python cli call."""
-    return export(input_file)
+    return export_to_s3(
+        logger,
+        input,
+        SKIP_S3_UPLOAD,
+        AWS_REGION_NAME,
+        S3_BUCKET_NAME,
+        "address_profiling",
+        S3_FILENAME_USER,
+    )
 
 
 if __name__ == "__main__":

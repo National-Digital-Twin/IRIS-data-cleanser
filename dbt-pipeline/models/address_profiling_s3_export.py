@@ -5,17 +5,17 @@
 """
 Example Usage:
 
-python -m address_base_plus_s3_export --input_file mart_parity_address_profiling.csv
-dbt run -s address_base_plus_s3_export
+python -m address_profiling_s3_export --input_file mart_parity_address_profiling_with_sap.csv
+dbt run -s address_profiling_s3_export
 """
-
 
 import os
 
 import typer
 from dotenv import load_dotenv
-from export import export_to_s3
-from logging_config import setup_logger
+
+from data_cleansing_pipeline.export import export_to_s3
+from data_cleansing_pipeline.logging_config import setup_logger
 
 # load credentials from .env
 load_dotenv(".env", verbose=True)
@@ -31,14 +31,18 @@ logger = setup_logger(DEBUG)
 
 def model(dbt, fal):
     """Interoperate with dbt fal's dbt run command."""
-    df = dbt.ref("mart_address_base_plus")
+    logger.info("-" * 100, "s3 export model", "-" * 100)
+    df = dbt.ref("mart_address_profiling_with_sap")
+    logger.info("-" * 100, "Address profiling data", "-" * 100)
+    logger.info(df.columns)
+    logger.info(df.shape)
     export_to_s3(
         logger,
         df,
         SKIP_S3_UPLOAD,
         AWS_REGION_NAME,
         S3_BUCKET_NAME,
-        "address_base_plus",
+        "address_profiling",
         S3_FILENAME_USER,
     )
     return df
@@ -48,11 +52,11 @@ def main(input_file: str):
     """Interoperate with python cli call."""
     return export_to_s3(
         logger,
-        input_file,
+        input,
         SKIP_S3_UPLOAD,
         AWS_REGION_NAME,
         S3_BUCKET_NAME,
-        "address_base_plus",
+        "address_profiling",
         S3_FILENAME_USER,
     )
 

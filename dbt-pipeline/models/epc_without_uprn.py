@@ -4,10 +4,11 @@ import fuzzymatcher
 import numpy as np
 import pandas as pd
 from dotenv import load_dotenv
-from logging_config import setup_logger
 from pandarallel import pandarallel
 from rapidfuzz import fuzz, process
 from tqdm import tqdm
+
+from data_cleansing_pipeline.logging_config import setup_logger
 
 # load credentials from .env
 load_dotenv(".env", verbose=True)
@@ -33,9 +34,7 @@ def pipeline(epc: pd.DataFrame, os: pd.DataFrame) -> pd.DataFrame:
 
     def match_address(address, partial_postcode):
         """Function to get the closest match and its UPRN based on the address and postcode."""
-        addresses_in_district = os[
-            os.postcode.str.contains(partial_postcode)
-        ].address.str.lower()
+        addresses_in_district = os[os.postcode.str.contains(partial_postcode)].address.str.lower()
         if len(addresses_in_district) < 10:
             addresses_in_district = os[
                 os.postcode.str.contains(partial_postcode.split(" ")[0])

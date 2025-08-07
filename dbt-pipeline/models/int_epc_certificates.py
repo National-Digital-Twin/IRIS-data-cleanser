@@ -25,10 +25,11 @@ import numpy as np
 import pandas as pd
 import typer
 from dotenv import load_dotenv
-from logging_config import setup_logger
 from pandarallel import pandarallel
 from rapidfuzz import fuzz, process
 from tqdm import tqdm
+
+from data_cleansing_pipeline.logging_config import setup_logger
 
 # load credentials from .env
 load_dotenv(".env", verbose=True)
@@ -83,9 +84,7 @@ def pipeline(epc: pd.DataFrame, os: pd.DataFrame) -> pd.DataFrame:
 
     def match_address(address, partial_postcode):
         """Function to get the closest match and its UPRN based on the address and postcode."""
-        addresses_in_district = os[
-            os.postcode.str.contains(partial_postcode)
-        ].address.str.lower()
+        addresses_in_district = os[os.postcode.str.contains(partial_postcode)].address.str.lower()
         if len(addresses_in_district) < 10:
             addresses_in_district = os[
                 os.postcode.str.contains(partial_postcode.split(" ")[0])
@@ -163,9 +162,7 @@ def pipeline(epc: pd.DataFrame, os: pd.DataFrame) -> pd.DataFrame:
 
     # Merge in OS (LPI) data for epc_ok as fallback
     epc_ok = epc_ok.merge(
-        os.query('os_api_source == "LPI"')[
-            ["uprn", "udprn", "address", "postcode"]
-        ].rename(
+        os.query('os_api_source == "LPI"')[["uprn", "udprn", "address", "postcode"]].rename(
             columns={
                 "udprn": "udprn_os_lpi",
                 "address": "address_os_lpi",
@@ -179,17 +176,13 @@ def pipeline(epc: pd.DataFrame, os: pd.DataFrame) -> pd.DataFrame:
     # If udprn_os_dpa is not null, use DPA data for udprn/address/postcode
     epc_ok["address_os"] = epc_ok.apply(
         lambda row: (
-            row["address_os_dpa"]
-            if pd.notna(row["udprn_os_dpa"])
-            else row["address_os_lpi"]
+            row["address_os_dpa"] if pd.notna(row["udprn_os_dpa"]) else row["address_os_lpi"]
         ),
         axis=1,
     )
     epc_ok["postcode_os"] = epc_ok.apply(
         lambda row: (
-            row["postcode_os_dpa"]
-            if pd.notna(row["udprn_os_dpa"])
-            else row["postcode_os_lpi"]
+            row["postcode_os_dpa"] if pd.notna(row["udprn_os_dpa"]) else row["postcode_os_lpi"]
         ),
         axis=1,
     )
@@ -270,10 +263,7 @@ def model(dbt, fal):
         "YO95",
     ]
     epc = (
-        epc[
-            epc.district.isin(isle_of_wight_districts)
-            | epc.district.isin(east_riding_districts)
-        ]
+        epc[epc.district.isin(isle_of_wight_districts) | epc.district.isin(east_riding_districts)]
         .copy()
         .drop(columns=["district"])
     )

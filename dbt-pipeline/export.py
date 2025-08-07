@@ -41,16 +41,6 @@ def export_to_s3(
     user_string = f"{user}_" if (user := s3_filename_user) else ""
     object_key = f"{object_key_prefix}_{user_string}{timestamp}.csv"
 
-    # check bucket exists
-    logger.info("CHECKING S3 BUCKET EXISTS")
-    try:
-        # Check if the bucket exists and is accessible
-        s3_client.head_bucket(Bucket=bucket_name)
-        logger.info("Successfully connected to bucket")
-    except ClientError as e:
-        logger.error(f"Error: Could not access the S3 bucket: {e}")
-        return None
-
     csv_buffer = StringIO()
     df.to_csv(csv_buffer, index=False)
 
@@ -63,9 +53,7 @@ def export_to_s3(
             Body=csv_buffer.getvalue(),
         )
         # Log the successful upload
-        logger.info(
-            f"Successfully uploaded `{object_key}` to S3 bucket `{bucket_name}`. ✨"
-        )
+        logger.info(f"Successfully uploaded `{object_key}` to S3 bucket `{bucket_name}`. ✨")
         return response
     except ClientError as e:
         logger.error(f"Error uploading file to S3: {e}")

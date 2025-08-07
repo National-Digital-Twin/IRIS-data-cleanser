@@ -4,7 +4,8 @@ import re
 import numpy as np
 import pandas as pd
 from dotenv import load_dotenv
-from logging_config import setup_logger
+
+from data_cleansing_pipeline.logging_config import setup_logger
 
 # load credentials from .env
 load_dotenv(".env", verbose=True)
@@ -62,9 +63,7 @@ def pipeline(epc: pd.DataFrame, os: pd.DataFrame) -> pd.DataFrame:
 
     # Merge in OS (LPI) data for epc_ok as fallback
     epc = epc.merge(
-        os.query('os_api_source == "LPI"')[
-            ["uprn", "udprn", "address", "postcode"]
-        ].rename(
+        os.query('os_api_source == "LPI"')[["uprn", "udprn", "address", "postcode"]].rename(
             columns={
                 "udprn": "udprn_os_lpi",
                 "address": "address_os_lpi",
@@ -78,17 +77,13 @@ def pipeline(epc: pd.DataFrame, os: pd.DataFrame) -> pd.DataFrame:
     # If udprn_os_dpa is not null, use DPA data for udprn/address/postcode
     epc["address_os"] = epc.apply(
         lambda row: (
-            row["address_os_dpa"]
-            if pd.notna(row["udprn_os_dpa"])
-            else row["address_os_lpi"]
+            row["address_os_dpa"] if pd.notna(row["udprn_os_dpa"]) else row["address_os_lpi"]
         ),
         axis=1,
     )
     epc["postcode_os"] = epc.apply(
         lambda row: (
-            row["postcode_os_dpa"]
-            if pd.notna(row["udprn_os_dpa"])
-            else row["postcode_os_lpi"]
+            row["postcode_os_dpa"] if pd.notna(row["udprn_os_dpa"]) else row["postcode_os_lpi"]
         ),
         axis=1,
     )

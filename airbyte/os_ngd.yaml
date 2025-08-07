@@ -28,10 +28,10 @@ definitions:
             inject_on_first_request: true
         requester:
           $ref: "#/definitions/base_requester"
-          path: /features/ngd/ofa/v1/collections/bld-fts-building-4/items?
+          path: /features/ngd/ofa/v1/collections/bld-fts-building-4/items
           http_method: GET
           request_parameters:
-            bbox: "{{ stream_partition.tile['bbox'] }}"
+            bbox: "{{ (stream_partition['tile'].split('|'))[0] }}"
             filter: buildinguse='Residential Accommodation'
             bbox-crs: http://www.opengis.net/def/crs/EPSG/0/27700
         record_selector:
@@ -44,12 +44,19 @@ definitions:
               - properties
         partition_router:
           type: ListPartitionRouter
-          values: "{{ config['5km-tiles-england'] }}"
+          values: "{{ config['5km-tiles-england'].split('|||') }}"
           cursor_field: tile
       schema_loader:
         type: InlineSchemaLoader
         schema:
           $ref: "#/schemas/os-ngd-buildings"
+      transformations:
+        - type: AddFields
+          fields:
+            - type: AddedFieldDefinition
+              path:
+                - region
+              value: "{{ stream_partition['tile'].split('|')[1] }}"
   base_requester:
     type: HttpRequester
     url_base: https://api.os.uk
@@ -90,7 +97,7 @@ metadata:
   testedStreams:
     os-ngd-buildings:
       hasRecords: true
-      streamHash: def28d4b53068bc7cdc5575f21e5fb281e1bb150
+      streamHash: 728c788f28dfc71561480ba708d632c4d94625e6
       hasResponse: true
       primaryKeysAreUnique: true
       primaryKeysArePresent: true
@@ -112,6 +119,10 @@ schemas:
           - string
           - "null"
       theme:
+        type:
+          - string
+          - "null"
+      region:
         type:
           - string
           - "null"

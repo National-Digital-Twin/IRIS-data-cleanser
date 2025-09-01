@@ -6,9 +6,9 @@ iris_data_cleansing:
       db_profile: dev_postgres # This points to your main adapter
     dev_postgres:
       type: postgres
-      host: euwest2-postgres-iris-data-cleansing.cfs4s6a8ue2r.eu-west-2.rds.amazonaws.com
+      host: iris-data-cleanser.cfs4s6a8ue2r.eu-west-2.rds.amazonaws.com
       user: postgres
-      password: :5t?yqbRMG-sY7pIjy..A0c~.xD]
+      password: _JxM9<kHe3UgY2Mpt_:KRu:gxFg!
       dbname: postgres
       schema: data_cleanser
       port: 5432

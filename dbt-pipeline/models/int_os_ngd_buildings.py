@@ -40,20 +40,4 @@ def model(dbt, fal):
     logger.info(ngd.columns)
     logger.info(ngd.shape)
 
-    # explode JSON field containing UPRN
-    ngd = ngd.merge(
-        ngd["uprnreference"]
-        # .apply(lambda x: json.loads(x))
-        .explode()
-        .pipe(lambda x: pd.json_normalize(x).set_index(x.index)),
-        left_index=True,
-        right_index=True,
-    )
-
-    # drop empty UPRN rows
-    ngd["uprn"] = pd.to_numeric(ngd["uprn"], errors="coerce")
-    ngd = ngd.dropna(subset=["uprn"])
-    ngd["uprn"] = ngd["uprn"].astype(int).astype(str)
-    ngd.reset_index(drop=True, inplace=True)
-
     return ngd

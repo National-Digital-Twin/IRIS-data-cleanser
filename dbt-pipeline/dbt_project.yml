@@ -67,5 +67,5 @@ models:
       +enabled: true
     int_os_ngd_buildings:
       +enabled: true
-    # os_ngd_buildings_s3_export:
-    #   +enabled: true
+    os_ngd_buildings_s3_export:
+      +enabled: true

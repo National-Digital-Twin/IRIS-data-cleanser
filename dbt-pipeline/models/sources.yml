@@ -8,5 +8,5 @@ sources:
       # - name: os_places_lpi
       # - name: england_wales_domestic_certificates
       # - name: england_wales_non_domestic_certificates
-      - name: os_ngd_buildings_mini
+      - name: os_ngd_buildings_east_mids
       # - name: recommendations

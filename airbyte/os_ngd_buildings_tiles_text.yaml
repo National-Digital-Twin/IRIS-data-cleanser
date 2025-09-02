@@ -19,20 +19,14 @@ definitions:
         field_name: key
         inject_into: header
     error_handler:
-      type: CompositeErrorHandler
-      error_handlers:
-        - type: DefaultErrorHandler
-          response_filters:
-            - type: HttpResponseFilter
-              http_codes: [429, 500, 503]
-              action: RETRY
-          backoff_strategies:
-            - type: WaitTimeFromHeader
-              header: Retry-After
-            - type: ExponentialBackoff
-              factor: 2
-              min_wait: 1
-              max_wait: 60
+      type: DefaultErrorHandler
+      response_filters:
+        - type: HttpResponseFilter
+          http_codes: [429, 500, 503]
+          action: RETRY
+      backoff_strategies:
+        - type: WaitTimeFromHeader
+          header: Retry-After
 
   paginator:
     type: DefaultPaginator
@@ -78,7 +72,7 @@ definitions:
               - properties
         partition_router:
           type: ListPartitionRouter
-          values: "{{ (config.get('tiles_text_se') or '').split('\n') }}"
+          values: "{{ (config.get('tiles_text_se') or '').split('|||') }}"
           cursor_field: tile
       schema_loader:
         type: InlineSchemaLoader
@@ -121,7 +115,301 @@ definitions:
               - properties
         partition_router:
           type: ListPartitionRouter
-          values: "{{ (config.get('tiles_text_sw') or '').split('\n') }}"
+          values: "{{ (config.get('tiles_text_sw') or '').split('|||') }}"
+          cursor_field: tile
+      schema_loader:
+        type: InlineSchemaLoader
+        schema:
+          type: object
+          $schema: http://json-schema.org/schema#
+      transformations:
+        - type: AddFields
+          fields:
+            - type: AddedFieldDefinition
+              path:
+                - region
+              value: "{{ stream_partition['tile'].split('|')[1] if '|' in stream_partition['tile'] else None }}"
+    os-ngd-buildings-ne:
+      type: DeclarativeStream
+      name: os-ngd-buildings-ne
+      primary_key: []
+      retriever:
+        type: SimpleRetriever
+        decoder:
+          type: JsonDecoder
+        paginator:
+          $ref: "#/definitions/paginator"
+        requester:
+          $ref: "#/definitions/base_requester"
+          path: /features/ngd/ofa/v1/collections/bld-fts-building-4/items
+          http_method: GET
+          request_parameters:
+            bbox: "{{ (stream_partition['tile'].split('|'))[0] }}"
+            bbox-crs: http://www.opengis.net/def/crs/EPSG/0/27700
+            filter: "buildinguse='Residential Accommodation'"
+        record_selector:
+          type: RecordSelector
+          extractor:
+            type: DpathExtractor
+            field_path:
+              - features
+              - "*"
+              - properties
+        partition_router:
+          type: ListPartitionRouter
+          values: "{{ (config.get('tiles_text_ne') or '').split('|||') }}"
+          cursor_field: tile
+      schema_loader:
+        type: InlineSchemaLoader
+        schema:
+          type: object
+          $schema: http://json-schema.org/schema#
+      transformations:
+        - type: AddFields
+          fields:
+            - type: AddedFieldDefinition
+              path:
+                - region
+              value: "{{ stream_partition['tile'].split('|')[1] if '|' in stream_partition['tile'] else None }}"
+    os-ngd-buildings-nw:
+      type: DeclarativeStream
+      name: os-ngd-buildings-nw
+      primary_key: []
+      retriever:
+        type: SimpleRetriever
+        decoder:
+          type: JsonDecoder
+        paginator:
+          $ref: "#/definitions/paginator"
+        requester:
+          $ref: "#/definitions/base_requester"
+          path: /features/ngd/ofa/v1/collections/bld-fts-building-4/items
+          http_method: GET
+          request_parameters:
+            bbox: "{{ (stream_partition['tile'].split('|'))[0] }}"
+            bbox-crs: http://www.opengis.net/def/crs/EPSG/0/27700
+            filter: "buildinguse='Residential Accommodation'"
+        record_selector:
+          type: RecordSelector
+          extractor:
+            type: DpathExtractor
+            field_path:
+              - features
+              - "*"
+              - properties
+        partition_router:
+          type: ListPartitionRouter
+          values: "{{ (config.get('tiles_text_nw') or '').split('|||') }}"
+          cursor_field: tile
+      schema_loader:
+        type: InlineSchemaLoader
+        schema:
+          type: object
+          $schema: http://json-schema.org/schema#
+      transformations:
+        - type: AddFields
+          fields:
+            - type: AddedFieldDefinition
+              path:
+                - region
+              value: "{{ stream_partition['tile'].split('|')[1] if '|' in stream_partition['tile'] else None }}"
+    os-ngd-buildings-yh:
+      type: DeclarativeStream
+      name: os-ngd-buildings-yh
+      primary_key: []
+      retriever:
+        type: SimpleRetriever
+        decoder:
+          type: JsonDecoder
+        paginator:
+          $ref: "#/definitions/paginator"
+        requester:
+          $ref: "#/definitions/base_requester"
+          path: /features/ngd/ofa/v1/collections/bld-fts-building-4/items
+          http_method: GET
+          request_parameters:
+            bbox: "{{ (stream_partition['tile'].split('|'))[0] }}"
+            bbox-crs: http://www.opengis.net/def/crs/EPSG/0/27700
+            filter: "buildinguse='Residential Accommodation'"
+        record_selector:
+          type: RecordSelector
+          extractor:
+            type: DpathExtractor
+            field_path:
+              - features
+              - "*"
+              - properties
+        partition_router:
+          type: ListPartitionRouter
+          values: "{{ (config.get('tiles_text_yh') or '').split('|||') }}"
+          cursor_field: tile
+      schema_loader:
+        type: InlineSchemaLoader
+        schema:
+          type: object
+          $schema: http://json-schema.org/schema#
+      transformations:
+        - type: AddFields
+          fields:
+            - type: AddedFieldDefinition
+              path:
+                - region
+              value: "{{ stream_partition['tile'].split('|')[1] if '|' in stream_partition['tile'] else None }}"
+    os-ngd-buildings-em:
+      type: DeclarativeStream
+      name: os-ngd-buildings-em
+      primary_key: []
+      retriever:
+        type: SimpleRetriever
+        decoder:
+          type: JsonDecoder
+        paginator:
+          $ref: "#/definitions/paginator"
+        requester:
+          $ref: "#/definitions/base_requester"
+          path: /features/ngd/ofa/v1/collections/bld-fts-building-4/items
+          http_method: GET
+          request_parameters:
+            bbox: "{{ (stream_partition['tile'].split('|'))[0] }}"
+            bbox-crs: http://www.opengis.net/def/crs/EPSG/0/27700
+            filter: "buildinguse='Residential Accommodation'"
+        record_selector:
+          type: RecordSelector
+          extractor:
+            type: DpathExtractor
+            field_path:
+              - features
+              - "*"
+              - properties
+        partition_router:
+          type: ListPartitionRouter
+          values: "{{ (config.get('tiles_text_em') or '').split('|||') }}"
+          cursor_field: tile
+      schema_loader:
+        type: InlineSchemaLoader
+        schema:
+          type: object
+          $schema: http://json-schema.org/schema#
+      transformations:
+        - type: AddFields
+          fields:
+            - type: AddedFieldDefinition
+              path:
+                - region
+              value: "{{ stream_partition['tile'].split('|')[1] if '|' in stream_partition['tile'] else None }}"
+    os-ngd-buildings-wm:
+      type: DeclarativeStream
+      name: os-ngd-buildings-wm
+      primary_key: []
+      retriever:
+        type: SimpleRetriever
+        decoder:
+          type: JsonDecoder
+        paginator:
+          $ref: "#/definitions/paginator"
+        requester:
+          $ref: "#/definitions/base_requester"
+          path: /features/ngd/ofa/v1/collections/bld-fts-building-4/items
+          http_method: GET
+          request_parameters:
+            bbox: "{{ (stream_partition['tile'].split('|'))[0] }}"
+            bbox-crs: http://www.opengis.net/def/crs/EPSG/0/27700
+            filter: "buildinguse='Residential Accommodation'"
+        record_selector:
+          type: RecordSelector
+          extractor:
+            type: DpathExtractor
+            field_path:
+              - features
+              - "*"
+              - properties
+        partition_router:
+          type: ListPartitionRouter
+          values: "{{ (config.get('tiles_text_wm') or '').split('|||') }}"
+          cursor_field: tile
+      schema_loader:
+        type: InlineSchemaLoader
+        schema:
+          type: object
+          $schema: http://json-schema.org/schema#
+      transformations:
+        - type: AddFields
+          fields:
+            - type: AddedFieldDefinition
+              path:
+                - region
+              value: "{{ stream_partition['tile'].split('|')[1] if '|' in stream_partition['tile'] else None }}"
+    os-ngd-buildings-ee:
+      type: DeclarativeStream
+      name: os-ngd-buildings-ee
+      primary_key: []
+      retriever:
+        type: SimpleRetriever
+        decoder:
+          type: JsonDecoder
+        paginator:
+          $ref: "#/definitions/paginator"
+        requester:
+          $ref: "#/definitions/base_requester"
+          path: /features/ngd/ofa/v1/collections/bld-fts-building-4/items
+          http_method: GET
+          request_parameters:
+            bbox: "{{ (stream_partition['tile'].split('|'))[0] }}"
+            bbox-crs: http://www.opengis.net/def/crs/EPSG/0/27700
+            filter: "buildinguse='Residential Accommodation'"
+        record_selector:
+          type: RecordSelector
+          extractor:
+            type: DpathExtractor
+            field_path:
+              - features
+              - "*"
+              - properties
+        partition_router:
+          type: ListPartitionRouter
+          values: "{{ (config.get('tiles_text_ee') or '').split('|||') }}"
+          cursor_field: tile
+      schema_loader:
+        type: InlineSchemaLoader
+        schema:
+          type: object
+          $schema: http://json-schema.org/schema#
+      transformations:
+        - type: AddFields
+          fields:
+            - type: AddedFieldDefinition
+              path:
+                - region
+              value: "{{ stream_partition['tile'].split('|')[1] if '|' in stream_partition['tile'] else None }}"
+    os-ngd-buildings-lon:
+      type: DeclarativeStream
+      name: os-ngd-buildings-lon
+      primary_key: []
+      retriever:
+        type: SimpleRetriever
+        decoder:
+          type: JsonDecoder
+        paginator:
+          $ref: "#/definitions/paginator"
+        requester:
+          $ref: "#/definitions/base_requester"
+          path: /features/ngd/ofa/v1/collections/bld-fts-building-4/items
+          http_method: GET
+          request_parameters:
+            bbox: "{{ (stream_partition['tile'].split('|'))[0] }}"
+            bbox-crs: http://www.opengis.net/def/crs/EPSG/0/27700
+            filter: "buildinguse='Residential Accommodation'"
+        record_selector:
+          type: RecordSelector
+          extractor:
+            type: DpathExtractor
+            field_path:
+              - features
+              - "*"
+              - properties
+        partition_router:
+          type: ListPartitionRouter
+          values: "{{ (config.get('tiles_text_lon') or '').split('|||') }}"
           cursor_field: tile
       schema_loader:
         type: InlineSchemaLoader
@@ -139,6 +427,13 @@ definitions:
 streams:
   - $ref: "#/definitions/streams/os-ngd-buildings-se"
   - $ref: "#/definitions/streams/os-ngd-buildings-sw"
+  - $ref: "#/definitions/streams/os-ngd-buildings-ne"
+  - $ref: "#/definitions/streams/os-ngd-buildings-nw"
+  - $ref: "#/definitions/streams/os-ngd-buildings-yh"
+  - $ref: "#/definitions/streams/os-ngd-buildings-em"
+  - $ref: "#/definitions/streams/os-ngd-buildings-wm"
+  - $ref: "#/definitions/streams/os-ngd-buildings-ee"
+  - $ref: "#/definitions/streams/os-ngd-buildings-lon"
 
 spec:
   type: Spec
@@ -157,12 +452,47 @@ spec:
         type: string
         order: 1
         title: tiles_text_se
-        description: South East tiles. One per line as "minx,miny,maxx,maxy|REGION_CODE"
+        description: South East tiles as a single line, separated by '|||'. Each part is "minx,miny,maxx,maxy|REGION_CODE" with no trailing delimiter.
       tiles_text_sw:
         type: string
         order: 2
         title: tiles_text_sw
-        description: South West tiles. One per line as "minx,miny,maxx,maxy|REGION_CODE"
+        description: South West tiles as a single line, separated by '|||'. Each part is "minx,miny,maxx,maxy|REGION_CODE" with no trailing delimiter.
+      tiles_text_ne:
+        type: string
+        order: 3
+        title: tiles_text_ne
+        description: North East tiles as a single line, separated by '|||'. Each part is "minx,miny,maxx,maxy|REGION_CODE".
+      tiles_text_nw:
+        type: string
+        order: 4
+        title: tiles_text_nw
+        description: North West tiles as a single line, separated by '|||'. Each part is "minx,miny,maxx,maxy|REGION_CODE".
+      tiles_text_yh:
+        type: string
+        order: 5
+        title: tiles_text_yh
+        description: Yorkshire and The Humber tiles as a single line, separated by '|||'. Each part is "minx,miny,maxx,maxy|REGION_CODE".
+      tiles_text_em:
+        type: string
+        order: 6
+        title: tiles_text_em
+        description: East Midlands tiles as a single line, separated by '|||'. Each part is "minx,miny,maxx,maxy|REGION_CODE".
+      tiles_text_wm:
+        type: string
+        order: 7
+        title: tiles_text_wm
+        description: West Midlands tiles as a single line, separated by '|||'. Each part is "minx,miny,maxx,maxy|REGION_CODE".
+      tiles_text_ee:
+        type: string
+        order: 8
+        title: tiles_text_ee
+        description: East of England tiles as a single line, separated by '|||'. Each part is "minx,miny,maxx,maxy|REGION_CODE".
+      tiles_text_lon:
+        type: string
+        order: 9
+        title: tiles_text_lon
+        description: London tiles as a single line, separated by '|||'. Each part is "minx,miny,maxx,maxy|REGION_CODE".
     additionalProperties: true
 
 metadata:

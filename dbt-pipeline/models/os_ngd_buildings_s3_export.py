@@ -30,13 +30,21 @@ def model(dbt, fal):
 
     logger = setup_logger(DEBUG)
 
-    print("-" * 100, "s3 export model", "-" * 100)
+    logger.info("Starting S3 export model")
     df = dbt.ref("int_os_ngd_buildings")
-    print("-" * 100, "OS NGD Buildings data", "-" * 100)
-    print(df.columns)
-    print(df.shape)
+    try:
+        logger.info("OS NGD Buildings columns: %s", list(df.columns))
+        logger.info("OS NGD Buildings shape: %s", getattr(df, "shape", None))
+    except Exception:
+        pass
 
-    print(SKIP_S3_UPLOAD, S3_BUCKET_NAME, S3_FILENAME_USER, AWS_REGION_NAME)
+    logger.info(
+        "S3 config SKIP=%s BUCKET=%s USER=%s REGION=%s",
+        SKIP_S3_UPLOAD,
+        S3_BUCKET_NAME,
+        S3_FILENAME_USER,
+        AWS_REGION_NAME,
+    )
 
     export_to_s3(
         logger,

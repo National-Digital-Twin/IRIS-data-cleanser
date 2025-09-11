@@ -19,15 +19,16 @@ def setup_logger(debug=False):
     logger = logging.getLogger()
     logger.setLevel(logging.DEBUG if debug else logging.ERROR)
 
-    # Create console handler
-    handler = logging.StreamHandler()
-    handler.setLevel(logging.DEBUG if debug else logging.ERROR)
-
-    # Create formatter with fixed format
-    formatter = logging.Formatter("%(asctime)s - %(levelname)s %(message)s")
-    handler.setFormatter(formatter)
-
-    # Add handler to logger
-    logger.addHandler(handler)
+    # Avoid duplicate handlers if called multiple times
+    if not any(isinstance(h, logging.StreamHandler) for h in logger.handlers):
+        handler = logging.StreamHandler()
+        handler.setLevel(logging.DEBUG if debug else logging.ERROR)
+        formatter = logging.Formatter("%(asctime)s - %(levelname)s %(message)s")
+        handler.setFormatter(formatter)
+        logger.addHandler(handler)
+    else:
+        # Update level on existing handlers to reflect debug flag
+        for h in logger.handlers:
+            h.setLevel(logging.DEBUG if debug else logging.ERROR)
 
     return logger

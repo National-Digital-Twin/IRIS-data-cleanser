@@ -36,8 +36,11 @@ def model(dbt, fal):
 
     # get validated EPC data
     ngd = dbt.ref("stg_os_ngd_buildings")
-    logger.info("-" * 50, "OS NGD Buildings COLUMNS", "-" * 50)
-    logger.info(ngd.columns)
-    logger.info(ngd.shape)
+    try:
+        logger.info("OS NGD Buildings columns: %s", list(ngd.columns))
+        logger.info("OS NGD Buildings shape: %s", getattr(ngd, "shape", None))
+    except Exception:
+        # Be defensive: logging should never break the model
+        pass
 
     return ngd

@@ -21,17 +21,20 @@ def export_to_s3(
     """Export final mart to s3."""
 
     if skip_s3_upload:
-        logger.info("-" * 100, "SKIPPING S3 UPLOAD", "-" * 100)
+        try:
+            logger.info("Skipping S3 upload: SKIP_S3_UPLOAD=true")
+        except Exception:
+            pass
         return df
 
     # connect to s3
-    logger.info("CONNECTING TO S3")
+    logger.info("Connecting to S3")
     try:
         s3_client = boto3.client(
             "s3",
             region_name=aws_region_name,
         )
-        logger.info("Successfully connected to s3")
+        logger.info("Successfully connected to S3")
     except (NoCredentialsError, PartialCredentialsError) as e:
         logger.error(f"Error with AWS credentials: {str(e)}")
         return None
@@ -45,7 +48,7 @@ def export_to_s3(
     df.to_csv(csv_buffer, index=False)
 
     # upload file
-    logger.info("UPLOADING FILE")
+    logger.info("Uploading file to S3: bucket=%s key=%s", bucket_name, object_key)
     try:
         response = s3_client.put_object(
             Bucket=bucket_name,

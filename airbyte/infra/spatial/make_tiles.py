@@ -376,6 +376,11 @@ def main():
     )
     parser.add_argument("--outdir", default="out/", help="Output directory")
     parser.add_argument(
+        "--no-joined",
+        action="store_true",
+        help="Do not write '*_joined.txt' joined files (joined is written by default)",
+    )
+    parser.add_argument(
         "--no-geojson", action="store_true", help="Do not write GeoJSON output"
     )
     parser.add_argument(
@@ -414,6 +419,18 @@ def main():
     if base_b != base_a:
         write_text_lines(base_b + ".txt", text_lines)
 
+    # By default write joined variant for Airbyte declarative source config
+    if not args.no_joined:
+        joined = "|||".join(text_lines)
+        os.makedirs(os.path.dirname(base_a), exist_ok=True)
+        with open(base_a + "_joined.txt", "w", encoding="utf-8") as f:
+            if joined:
+                f.write(joined)
+        if base_b != base_a:
+            with open(base_b + "_joined.txt", "w", encoding="utf-8") as f:
+                if joined:
+                    f.write(joined)
+
     if not args.no_geojson:
         export_tiles_geojson_27700(base_a + ".geojson", tiles)
 
@@ -431,9 +448,14 @@ def main():
         except Exception as e:
             print(f"[warn] Could not write PNG preview: {e}")
 
-    print(
-        f"Wrote: {base_a}.txt" + (" and " + base_b + ".txt" if base_b != base_a else "")
-    )
+    wrote = [base_a + ".txt"]
+    if base_b != base_a:
+        wrote.append(base_b + ".txt")
+    if not args.no_joined:
+        wrote.append(base_a + "_joined.txt")
+        if base_b != base_a:
+            wrote.append(base_b + "_joined.txt")
+    print("Wrote: " + ", ".join(wrote))
 
 
 if __name__ == "__main__":

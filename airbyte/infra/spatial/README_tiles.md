@@ -20,8 +20,16 @@ Outputs
   - `tiles_<region>_preview.html` (Folium, EPSG:4326)
   - `tiles_<region>_preview.png` (matplotlib)
 
+Feeding Airbyte (os_ngd_buildings.yaml)
+
+- The Airbyte declarative source expects a single config string per region (e.g. `tiles_text_se`) where tiles are joined by `|||`.
+- Default: `*_joined.txt` is written automatically next to the line-by-line files. Copy the contents of `*_joined.txt` into the matching `tiles_text_*` field in Airbyte.
+- Opt-out: pass `--no-joined` if you do not want the `*_joined.txt` files.
+- Alternative (manual join):
+  - Linux/macOS: `paste -sd '|||' out/tiles_South_East.txt > out/tiles_South_East_joined.txt`
+  - Or: `awk '{printf NR==1?"%s":"|||%s", $0}' out/tiles_South_East.txt > out/tiles_South_East_joined.txt`
+
 Notes
 
 - Region detection uses the `RGN24NM` property in the provided Regions GeoJSON.
 - If Folium/Matplotlib/pyproj are unavailable in your environment, the tool will still write the TEXT file and skip previews.
-

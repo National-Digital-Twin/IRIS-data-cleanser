@@ -14,7 +14,5 @@ models:
         description: "Postcode for the building address."
       - name: address
         description: "Preferred address from Ordnance Survey Places, fallback to EPC address if necessary."
-      - name: fuzzy_matched
-        description: "Indicator whether UPRN came from EPC directly (0) or fuzzy matching (1). Always 0 for this model."
     meta:
       owner: "data_engineering_team"

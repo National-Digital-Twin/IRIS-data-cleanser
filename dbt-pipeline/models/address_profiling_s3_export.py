@@ -13,18 +13,19 @@ import os
 
 import typer
 from dotenv import load_dotenv
-
-from data_cleansing_pipeline.export import export_to_s3
-from data_cleansing_pipeline.logging_config import setup_logger
+from utils.export import export_to_s3
+from utils.logging_config import setup_logger
 
 # load credentials from .env
 load_dotenv(".env", verbose=True)
 
-SKIP_S3_UPLOAD = os.environ.get("SKIP_S3_UPLOAD", True)
+SKIP_S3_UPLOAD = os.environ.get("SKIP_S3_UPLOAD")
 S3_BUCKET_NAME = os.environ.get("S3_BUCKET_NAME")
 S3_FILENAME_USER = os.environ.get("S3_FILENAME_USER")
 AWS_REGION_NAME = os.environ.get("AWS_REGION_NAME")
-DEBUG = os.environ.get("DEBUG", False)
+DEBUG = os.environ.get("DEBUG", True)
+
+print(SKIP_S3_UPLOAD, S3_BUCKET_NAME, S3_FILENAME_USER, AWS_REGION_NAME)  # noqa: T201
 
 logger = setup_logger(DEBUG)
 

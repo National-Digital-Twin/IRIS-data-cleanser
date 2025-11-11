@@ -33,13 +33,13 @@ models:
     stg_epc_recommendations:
       +enabled: false
     stg_epc_certificates:
-      +enabled: false
+      +enabled: true
     stg_os_places:
       +enabled: false
     mart_address_profiling:
-      +enabled: false
+      +enabled: true
     mart_address_profiling_with_sap:
-      +enabled: false
+      +enabled: true
     mart_address_base_plus:
       +enabled: false
     int_os_epc:
@@ -49,7 +49,7 @@ models:
     improvement_measures_s3_export:
       +enabled: false
     epc_with_uprn:
-      +enabled: false
+      +enabled: true
     epc_without_uprn:
       +enabled: false
     combine_epc_data:
@@ -59,13 +59,13 @@ models:
     address_base_plus_s3_export:
       +enabled: false
     address_profiling_s3_export:
-      +enabled: false
+      +enabled: true
 #     # Config indicated by + and applies to all files under models/example/
 #     example:
 #       +materialized: view
     stg_os_ngd_buildings:
-      +enabled: true
+      +enabled: false
     int_os_ngd_buildings:
-      +enabled: true
+      +enabled: false
     os_ngd_buildings_s3_export:
-      +enabled: true
+      +enabled: false

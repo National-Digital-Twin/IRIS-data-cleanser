@@ -517,7 +517,6 @@ def pipeline(df):
         "lighting_cost_current",
         "inspection_date",
         "flat_storey_count",
-        "fuzzy_matched",
         "certificate_type",
     ]
 
@@ -575,7 +574,7 @@ def pipeline(df):
             "construction_age_band": "ConstructionAgeBand",
             "built_form": "BuiltForm",
             "total_floor_area": "TotalFloorArea",
-            "fuzzy_matched": "FuzzyMatched",
+            # "fuzzy_matched": "FuzzyMatched",
             "certificate_type": "CertificateType",
         },
     )
@@ -647,7 +646,7 @@ def pipeline(df):
             "WaterHeatingCost(£/yr)",
             "LightingCost(£/yr)",
             "TotalFloorArea",
-            "FuzzyMatched",
+            # "FuzzyMatched",
             "CertificateType",
         ]
     ].copy()

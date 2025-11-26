@@ -26,7 +26,7 @@ def delete_workspace(client, workspace_id):
     Deletes a workspace in Airbyte.
     """
     
-    delete_workspace_request = client.workspaces.delete_workspace(
+    client.workspaces.delete_workspace(
         request=api.DeleteWorkspaceRequest(
             workspace_id=workspace_id)
     )

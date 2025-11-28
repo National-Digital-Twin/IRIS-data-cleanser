@@ -20,7 +20,7 @@ To run DBT as a container you have to first build the required pipeline images. 
 
 You can use the following command to run as a docker container:
 ```sh
-docker run -d [-e <environment-variable>...] <dbt-image-name> .
+docker run -d [-e <environment-variable>...| -env-file <path-to-env-file>] <dbt-image-name> .
 ```
 
 

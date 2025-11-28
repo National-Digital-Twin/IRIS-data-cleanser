@@ -15,7 +15,8 @@ Try running the following commands:
 
 ### Running as a docker container:
 To run DBT as a container you have to first build the required pipeline images. The docker files for these are given below:
-- [EPC](infrastructure/Dockerfile.epc)
+
+- [EPC](infrastructure/Dockerfile.epc)  
 You can use the following command to run as a docker container:
 ```sh
 docker run -d [-e <environment-variable>...] <dbt-image-name> .

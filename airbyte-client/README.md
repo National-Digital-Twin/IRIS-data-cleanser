@@ -6,7 +6,8 @@ Airbyte Python client helpers for creating, updating, running, and deleting Airb
 
 ## Docker containers (for local usage)
 - Ensure docker is installed on your machine.
-- Start airbyte if not already running using [official documentation](https://docs.airbyte.com/platform/using-airbyte/getting-started/oss-quickstart#install-abctl-the-fast-way-mac-linux). There's no need to download Docker Desktop if you don't want to.
+- Start airbyte if not already running using [official documentation](https://docs.airbyte.com/platform/using-airbyte/getting-started/oss-quickstart#install-abctl-the-fast-way-mac-linux). There's no need to download Docker Desktop if you don't want to. 
+  - For ease of use, install with authentication **disabled** using [this guidance](https://docs.airbyte.com/platform/deploying-airbyte/integrations/authentication#turning-off-authentication).
 - Run `docker compose up -d` from within the airbyte-client directory. 
 
 ## Environment setup
@@ -21,6 +22,7 @@ Airbyte Python client helpers for creating, updating, running, and deleting Airb
 
 ## Configure env vars
 Create `airbyte-client/.env` (copy from `.env.example` if present) with:
+- Airbyte authentication: `AUTHENTICATION_REQUIRED` ("TRUE" or "FALSE")
 - Airbyte auth: `AIRBYTE_SERVER_URL`, `AIRBYTE_CLIENT_ID`, `AIRBYTE_CLIENT_SECRET`.
 - Workspace/IDs: `WORKSPACE_NAME`, `WORKSPACE_ID`, `SOURCE_ID`, `DESTINATION_ID`, `EPC_CONNECTION_ID`.
 - Connection naming: `EPC_SOURCE_NAME`, `EPC_CONNECTION_NAME`, `DESTINATION_NAME`.

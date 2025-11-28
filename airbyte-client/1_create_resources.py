@@ -9,11 +9,18 @@ def main():
     """
     # 1. Authenticate
     load_dotenv()
-    client = auth.get_authenticated_client(
-        server_url=os.getenv("AIRBYTE_SERVER_URL"), 
-        client_id=os.getenv("AIRBYTE_CLIENT_ID"), 
-        client_secret=os.getenv("AIRBYTE_CLIENT_SECRET")
-    )
+    if os.getenv("AUTHENTICATION_REQUIRED")=="FALSE":
+        client = auth.get_authenticated_client(
+            server_url=os.getenv("AIRBYTE_SERVER_URL"),
+        )
+    else:
+        client = auth.get_authenticated_client(
+            server_url=os.getenv("AIRBYTE_SERVER_URL"), 
+            auth_required=True,
+            client_id=os.getenv("AIRBYTE_CLIENT_ID"), 
+            client_secret=os.getenv("AIRBYTE_CLIENT_SECRET")
+        )
+    print("Airbyte API client created successfully")
     
     # 2. Create Workspace
     workspace_id = workspaces.create_workspace(

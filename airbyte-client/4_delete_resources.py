@@ -9,17 +9,15 @@ def main():
     """
     # 1. Authenticate
     load_dotenv()
-    if os.getenv("AUTHENTICATION_REQUIRED")=="FALSE":
-        client = auth.get_authenticated_client(
-            server_url=os.getenv("AIRBYTE_SERVER_URL")
-        )
-    else:
-        client = auth.get_authenticated_client(
-            server_url=os.getenv("AIRBYTE_SERVER_URL"), 
-            auth_required=True,
-            client_id=os.getenv("AIRBYTE_CLIENT_ID"), 
-            client_secret=os.getenv("AIRBYTE_CLIENT_SECRET")
-        )
+    
+    auth_required = (os.getenv("AUTHENTICATION_REQUIRED", "FALSE").strip().lower()=="true")
+    client = auth.get_authenticated_client(
+        server_url=os.getenv("AIRBYTE_SERVER_URL"), 
+        auth_required=auth_required,
+        client_id=os.getenv("AIRBYTE_CLIENT_ID", None), 
+        client_secret=os.getenv("AIRBYTE_CLIENT_SECRET", None)
+    )
+
     print("Airbyte API client created successfully")
     
     # Delete workspace and connectors

@@ -21,7 +21,7 @@ def build_s3_config(bucket, streams, endpoint, auth_mode, access_key_id=None, se
     if mode not in {"role", "access_key"}:
         raise ValueError(f"Invalid S3 auth_mode: {auth_mode}. Use 'role' or 'access_key'.")
     
-    base = dict(bucket=bucket, streams=streams, endpoint=endpoint)
+    base = {"bucket": bucket, "streams": streams, "endpoint": endpoint}
     
     if mode=="role":
         base.update(role_arn=role_arn)

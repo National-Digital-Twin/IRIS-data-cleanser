@@ -61,7 +61,7 @@ def update_postgres_destination(client, workspace_id, destination_id, destinatio
     configuration=models.DestinationPostgres(
         database=database,
         host=host,
-        port=int(port),
+        port=port,
         username=username,
         password=password,
         schema=schema

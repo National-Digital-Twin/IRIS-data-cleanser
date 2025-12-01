@@ -48,7 +48,7 @@ def main():
         destination_name=os.getenv("DESTINATION_NAME"),
         database=os.getenv("DATABASE_NAME"),
         host=os.getenv("DATABASE_HOST"),
-        port=os.getenv("DATABASE_PORT"),
+        port=int(os.getenv("DATABASE_PORT")),
         username=os.getenv("DATABASE_USERNAME"),
         password=os.getenv("DATABASE_PASSWORD"),
         schema=os.getenv("DATABASE_SCHEMA")

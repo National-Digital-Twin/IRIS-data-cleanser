@@ -2,7 +2,9 @@ Airbyte Python client helpers for creating, updating, running, and deleting Airb
 
 ## Prereqs
 - Python 3.11+
-- Access to your Airbyte instance (OAuth client ID/secret) and Postgres/S3 credentials.
+- Access to your Airbyte instance (OAuth client ID/secret) 
+- Access to minio (local) via access key ID or s3 (deployed) via IAM role
+- Access to Postgres (local) via local credentials or RDS (deployed) via deployed credentials
 
 ## Docker containers (for local usage)
 - Ensure docker is installed on your machine.
@@ -20,13 +22,16 @@ Airbyte Python client helpers for creating, updating, running, and deleting Airb
   - `pip install -r requirements.txt`.
 - `.venv/` is ignored; only commit `pyproject.toml`, `uv.lock`, and (optionally) `requirements.txt`.
 
+## MINIO config (local)
+- Log into MINIO UI, create and configure bucket and directories and load data. 
+
 ## Configure env vars
 Create `airbyte-client/.env` (copy from `.env.example` if present) with:
 - Airbyte authentication: `AUTHENTICATION_REQUIRED` ("TRUE" or "FALSE")
-- Airbyte auth: `AIRBYTE_SERVER_URL`, `AIRBYTE_CLIENT_ID`, `AIRBYTE_CLIENT_SECRET`.
+- Airbyte auth (if authentication enabled): `AIRBYTE_SERVER_URL`, `AIRBYTE_CLIENT_ID`, `AIRBYTE_CLIENT_SECRET`.
 - Workspace/IDs: `WORKSPACE_NAME`, `WORKSPACE_ID`, `SOURCE_ID`, `DESTINATION_ID`, `EPC_CONNECTION_ID`.
 - Connection naming: `EPC_SOURCE_NAME`, `EPC_CONNECTION_NAME`, `DESTINATION_NAME`.
-- Source config: `EPC_CERTIFICATES_STREAM_PARAMS` (JSON string with `stream_name`, `globs`), `S3_BUCKET_NAME`, `S3_ACCESS_KEY_ID`, `S3_SECRET_ACCESS_KEY`, `S3_ENDPOINT`.
+- Source config: `EPC_CERTIFICATES_STREAM_PARAMS` (JSON string with `stream_name`, `globs`), `S3_BUCKET_NAME`, `S3_AUTH_MODE` (set to "role" or "access_key"), `S3_ACCESS_KEY_ID`, `S3_SECRET_ACCESS_KEY`, `S3_IAM_ROLE_ARN`, `S3_ENDPOINT`.
 - Destination config: `DATABASE_NAME`, `DATABASE_HOST`, `DATABASE_PORT`, `DATABASE_USERNAME`, `DATABASE_PASSWORD`, `DATABASE_SCHEMA`.
 
 ## Scripts

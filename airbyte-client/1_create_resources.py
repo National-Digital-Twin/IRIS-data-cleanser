@@ -37,8 +37,10 @@ def main():
         source_name=os.getenv("EPC_SOURCE_NAME"),
         streams_params=[json.loads(os.getenv("EPC_CERTIFICATES_STREAM_PARAMS"))],
         bucket=os.getenv("S3_BUCKET_NAME"),
-        bucket_access_key_id=os.getenv("S3_ACCESS_KEY_ID"),
-        bucket_secret_access_key=os.getenv("S3_SECRET_ACCESS_KEY"),
+        auth_mode=os.getenv("S3_AUTH_MODE"),
+        access_key_id=os.getenv("S3_ACCESS_KEY_ID"),
+        secret_access_key=os.getenv("S3_SECRET_ACCESS_KEY"),
+        role_arn=os.getenv("S3_IAM_ROLE_ARN"),
         endpoint=os.getenv("S3_ENDPOINT")
     )
     print(f"Source ID: {source_id}")

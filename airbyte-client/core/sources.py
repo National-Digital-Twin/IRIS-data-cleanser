@@ -1,7 +1,35 @@
 from airbyte_api import models, api
 
 
-def create_s3_source(client, workspace_id, source_name, streams_params:dict, bucket, bucket_access_key_id, bucket_secret_access_key, endpoint):
+def build_s3_config(bucket, streams, endpoint, auth_mode, access_key_id=None, secret_access_key=None, role_arn=None):
+    """Create configuration for s3 source.
+
+    Args:
+        bucket (str): The S3 bucket name.
+        streams (list): List of streams for the source.
+        endpoint (str): The S3 bucket endpoint.
+        auth_mode (str): Set "role" to use IAM role. Set "access_key" to use access key id and secret access key.
+        access_key_id (str, optional): Access key ID. Defaults to None.
+        secret_access_key (str, optional): Secret access key. Defaults to None.
+        role_arn (str, optional): IAM role. Defaults to None.
+
+    Returns:
+        models.SourceS3: s3 bucket configuration class
+    """
+    
+    mode = (auth_mode or "").lower()
+    if mode not in {"role", "access_key"}:
+        raise ValueError(f"Invalid S3 auth_mode: {auth_mode}. Use 'role' or 'access_key'.")
+    
+    base = dict(bucket=bucket, streams=streams, endpoint=endpoint)
+    
+    if mode=="role":
+        base.update(role_arn=role_arn)
+    else:
+        base.update(aws_access_key_id=access_key_id, aws_secret_access_key=secret_access_key)
+    return models.SourceS3(**base)
+
+def create_s3_source(client, workspace_id, source_name, streams_params:list, bucket, auth_mode, access_key_id, secret_access_key, role_arn, endpoint):
     """
     Creates an S3 source in Airbyte.
 
@@ -9,11 +37,15 @@ def create_s3_source(client, workspace_id, source_name, streams_params:dict, buc
         client: The authenticated Airbyte client.
         workspace_id (str): The ID of the workspace.
         source_name (str): The name of the source.
-        streams_params (dict): The streams to be created. Dictionary containing:
+        streams_params (list): A list of dictionaries. Each dictionary contains params for each stream:
             - stream_name (str): The name of the stream.
             - globs (list): List of glob patterns for files.
         
         bucket (str): The S3 bucket name.
+        auth_mode (str): Either "role" or "access_key" to determine s3 bucket authentication.
+        access_key_id (str, optional): Access key ID. Defaults to None.
+        secret_access_key (str, optional): Secret access key. Defaults to None.
+        role_arn (str, optional): IAM role. Defaults to None.
         endpoint (str): The S3 endpoint URL.
 
     Returns:
@@ -32,12 +64,14 @@ def create_s3_source(client, workspace_id, source_name, streams_params:dict, buc
         )
     print(streams)
     
-    configuration=models.SourceS3(
+    configuration=build_s3_config(
         bucket=bucket,
         streams=streams,
-        aws_access_key_id=bucket_access_key_id,
-        aws_secret_access_key=bucket_secret_access_key,
-        endpoint=endpoint
+        endpoint=endpoint,
+        auth_mode=auth_mode,
+        access_key_id=access_key_id,
+        secret_access_key=secret_access_key,
+        role_arn=role_arn,
     )
     
     create_source_response = client.sources.create_source(
@@ -50,7 +84,7 @@ def create_s3_source(client, workspace_id, source_name, streams_params:dict, buc
     
     return create_source_response.source_response.source_id
 
-def update_s3_source(client, workspace_id, source_id, source_name, streams_params:dict, bucket, bucket_access_key_id, bucket_secret_access_key, endpoint):
+def update_s3_source(client, workspace_id, source_id, source_name, streams_params:list, bucket, auth_mode, access_key_id, secret_access_key, role_arn, endpoint):
     """
     Updates an s3 source in Airbyte.
 
@@ -59,14 +93,19 @@ def update_s3_source(client, workspace_id, source_id, source_name, streams_param
         workspace_id (str): The ID of the workspace.
         source_id (str): The ID of the source.
         source_name (str): The name of the source.
-        streams_params (dict): The streams to be created. Dictionary containing:
+        streams_params (list): A list of dictionaries. Each dictionary contains params for each stream:
             - stream_name (str): The name of the stream.
             - globs (list): List of glob patterns for files.
-    
+        
         bucket (str): The S3 bucket name.
-        bucket_access_key_id (str): The bucket access key for the bucket.
-        bucket_secret_access_key (str): The bucket secret access key for the bucket.
+        auth_mode (str): Either "role" or "access_key" to determine s3 bucket authentication.
+        access_key_id (str, optional): Access key ID. Defaults to None.
+        secret_access_key (str, optional): Secret access key. Defaults to None.
+        role_arn (str, optional): IAM role. Defaults to None.
         endpoint (str): The S3 endpoint URL.
+        
+    Returns:
+        str: The ID of the updated source.
     """
 
     # create streams
@@ -81,12 +120,14 @@ def update_s3_source(client, workspace_id, source_id, source_name, streams_param
         )
 
     # create configuration
-    configuration=models.SourceS3(
+    configuration=build_s3_config(
         bucket=bucket,
         streams=streams,
-        aws_access_key_id=bucket_access_key_id,
-        aws_secret_access_key=bucket_secret_access_key,
-        endpoint=endpoint
+        endpoint=endpoint,
+        auth_mode=auth_mode,
+        access_key_id=access_key_id,
+        secret_access_key=secret_access_key,
+        role_arn=role_arn,
     )
 
     update_source_response = client.sources.patch_source(

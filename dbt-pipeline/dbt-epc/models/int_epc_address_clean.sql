@@ -29,6 +29,7 @@ select
     wind_turbine_count,
     mechanical_ventilation,
     address,
+    posttown,
     construction_age_band,
     uprn,
     certificate_type

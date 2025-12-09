@@ -21,6 +21,7 @@ select
     sapband,
     lodgement_date,
     construction_age_band,
+    posttown,
     built_form,
     total_floor_area,
     environmental_impact_rating,

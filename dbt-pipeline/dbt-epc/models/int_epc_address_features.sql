@@ -34,6 +34,7 @@ with base as (
         lighting_cost_current,
         inspection_date,
         flat_storey_count,
+        posttown,
         certificate_type
     from {{ ref('int_epc_address_clean') }}
 ),
@@ -90,6 +91,7 @@ feature_map as (
         lighting_cost_current,
         inspection_date,
         flat_storey_count,
+        posttown,
         certificate_type
     from split_descriptions
 ),
@@ -103,7 +105,7 @@ mapped as (
         saprating,
         sapband,
         lodgement_date,
-        construction_age_band,
+        trim(regexp_replace(construction_age_band, '^\s*England and Wales:\s*', '', 'i')) as construction_age_band,
         built_form_norm as built_form,
         total_floor_area,
         environment_impact_current as environmental_impact_rating,
@@ -112,6 +114,7 @@ mapped as (
         hot_water_cost_current as water_heating_cost_gbp_per_yr,
         lighting_cost_current as lighting_cost_gbp_per_yr,
         property_type,
+        posttown,
         flat_storey_count as storeys_count,
         -- map flat level to numeric
         case

@@ -20,24 +20,6 @@ select
     lighting_cost_current as lighting_cost_gbp_per_yr,
     property_type,
     posttown,
-    flat_storey_count as storeys_count,
-    -- map flat level to numeric
-    case
-        when lower(floor_level) in ('basement', '-1', '-1.0') then -1
-        when lower(floor_level) in ('ground', 'ground floor', '00', '0', '0.0') then 0
-        when lower(floor_level) in ('1st', '01', '1', '1.0') then 1
-        when lower(floor_level) in ('2nd', '02', '2', '2.0') then 2
-        when lower(floor_level) in ('3rd', '03', '3', '3.0') then 3
-        when lower(floor_level) in ('4th', '04', '4', '4.0') then 4
-        when lower(floor_level) in ('5th', '05', '5', '5.0') then 5
-        when lower(floor_level) = '6th' then 6
-        when lower(floor_level) = '7th' or floor_level = '07' then 7
-        when lower(floor_level) = '8th' then 8
-        when lower(floor_level) = '12th' then 12
-        when lower(floor_level) = 'topfloor' then 13
-        when lower(floor_level) = 'midfloor' then 6
-        else null
-    end as flat_level,
     -- heating category (aligned with original Python mapping)
     case
         when lower(mainheat_description) like '%boiler and radiators, mains gas%' then 'BoilerRadiatorsMainsGas'
@@ -77,7 +59,6 @@ select
         when main_fuel ilike '%invalid%' then 'Invalid'
         else 'Other'
     end as main_fuel_type,
-    main_heating_controls as main_heating_control,
     -- glazing
     case
         when glazed_type ilike '%double%' and glazed_type ilike '%2002%' then 'DoubleGlazingAfter2002'
@@ -157,7 +138,6 @@ select
         when floor_insulation_raw ilike '%assumed%' then trim(replace(floor_insulation_raw, '(assumed)', ''))
         else nullif(trim(floor_insulation_raw), '')
     end as floor_insulation,
-    nullif(trim(floor_insulation_thickness_raw), '') as floor_insulation_thickness,
     windows_description,
     floor_description,
     number_open_fireplaces as open_fireplaces_count,

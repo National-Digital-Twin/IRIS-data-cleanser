@@ -11,7 +11,7 @@ select
     current_energy_rating as sapband,
     lodgement_date,
     trim(regexp_replace(construction_age_band, '^\s*England and Wales:\s*', '', 'i')) as construction_age_band,
-    regexp_replace(initcap(coalesce(built_form, '')), '[^A-Za-z0-9]', '', 'g') as built_form,
+    nullif(regexp_replace(initcap(built_form), '[^A-Za-z0-9]', '', 'g'), '') as built_form,
     total_floor_area,
     environment_impact_current as environmental_impact_rating,
     co2_emissions_current as tco2,

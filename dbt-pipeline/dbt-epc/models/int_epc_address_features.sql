@@ -133,13 +133,16 @@ select
         else 'Other'
     end as wall_construction,
     case
-        when wall_insulation_raw ilike '%filled cavity%' and wall_insulation_raw ilike '%internal%' then 'FilledCavityAndInternalInsulation'
-        when wall_insulation_raw ilike '%filled cavity%' and wall_insulation_raw ilike '%external%' then 'FilledCavityAndExternalInsulation'
-        when wall_insulation_raw ilike '%filled cavity%' then 'FilledCavity'
-        when wall_insulation_raw ilike '%internal%' then 'WithInternalInsulation'
-        when wall_insulation_raw ilike '%external%' then 'WithExternalInsulation'
-        when wall_insulation_raw ilike '%additional insulation%' then 'WithAdditionalInsulation'
-        else null
+        when wall_insulation_raw ilike '%filled cavity%' and wall_insulation_raw ilike '%internal%' then 'InternalInsulation'
+        when wall_insulation_raw ilike '%filled cavity%' and wall_insulation_raw ilike '%external%' then 'ExternalInsulation'
+        when wall_insulation_raw ilike '%filled cavity%' then 'InsulatedWall'
+        when wall_insulation_raw ilike '%internal%' then 'InternalInsulation'
+        when wall_insulation_raw ilike '%external%' then 'ExternalInsulation'
+        when wall_insulation_raw ilike '%additional insulation%' then 'InsulatedWall'
+        when wall_insulation_raw ilike '%as built%' then 'InsulatedWall'
+        when wall_insulation_raw ilike '%partial%' then 'PartialInsulation'
+        when wall_insulation_raw is null or trim(wall_insulation_raw) = '' then 'NoInsulationInWall'
+        else 'WallInsulation'
     end as wall_insulation_type,
     wall_insulation_thickness_raw as wall_insulation_thickness,
     -- floor mappings

@@ -38,19 +38,24 @@ select
         when lower(floor_level) = 'midfloor' then 6
         else null
     end as flat_level,
-    -- heating category (simplified mappings)
+    -- heating category (aligned with original Python mapping)
     case
-        when mainheat_description ilike '%mains gas%' and mainheat_description ilike '%boiler%' then 'BoilerRadiatorsMainsGas'
-        when mainheat_description ilike '%electric storage heaters%' then 'ElectricHeaters'
-        when mainheat_description ilike '%lpg%' then 'BoilerRadiatorsLPG'
-        when mainheat_description ilike '%oil%' then 'BoilerRadiatorsOil'
-        when mainheat_description ilike '%air source heat pump%' then 'AirSourceHeatPump'
-        when mainheat_description ilike '%ground source heat pump%' then 'GroundSourceHeatPump'
-        when mainheat_description ilike '%water source heat pump%' then 'WaterSourceHeatPump'
-        when mainheat_description ilike '%community scheme%' then 'CommunityScheme'
-        when mainheat_description ilike '%electric underfloor%' then 'ElectricUnderfloor'
-        when mainheat_description ilike '%warm air%' and mainheat_description ilike '%mains gas%' then 'WarmAirMainsGas'
-        when mainheat_description ilike '%no system%' then 'NoSystemPresent'
+        when lower(mainheat_description) like '%boiler and radiators, mains gas%' then 'BoilerRadiatorsMainsGas'
+        when lower(mainheat_description) like '%electric storage heaters%' or lower(mainheat_description) like '%portable electric heaters%' then 'ElectricHeaters'
+        when lower(mainheat_description) like '%boiler and radiators, lpg%' or lower(mainheat_description) like '%boiler and underfloor heating, lpg%' then 'BoilerRadiatorsLPG'
+        when lower(mainheat_description) like '%boiler and radiators, oil%' or lower(mainheat_description) like '%boiler and underfloor heating, oil%' then 'BoilerRadiatorsOil'
+        when lower(mainheat_description) like '%electric underfloor heating%' then 'ElectricUnderfloor'
+        when lower(mainheat_description) like '%community scheme%' then 'CommunityScheme'
+        when lower(mainheat_description) like '%warm air, mains gas%' then 'WarmAirMainsGas'
+        when lower(mainheat_description) like '%boiler & underfloor, mains gas%' or lower(mainheat_description) like '%boiler and underfloor heating, mains gas%' then 'BoilerUnderfloorMainsGas'
+        when lower(mainheat_description) like '%air source heat pump%' then 'AirSourceHeatPump'
+        when lower(mainheat_description) like '%boiler and radiators, electric%' or lower(mainheat_description) like '%boiler and underfloor heating, electric%' then 'BoilerRadiatorsElectric'
+        when lower(mainheat_description) like '%ground source heat pump%' then 'GroundSourceHeatPump'
+        when lower(mainheat_description) like '%boiler and radiators, dual fuel%' then 'BoilerRadiatorsDualFuel'
+        when lower(mainheat_description) like '%boiler and radiators, wood%' then 'BoilerRadiatorsWood'
+        when lower(mainheat_description) like '%room heaters, mains gas%' then 'RoomHeatersMainsGas'
+        when lower(mainheat_description) like '%no system present%' then 'NoSystemPresent'
+        when lower(mainheat_description) like '%water source heat pump%' then 'WaterSourceHeatPump'
         else 'Other'
     end as main_heating_category,
     -- fuel category

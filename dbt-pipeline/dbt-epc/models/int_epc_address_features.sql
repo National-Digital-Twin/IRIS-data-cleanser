@@ -58,16 +58,23 @@ select
         when lower(mainheat_description) like '%water source heat pump%' then 'WaterSourceHeatPump'
         else 'Other'
     end as main_heating_category,
-    -- fuel category
+    -- fuel category (aligned with original Python mapping)
     case
         when main_fuel ilike '%mains gas%' then 'MainsGas'
-        when main_fuel ilike '%electric%' then 'Electricity'
+        when main_fuel ilike '%electricity%' or main_fuel ilike '%electric%' then 'Electricity'
         when main_fuel ilike '%oil%' then 'Oil'
         when main_fuel ilike '%lpg%' then 'LPG'
+        when main_fuel ilike '%no heating/hot-water system%' then 'NoSystem'
         when main_fuel ilike '%dual fuel%' then 'DualFuel'
-        when main_fuel ilike '%wood%' then 'Wood'
-        when main_fuel ilike '%coal%' then 'Coal'
+        when main_fuel ilike '%wood logs%' then 'WoodLogs'
+        when main_fuel ilike '%wood pellets%' then 'WoodPellets'
+        when main_fuel ilike '%wood chips%' then 'WoodChips'
+        when main_fuel ilike '%house coal%' then 'Coal'
+        when main_fuel ilike '%anthracite%' then 'Anthracite'
+        when main_fuel ilike '%smokeless coal%' then 'SmokelessCoal'
         when main_fuel ilike '%biomass%' then 'Biomass'
+        when main_fuel ilike '%biogas%' then 'Biogas'
+        when main_fuel ilike '%invalid%' then 'Invalid'
         else 'Other'
     end as main_fuel_type,
     main_heating_controls as main_heating_control,

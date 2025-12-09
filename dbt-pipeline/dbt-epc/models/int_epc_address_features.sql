@@ -144,7 +144,6 @@ select
         when wall_insulation_raw is null or trim(wall_insulation_raw) = '' then 'NoInsulationInWall'
         else 'WallInsulation'
     end as wall_insulation_type,
-    wall_insulation_thickness_raw as wall_insulation_thickness,
     -- floor mappings
     case
         when floor_construction_raw ilike '%solid%' then 'Solid'

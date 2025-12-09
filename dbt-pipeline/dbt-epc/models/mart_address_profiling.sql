@@ -41,7 +41,6 @@ select
     roof_insulation_thickness as "RoofInsulationThickness",
     wall_construction as "WallConstruction",
     wall_insulation_type as "WallInsulationType",
-    wall_insulation_thickness as "WallInsulationThickness",
     floor_construction as "FloorConstruction",
     floor_insulation as "FloorInsulation",
     floor_insulation_thickness as "FloorInsulationThickness",

@@ -1,6 +1,8 @@
 {{ config(materialized='view') }}
 
 -- Keep the latest record per UPRN (by lodgement_date desc, then inspection_date desc).
+-- TODO: once ground-truth comparisons are done, consider keeping all EPC records and only dropping exact duplicates,
+-- or add a separate view for "latest per UPRN" alongside a full-history view.
 
 with ranked as (
     select
@@ -41,7 +43,6 @@ select
     roof_insulation_thickness,
     wall_construction,
     wall_insulation_type,
-    wall_insulation_thickness,
     floor_construction,
     floor_insulation,
     floor_insulation_thickness,

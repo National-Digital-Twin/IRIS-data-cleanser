@@ -101,15 +101,24 @@ select
         when roof_insulation_raw ilike '%mm%' then regexp_replace(roof_insulation_raw, '[^0-9]', '', 'g') || 'mm'
         else null
     end as roof_insulation_thickness,
-    coalesce(
-        case
-            when roof_insulation_raw ilike '%loft%' then 'LoftInsulation'
-            when roof_insulation_raw ilike '%insulated%' then 'Insulated'
-            when roof_insulation_raw ilike '%mm%' then null
-            else nullif(trim(roof_insulation_raw), '')
-        end,
-        nullif(trim(roof_insulation_extra), '')
-    ) as roof_insulation_location,
+    case
+        when roof_insulation_raw is null or trim(roof_insulation_raw) = '' then null
+        when roof_insulation_raw ilike '%rafters%' then 'InsulatedAtRafters'
+        when roof_insulation_raw ilike '%ceiling insulated%' then 'CeilingInsulated'
+        when roof_insulation_raw ilike '%flat roof%' then 'FlatRoofInsulation'
+        when roof_insulation_raw ilike '%with additional insulation%' then 'ThatchedWithAdditionalInsulation'
+        when roof_insulation_raw ilike '%thatched%' then 'InsulatedWithThatched'
+        when roof_insulation_raw ilike '%limited insulation%' and roof_insulation_raw ilike '%assumed%' then 'LimitedInsulationAssumed'
+        when roof_insulation_raw ilike '%limited insulation%' then 'LimitedInsulation'
+        when roof_insulation_raw ilike '%insulated%' and roof_insulation_raw ilike '%assumed%' then 'InsulatedAssumed'
+        when roof_insulation_raw ilike '%insulated%' then 'Insulated'
+        when roof_insulation_raw ilike '%loft insulation%' and roof_insulation_raw ilike '%assumed%' then 'LoftInsulationAssumed'
+        when roof_insulation_raw ilike '%loft insulation%' then 'LoftInsulation'
+        when roof_insulation_raw ilike '%no insulation%' and roof_insulation_raw ilike '%assumed%' then 'NoInsulationAssumedInRoof'
+        when roof_insulation_raw ilike '%no insulation%' then 'NoInsulationInRoof'
+        when roof_insulation_raw ilike '%unknown%' then null
+        else nullif(trim(roof_insulation_extra), '')
+    end as roof_insulation_location,
     -- wall mappings
     case
         when wall_construction_raw ilike '%cavity%' then 'CavityWall'

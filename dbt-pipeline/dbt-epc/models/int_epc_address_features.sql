@@ -98,7 +98,7 @@ select
         else null
     end as roof_construction,
     case
-        when roof_insulation_raw ilike '%mm%' then regexp_replace(roof_insulation_raw, '[^0-9]', '', 'g') || 'mm'
+        when roof_insulation_raw ilike '%mm%' then regexp_replace(roof_insulation_raw, '[^0-9+]', '', 'g') || 'mm'
         else null
     end as roof_insulation_thickness,
     case

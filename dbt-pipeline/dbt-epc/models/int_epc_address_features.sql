@@ -119,14 +119,18 @@ select
         when roof_insulation_raw ilike '%unknown%' then null
         else nullif(trim(roof_insulation_extra), '')
     end as roof_insulation_location,
-    -- wall mappings
+    -- wall mappings (aligned to original Python transform_wall_construction)
     case
-        when wall_construction_raw ilike '%cavity%' then 'CavityWall'
-        when wall_construction_raw ilike '%timber%' then 'TimberFrame'
+        when wall_construction_raw ilike '%cavity wall%' then 'CavityWall'
+        when wall_construction_raw ilike '%timber frame%' then 'TimberFrame'
         when wall_construction_raw ilike '%solid brick%' then 'SolidBrick'
+        when wall_construction_raw ilike '%sandstone or limestone%' then 'SandstoneOrLimestone'
         when wall_construction_raw ilike '%sandstone%' then 'Sandstone'
         when wall_construction_raw ilike '%granite%' or wall_construction_raw ilike '%whin%' then 'GraniteOrWhinstone'
-        else coalesce(nullif(trim(wall_construction_raw), ''), 'Other')
+        when wall_construction_raw ilike '%park home wall%' then 'ParkHomeWall'
+        when wall_construction_raw ilike '%cob%' then 'Cob'
+        when wall_construction_raw ilike '%system built%' then 'SystemBuilt'
+        else 'Other'
     end as wall_construction,
     case
         when wall_insulation_raw ilike '%filled cavity%' and wall_insulation_raw ilike '%internal%' then 'FilledCavityAndInternalInsulation'

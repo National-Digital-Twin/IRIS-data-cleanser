@@ -487,36 +487,35 @@ def pipeline(df):
     # Filter out the required columns with uppercase names
     columns_to_keep = [
         "lmk_key",
-        "uprn",
-        "address",
         "postcode",
-        "property_type",
-        "built_form",
         "current_energy_rating",
         "current_energy_efficiency",
-        "roof_description",
-        "walls_description",
+        "property_type",
+        "built_form",
+        "inspection_date",
+        "lodgement_date",
+        "environment_impact_current",
+        "co2_emissions_current",
+        "lighting_cost_current",
+        "heating_cost_current",
+        "hot_water_cost_current",
+        "total_floor_area",
+        "floor_level",
+        "flat_storey_count",
+        "main_heating_controls",
+        "glazed_type",
+        "number_open_fireplaces",
         "floor_description",
         "windows_description",
-        "glazed_type",
-        "total_floor_area",
-        "environment_impact_current",
-        "lodgement_date",
-        "co2_emissions_current",
-        "floor_level",
-        "heating_cost_current",
-        "construction_age_band",
-        "main_heating_controls",
+        "walls_description",
+        "roof_description",
         "mainheat_description",
         "main_fuel",
-        "number_open_fireplaces",
         "wind_turbine_count",
         "mechanical_ventilation",
-        # "heating_cost_current",  # Un-commented as it was commented in your original list
-        "hot_water_cost_current",
-        "lighting_cost_current",
-        "inspection_date",
-        "flat_storey_count",
+        "address",
+        "construction_age_band",
+        "uprn",
         "certificate_type",
     ]
 
@@ -737,8 +736,8 @@ def pipeline(df):
 
 
 def model(dbt, fal):
-    """dbt-fal model."""
-    return dbt.ref("epc_with_uprn").pipe(pipeline)
+    """dbt model."""
+    return dbt.ref("stg_epc_certificates").pipe(pipeline)
 
 
 def main(input_csv: str, output_csv: str, to_excel: bool):

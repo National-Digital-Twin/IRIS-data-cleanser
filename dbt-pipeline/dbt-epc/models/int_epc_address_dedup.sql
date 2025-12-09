@@ -1,0 +1,54 @@
+{{ config(materialized='view') }}
+
+-- Keep the latest record per UPRN (by lodgement_date desc, then inspection_date desc).
+
+with ranked as (
+    select
+        *,
+        row_number() over (
+            partition by uprn
+            order by lodgement_date desc, saprating desc, lmk_key desc
+        ) as rn
+    from {{ ref('int_epc_address_features') }}
+)
+
+select
+    lmk_key,
+    uprn,
+    address,
+    postcode,
+    saprating,
+    sapband,
+    lodgement_date,
+    construction_age_band,
+    built_form,
+    total_floor_area,
+    environmental_impact_rating,
+    tco2,
+    heating_cost_gbp_per_yr,
+    water_heating_cost_gbp_per_yr,
+    lighting_cost_gbp_per_yr,
+    property_type,
+    storeys_count,
+    flat_level,
+    main_heating_category,
+    main_fuel_type,
+    main_heating_control,
+    multiple_glazing_type,
+    roof_construction,
+    roof_insulation_location,
+    roof_insulation_thickness,
+    wall_construction,
+    wall_insulation_type,
+    wall_insulation_thickness,
+    floor_construction,
+    floor_insulation,
+    floor_insulation_thickness,
+    windows_description,
+    floor_description,
+    open_fireplaces_count,
+    renewables,
+    ventilation,
+    certificate_type
+from ranked
+where rn = 1

@@ -61,6 +61,7 @@ select
     end as main_fuel_type,
     -- glazing
     case
+        when glazed_type ilike '%double%' and glazed_type ilike '%before%2002%' then 'DoubleGlazingBefore2002'
         when glazed_type ilike '%double%' and glazed_type ilike '%2002%' then 'DoubleGlazingAfter2002'
         when glazed_type ilike '%double%' then 'DoubleGlazing'
         when glazed_type ilike '%triple%' then 'TripleGlazing'

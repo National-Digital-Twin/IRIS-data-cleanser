@@ -129,14 +129,15 @@ select
     case
         when floor_construction_raw ilike '%solid%' then 'Solid'
         when floor_construction_raw ilike '%suspended%' then 'Suspended'
-        when floor_construction_raw ilike '%other premises below%' then 'OtherPremisesBelow'
+        when floor_construction_raw ilike '%another dwelling above%' then 'AnotherDwellingAbove'
         when floor_construction_raw ilike '%another dwelling below%' then 'AnotherDwellingBelow'
         else null
     end as floor_construction,
     case
-        when floor_insulation_raw ilike '%uninsulated%' then 'NoInsulation'
-        when floor_insulation_raw ilike '%assumed%' then trim(replace(floor_insulation_raw, '(assumed)', ''))
-        else nullif(trim(floor_insulation_raw), '')
+        when floor_insulation_raw ilike '%no insulation%' or floor_insulation_raw ilike '%uninsulated%' then 'NoInsulationInFloor'
+        when floor_insulation_raw ilike '%limited%' then 'LimitedFloorInsulation'
+        when floor_insulation_raw is null or trim(floor_insulation_raw) = '' then null
+        else 'InsulatedFloor'
     end as floor_insulation,
     windows_description,
     floor_description,

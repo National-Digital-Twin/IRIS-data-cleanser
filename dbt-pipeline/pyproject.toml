@@ -5,16 +5,6 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
-    "boto3>=1.42.2",
     "dbt-core>=1.5.5",
-    "dbt-fal>=1.5.9",
     "dbt-postgres>=1.5.5",
-    "fuzzymatcher>=0.0.6",
-    "numpy>=2.3.5",
-    "pandarallel>=1.6.5",
-    "pandas>=1.5.3",
-    "python-dotenv>=1.2.1",
-    "rapidfuzz>=3.14.3",
-    "tqdm>=4.67.1",
-    "typer>=0.20.0",
 ]

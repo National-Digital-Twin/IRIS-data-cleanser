@@ -14,7 +14,6 @@ COPY dbt-epc/packages.yml ./packages.yml
 COPY dbt-epc/dbt_project.yml ./dbt_project.yml
 COPY dbt-epc/profiles.yml ./profiles.yml
 COPY dbt-epc/models ./models
-COPY dbt-epc/tests ./tests
 COPY utils ./utils
 
 RUN dbt deps --project-dir .

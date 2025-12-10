@@ -1,20 +1,8 @@
 {{ config(materialized='view') }}
 
--- Keep the latest record per UPRN (by lodgement_date desc, then inspection_date desc).
--- TODO: once ground-truth comparisons are done, consider keeping all EPC records and only dropping exact duplicates,
--- or add a separate view for "latest per UPRN" alongside a full-history view.
+-- Keep all EPC records, dropping only exact duplicates.
 
-with ranked as (
-    select
-        *,
-        row_number() over (
-            partition by uprn
-            order by lodgement_date desc, saprating desc, lmk_key desc
-        ) as rn
-    from {{ ref('int_epc_address_features') }}
-)
-
-select
+select distinct
     lmk_key,
     uprn,
     address,
@@ -48,5 +36,4 @@ select
     renewables,
     ventilation,
     certificate_type
-from ranked
-where rn = 1
+from {{ ref('int_epc_address_features') }}

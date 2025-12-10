@@ -144,6 +144,13 @@ select
     floor_description,
     number_open_fireplaces as open_fireplaces_count,
     wind_turbine_count as renewables,
-    mechanical_ventilation as ventilation,
+    case
+        when mechanical_ventilation ilike '%mechanical supply and extract%' then 'MechanicalSupplyAndExtract'
+        when mechanical_ventilation ilike '%mechanical%' and mechanical_ventilation ilike '%supply%' and mechanical_ventilation ilike '%extract%' then 'MechanicalSupplyAndExtract'
+        when mechanical_ventilation ilike '%mechanical ventilation%' then 'MechanicalSupplyAndExtract'
+        when mechanical_ventilation ilike '%mechanical extract%' then 'MechanicalExtractOnly'
+        when mechanical_ventilation ilike '%mechanical%' then 'MechanicalExtractOnly'
+        else 'NaturalVentilation'
+    end as ventilation,
     certificate_type
 from {{ ref('int_epc_address_split') }}

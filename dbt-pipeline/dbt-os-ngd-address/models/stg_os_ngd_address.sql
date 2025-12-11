@@ -6,7 +6,7 @@ with source as (
 )
 
 select
-    cast(nullif(trim(uprn), '') as bigint) as uprn,
+    cast(nullif(trim(uprn), '') as text) as uprn,
     cast(nullif(trim(versiondate), '') as date) as versiondate,
     cast(nullif(trim(versionavailablefromdate), '') as timestamp) as versionavailablefromdate,
     cast(nullif(trim(versionavailabletodate), '') as timestamp) as versionavailabletodate,
@@ -47,8 +47,8 @@ select
     cast(nullif(trim(buildstatusdate), '') as date) as buildstatusdate,
     nullif(trim(addressstatus), '') as addressstatus,
     nullif(trim(postcodesource), '') as postcodesource,
-    cast(nullif(trim(parentuprn), '') as bigint) as parentuprn,
-    cast(nullif(trim(rootuprn), '') as bigint) as rootuprn,
+    cast(nullif(trim(parentuprn), '') as text) as parentuprn,
+    cast(nullif(trim(rootuprn), '') as text) as rootuprn,
     cast(nullif(trim(hierarchylevel), '') as integer) as hierarchylevel,
     cast(nullif(trim(usrn), '') as bigint) as usrn,
     nullif(trim(usrnmatchindicator), '') as usrnmatchindicator,

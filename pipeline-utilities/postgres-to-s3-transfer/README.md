@@ -11,8 +11,9 @@ Exports a Postgres table to CSV and uploads it to S3/MinIO using psql and awscli
 - AWS creds (optional; rely on IAM/IRSA if not set)
 
 ## Build and run (from this directory)
-docker build -t postgres-to-s3-transfer -f Dockerfile .
-docker run --rm --env-file .env postgres-to-s3-transfer
+`docker build -t postgres-to-s3-transfer -f Dockerfile .`
+
+`docker run --rm --env-file .env postgres-to-s3-transfer`
 
 Or set envs explicitly:
 docker run --rm \

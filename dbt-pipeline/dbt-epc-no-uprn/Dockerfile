@@ -1,5 +1,7 @@
 FROM python:3.11.14-slim
 
+RUN useradd --create-home --shell /bin/bash appuser
+
 WORKDIR /app
 
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -16,6 +18,9 @@ COPY dbt-epc-no-uprn/profiles.yml ./profiles.yml
 COPY dbt-epc-no-uprn/models ./models
 COPY dbt-epc-no-uprn/tests ./tests
 COPY utils ./utils
+
+RUN chown -R appuser:appuser /app
+USER appuser
 
 RUN dbt deps --project-dir .
 

@@ -31,7 +31,7 @@ docker build -f dbt-os-ngd-buildings/Dockerfile -t dbt-os-ngd-buildings .
 ```
 Before running, ensure that all required environment variables are defined. Use .env.local as a guide. Once ready, run with your environment (or `--env-file ../.env` if you store it at repo root) e.g.:
 ```sh
-docker run --rm --env-file ../.env dbt-epc dbt run --project-dir .
+docker run --rm --env-file ../.env dbt-epc
 ```
 
 ### Resources

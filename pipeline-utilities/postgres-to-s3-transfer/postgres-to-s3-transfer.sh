@@ -27,4 +27,5 @@ fi
 echo "Uploading to s3://${S3_BUCKET}/${S3_DIR}/${TABLE}.csv"
 aws "${AWS_ARGS[@]}" s3 cp "${FILE}" "s3://${S3_BUCKET}/${S3_DIR}/${TABLE}.csv"
 
-
+rm -f "${FILE}"
+echo "Cleaned up local file ${FILE}"

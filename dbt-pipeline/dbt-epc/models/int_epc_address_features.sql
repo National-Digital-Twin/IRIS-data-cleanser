@@ -131,6 +131,7 @@ select
         when floor_construction_raw ilike '%solid%' then 'Solid'
         when floor_construction_raw ilike '%suspended%' then 'Suspended'
         when floor_construction_raw ilike '%another dwelling below%' then 'AnotherDwellingBelow'
+        when floor_construction_raw ilike '%other premises below%' then 'OtherPremisesBelow'
         else null
     end as floor_construction,
     case

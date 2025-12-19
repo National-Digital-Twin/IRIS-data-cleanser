@@ -18,7 +18,10 @@ select
     heating_cost_current as heating_cost_gbp_per_yr,
     hot_water_cost_current as water_heating_cost_gbp_per_yr,
     lighting_cost_current as lighting_cost_gbp_per_yr,
-    property_type,
+    case
+        when property_type ilike '% %' then regexp_replace(initcap(trim(property_type)), '\s+', '', 'g')
+        else property_type
+    end as property_type,
     posttown,
     -- heating category (aligned with original Python mapping)
     case

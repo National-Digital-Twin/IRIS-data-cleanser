@@ -1,4 +1,4 @@
-dbt_os_ngd_address:
+dbt_os_ngd_buildings:
   target: dev
   outputs:
     dev:

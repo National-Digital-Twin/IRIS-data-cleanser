@@ -12,11 +12,11 @@ ENV PYTHONPATH=/app:/app/utils
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY dbt-os-ngd-address/packages.yml ./packages.yml
-COPY dbt-os-ngd-address/dbt_project.yml ./dbt_project.yml
-COPY dbt-os-ngd-address/profiles.yml ./profiles.yml
-COPY dbt-os-ngd-address/models ./models
-COPY dbt-os-ngd-address/tests ./tests
+COPY dbt-os-ngd-buildings/packages.yml ./packages.yml
+COPY dbt-os-ngd-buildings/dbt_project.yml ./dbt_project.yml
+COPY dbt-os-ngd-buildings/profiles.yml ./profiles.yml
+COPY dbt-os-ngd-buildings/models ./models
+COPY dbt-os-ngd-buildings/tests ./tests
 COPY utils ./utils
 
 RUN chown -R appuser:appuser /app

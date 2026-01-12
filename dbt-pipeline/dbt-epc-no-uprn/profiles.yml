@@ -1,4 +1,4 @@
-dbt_os_ngd_address:
+dbt_epc_no_uprn:
   target: dev
   outputs:
     dev:

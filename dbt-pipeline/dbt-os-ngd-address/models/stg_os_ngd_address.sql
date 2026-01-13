@@ -63,4 +63,4 @@ select
     nullif(trim(positionalaccuracy), '') as positionalaccuracy,
     cast(nullif(trim(effectivestartdate), '') as date) as effectivestartdate,
     cast(nullif(trim(effectiveenddate), '') as date) as effectiveenddate
-from source
+from {{ source('postgres', 'add_gb_build_addresses')}}

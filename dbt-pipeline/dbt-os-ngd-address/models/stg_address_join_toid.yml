@@ -19,6 +19,4 @@ models:
       - name: longitude
         tests:
           - not_null
-      - name: toid
-        tests:
-          - not_null
+

@@ -12,3 +12,4 @@ select
     latitude as "Latitude",
     longitude as "Longitude"
 from {{ ref('stg_address_join_toid') }}
+where primaryclassificationdescription = 'Residential'

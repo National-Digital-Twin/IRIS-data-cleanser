@@ -2,8 +2,6 @@
 
 select 
     uprn as "UPRN",
-    parentuprn as "ParentUPRN",
-    rootuprn as "RootUPRN",
     toid as "TOID",
     fulladdress as "Address",
     postcode as "Postcode",

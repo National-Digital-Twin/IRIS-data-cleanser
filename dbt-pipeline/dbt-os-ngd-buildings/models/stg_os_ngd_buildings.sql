@@ -32,7 +32,9 @@ with buildings as
         roofshapeaspect_shape,
         roofshapeaspect_updatedate
     FROM {{ source('postgres', 'bld_fts_building') }}
-    where buildinguse in ('Residential Accommodation', 'Mixed Use')
+    where 
+        buildinguse like '%Residential Accommodation%' or 
+        buildinguse like '%Mixed Use%'
     ),
 
     crossref as (

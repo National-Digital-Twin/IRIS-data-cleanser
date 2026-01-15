@@ -44,7 +44,7 @@ with buildings as
                     'buildingversiondate', buildingversiondate
                 )
             ) filter (where uprn is not null) as uprnreference
-        from {{ source('postgres', 'osid_uprn_crossref')}}   -- your left-joined source, but ideally just the xref table
+        from {{ source('postgres', 'bld_fts_building_bldtoaddrcrossref')}}   -- your left-joined source, but ideally just the xref table
         group by buildingid
     )
 

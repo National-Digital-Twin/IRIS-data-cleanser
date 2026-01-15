@@ -5,4 +5,4 @@ sources:
     schema: "{{ env_var('DB_SCHEMA') }}"
     tables:
       - name: bld_fts_building
-      - name: osid_uprn_crossref
+      - name: bld_fts_building_bldtoaddrcrossref

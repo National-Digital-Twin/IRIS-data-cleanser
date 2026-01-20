@@ -6,8 +6,6 @@ WORKDIR /app
 
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
-ENV DBT_PROFILES_DIR=/app
-ENV PYTHONPATH=/app:/app/utils
 
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt

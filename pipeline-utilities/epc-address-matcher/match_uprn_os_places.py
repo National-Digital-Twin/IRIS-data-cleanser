@@ -6,15 +6,15 @@ from osdatahub import PlacesAPI
 import time
 import logging
 
+# Load environment variables
+load_dotenv(".env")
+
 logging.basicConfig(
-     level="INFO",
+     level=os.getenv("LOG_LEVEL", "INFO"),
      format="%(asctime)s [%(levelname)s] %(message)s"
 )
 
 logger = logging.getLogger(__name__)
-
-# Load environment variables
-load_dotenv(".env")
 
 OS_PLACES_KEY = os.environ.get("OS_PLACES_KEY")
 
@@ -138,14 +138,11 @@ def match_address(api_client, address, threshold=0.8):
         match_score (float): a match score value
     """
 
-    ## TODO: check threshold (0.7 vs 0.8)
     results = api_client.find(text=address, minmatch=threshold, limit=1)
     if results and results.get("features"):
                 props = results["features"][0].get("properties", {})
-                logger.info(f"""Address: {address} matched to UPRN: {props.get("UPRN")} with match score: {props.get("MATCH")}""")
                 return props.get("UPRN"), float(props.get("MATCH")), props.get("MATCH_DESCRIPTION") 
     else:
-        logger.warning(f"No results for {address}.")
         return None, None, None
 
 def main():
@@ -153,23 +150,20 @@ def main():
     engine = get_db_connection(DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASSWORD)
 
     crossref_exists = is_crossref_exists(engine, DB_SCHEMA)
-    if crossref_exists: 
-        certificates = get_certificates(engine, DB_SCHEMA, crossref_exists=True)
-    else:
-        certificates = get_certificates(engine, DB_SCHEMA, crossref_exists=False)
+    certificates = get_certificates(engine, DB_SCHEMA, crossref_exists=crossref_exists)
 
     certificates_matched_dict = []
     places_api = PlacesAPI(OS_PLACES_KEY)
 
     matched = 0
     unmatched = 0
-    for _, record in certificates.iterrows():
 
-        logger.info(f"Matching threshold set at {MATCH_THRESHOLD}")
+    logger.info(f"Matching threshold set at {MATCH_THRESHOLD}")
+
+    for _, record in certificates.iterrows():
 
         uprn, match_score, match_description = match_address(places_api, record["query_address"], MATCH_THRESHOLD)
 
-        ## TODO: try live mode first (600 transactions per minute)
         time.sleep(0.1)
         
         if uprn is not None and match_score is not None and match_description is not None:
@@ -182,7 +176,7 @@ def main():
             certificates_matched_dict.append(record_matched)
             matched += 1
 
-            if matched % 1000 == 0:
+            if matched==10 or matched % 1000 == 0:
                  logger.info(f"Matched {matched} records.")
                  logger.info(f"Could find a UPRN at or above the threshold for {unmatched} records")
         else:

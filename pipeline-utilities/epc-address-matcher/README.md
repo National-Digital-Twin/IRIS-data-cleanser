@@ -2,18 +2,22 @@
 
 Minimal utility to match EPC certificate addresses to UPRNs using OS Places and write a cross-reference table in Postgres.
 
-## What it does
+## Prerequisites
+This utility requires you to have a `certificates` table in a postgres database containing EPC certificates. 
+
+### What it does
 - Reads certificates without a UPRN from `certificates`.
 - Calls OS Places to find the top UPRN candidate above a match threshold.
 - Appends results to `epc_address_uprn_crossref` (by `lmk_key`).
 
-## Environment
+### Environment
 Required:
 - `OS_PLACES_KEY`
 - `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_SCHEMA`, `DB_USER`, `DB_PASSWORD`
 
 Optional:
-- `MATCH_THRESHOLD` (default in code)
+- `MATCH_THRESHOLD` (0.8 by default)
+- `LOG_LEVEL` ("INFO" by default)
 
 ## Run locally
 

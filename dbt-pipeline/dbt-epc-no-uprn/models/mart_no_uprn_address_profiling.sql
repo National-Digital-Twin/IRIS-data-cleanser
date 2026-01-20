@@ -9,7 +9,7 @@ with src as (
 select
     lmk_key as "LMK_KEY",
     uprn as "UPRN",
-    match_score,
+    match_score as "MatchScore",
     concat_ws(', ', initcap(address), initcap(posttown), upper(postcode)) as "Address",
     upper(postcode) as "Postcode",
     environmental_impact_rating as "EnvironmentalImpactRating",

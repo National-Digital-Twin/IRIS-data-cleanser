@@ -103,8 +103,7 @@ def get_certificates(engine, db_schema, crossref_exists=False):
             FROM {db_schema}.certificates c
             left join {db_schema}.epc_address_uprn_crossref eauc on eauc.lmk_key=c."LMK_KEY"
                 WHERE NULLIF(TRIM(c."UPRN"), '') IS NULL
-                and eauc.lmk_key is null) t
-        order by query_address, "LODGEMENT_DATE" desc;
+                and eauc.lmk_key is null) t;
     """
 
     else:
@@ -119,8 +118,7 @@ def get_certificates(engine, db_schema, crossref_exists=False):
                 concat_ws(', ', UPPER("ADDRESS"), UPPER("POSTTOWN"), UPPER("POSTCODE")) as query_address,
                 "LODGEMENT_DATE"
             FROM {db_schema}.certificates 
-            WHERE NULLIF(TRIM("UPRN"), '') IS NULL) t
-        order by query_address, "LODGEMENT_DATE" desc;
+            WHERE NULLIF(TRIM("UPRN"), '') IS NULL) t;
         """
 
     return pd.read_sql(query, engine)

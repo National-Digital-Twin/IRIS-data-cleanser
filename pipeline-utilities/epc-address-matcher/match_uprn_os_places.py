@@ -26,7 +26,7 @@ else:
 
 # Database Connection Details
 DB_HOST = os.getenv("DB_HOST")
-DB_PORT = os.getenv("DB_PORT")
+DB_PORT = os.getenv("DB_PORT", default=5432)
 DB_NAME = os.getenv("DB_NAME")
 DB_SCHEMA = os.getenv("DB_SCHEMA")
 DB_USER = os.getenv("DB_USER")
@@ -150,7 +150,7 @@ def main():
     crossref_exists = is_crossref_exists(engine, DB_SCHEMA)
     certificates = get_certificates(engine, DB_SCHEMA, crossref_exists=crossref_exists)
 
-    certificates_matched_dict = []
+    crossref_rows = []
     places_api = PlacesAPI(OS_PLACES_KEY)
 
     matched = 0
@@ -171,32 +171,39 @@ def main():
                 "uprn": uprn,
                 "match_score": match_score
             }
-            certificates_matched_dict.append(record_matched)
+            crossref_rows.append(record_matched)
             matched += 1
 
-            if matched==10 or matched % 1000 == 0:
-                 logger.info(f"Matched {matched} records.")
-                 logger.info(f"Could find a UPRN at or above the threshold for {unmatched} records")
         else:
+            record_unmatched = {
+                "lmk_key": record["LMK_KEY"],
+                "query_address": record["query_address"],
+                "uprn": None,
+                "match_score": None
+            }
+            crossref_rows.append(record_unmatched)
             unmatched += 1
-            continue
+            
+        if (matched+unmatched)==10 or (matched+unmatched) % 1000 == 0:
+            logger.info(f"UPRN found for {matched} records so far.")
+            logger.info(f"A UPRN could not be found for {unmatched} records so far.")
     
-    logger.info(f"{matched} records successfully matched.")
+    logger.info(f"A total of {matched} records were successfully matched.")
+    logger.info(f"A total of {unmatched} records were not able to be matched.")
 
     epc_address_uprn_crossref = pd.DataFrame(
-        certificates_matched_dict,
+        crossref_rows,
         columns=["lmk_key", "query_address", "uprn", "match_score"]
     )
 
-    logger.info(f"{matched} records loading into postgres.")
+    logger.info(f"{len(crossref_rows)} records loading into postgres.")
 
     epc_address_uprn_crossref.to_sql("epc_address_uprn_crossref", schema=DB_SCHEMA, con=engine, index=False, if_exists='append')
 
-    logger.info(f"{matched} records successfully loaded into postgres.")
+    logger.info(f"{len(crossref_rows)} records successfully loaded into postgres.")
 
 if __name__ == "__main__":
      main()
-
 
 
 

@@ -8,7 +8,7 @@ This utility requires you to have a `certificates` table in a postgres database 
 ### What it does
 - Reads certificates without a UPRN from `certificates`.
 - Calls OS Places to find the top UPRN candidate above a match threshold.
-- Appends results to `epc_address_uprn_crossref` (by `lmk_key`).
+- Appends results to `epc_address_uprn_crossref` (by `lmk_key`), including unmatched rows with null `uprn`/`match_score` to avoid reprocessing.
 
 ### Environment
 Required:

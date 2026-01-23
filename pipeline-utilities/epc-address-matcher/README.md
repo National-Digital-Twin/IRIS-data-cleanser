@@ -12,12 +12,13 @@ This utility requires you to have a `certificates` table in a postgres database 
 
 ### Environment
 Required:
-- `OS_PLACES_KEY`
+- `OS_PLACES_API_KEY`
 - `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_SCHEMA`, `DB_USER`, `DB_PASSWORD`
 
 Optional:
 - `MATCH_THRESHOLD` (0.8 by default)
 - `LOG_LEVEL` ("INFO" by default)
+- `LOG_INTERVAL` (1000 by default)
 
 ## Run locally
 

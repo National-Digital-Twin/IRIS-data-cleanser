@@ -5,6 +5,7 @@ from sqlalchemy import create_engine, text
 from osdatahub import PlacesAPI
 import time
 import logging
+import datetime
 
 # Load environment variables
 load_dotenv(".env")
@@ -16,9 +17,9 @@ logging.basicConfig(
 
 logger = logging.getLogger(__name__)
 
-OS_PLACES_KEY = os.environ.get("OS_PLACES_KEY")
+OS_PLACES_API_KEY = os.environ.get("OS_PLACES_API_KEY")
 
-if not OS_PLACES_KEY:
+if not OS_PLACES_API_KEY:
     logger.error("OS_PLACES_KEY not found. Please set it in your .env file.")
     raise RuntimeError("OS_PLACES_KEY not found. Please set it in your .env file.")
 else:
@@ -31,7 +32,8 @@ DB_NAME = os.getenv("DB_NAME")
 DB_SCHEMA = os.getenv("DB_SCHEMA")
 DB_USER = os.getenv("DB_USER")
 DB_PASSWORD = os.getenv("DB_PASSWORD")
-MATCH_THRESHOLD=float(os.getenv("MATCH_THRESHOLD"))
+MATCH_THRESHOLD=float(os.getenv("MATCH_THRESHOLD", default=0.8))
+LOG_INTERVAL = int(os.getenv("LOG_INTERVAL", default=1000))
 
 
 def get_db_connection(db_host, db_port, db_name, db_user, db_password):
@@ -90,35 +92,38 @@ def get_certificates(engine, db_schema, crossref_exists=False):
 
     if crossref_exists:
         query = f"""
-        select
-            "LMK_KEY",
-            query_address, 
-            "LODGEMENT_DATE"
-        from (
+            WITH latest AS (
+                SELECT
+                    lmk_key,
+                    MAX(match_date) AS last_match_date,
+                    MAX(uprn) FILTER (WHERE uprn IS NOT NULL) AS uprn
+                FROM {db_schema}.epc_address_uprn_crossref
+                GROUP BY lmk_key
+            )
             SELECT 
                 c."LMK_KEY",
                 concat_ws(', ', UPPER(c."ADDRESS"), UPPER(c."POSTTOWN"), UPPER(c."POSTCODE")) as query_address,
-                c."LODGEMENT_DATE",
-                eauc.lmk_key
+                c."LODGEMENT_DATE"
             FROM {db_schema}.certificates c
-            left join {db_schema}.epc_address_uprn_crossref eauc on eauc.lmk_key=c."LMK_KEY"
+            left join latest eauc on eauc.lmk_key=c."LMK_KEY"
                 WHERE NULLIF(TRIM(c."UPRN"), '') IS NULL
-                and eauc.lmk_key is null) t;
-    """
+                AND (
+                    eauc.lmk_key IS NULL
+                    OR (
+                        eauc.uprn IS NULL
+                        AND (eauc.last_match_date IS NULL OR eauc.last_match_date < CURRENT_DATE - INTERVAL '1 year')
+                    )
+                );
+        """
 
     else:
         query = f"""
-        select
-            "LMK_KEY",
-            query_address, 
-            "LODGEMENT_DATE"
-        from (
             SELECT 
                 "LMK_KEY",
                 concat_ws(', ', UPPER("ADDRESS"), UPPER("POSTTOWN"), UPPER("POSTCODE")) as query_address,
                 "LODGEMENT_DATE"
             FROM {db_schema}.certificates 
-            WHERE NULLIF(TRIM("UPRN"), '') IS NULL) t;
+            WHERE NULLIF(TRIM("UPRN"), '') IS NULL;
         """
 
     return pd.read_sql(query, engine)
@@ -151,7 +156,7 @@ def main():
     certificates = get_certificates(engine, DB_SCHEMA, crossref_exists=crossref_exists)
 
     crossref_rows = []
-    places_api = PlacesAPI(OS_PLACES_KEY)
+    places_api = PlacesAPI(OS_PLACES_API_KEY)
 
     matched = 0
     unmatched = 0
@@ -163,13 +168,16 @@ def main():
         uprn, match_score, match_description = match_address(places_api, record["query_address"], MATCH_THRESHOLD)
 
         time.sleep(0.1)
+
+        match_date = datetime.date.today()
         
         if uprn is not None and match_score is not None and match_description is not None:
             record_matched = {
                 "lmk_key": record["LMK_KEY"],
                 "query_address": record["query_address"],
                 "uprn": uprn,
-                "match_score": match_score
+                "match_score": match_score,
+                "match_date": match_date
             }
             crossref_rows.append(record_matched)
             matched += 1
@@ -179,12 +187,17 @@ def main():
                 "lmk_key": record["LMK_KEY"],
                 "query_address": record["query_address"],
                 "uprn": None,
-                "match_score": None
+                "match_score": None,
+                "match_date": match_date
             }
             crossref_rows.append(record_unmatched)
             unmatched += 1
-            
-        if (matched+unmatched)==10 or (matched+unmatched) % 1000 == 0:
+        
+        if (matched+unmatched) == 10:
+            logger.debug(f"UPRN found for {matched} records so far.")
+            logger.debug(f"A UPRN could not be found for {unmatched} records so far.")
+
+        if (matched+unmatched) % LOG_INTERVAL == 0:
             logger.info(f"UPRN found for {matched} records so far.")
             logger.info(f"A UPRN could not be found for {unmatched} records so far.")
     
@@ -193,7 +206,7 @@ def main():
 
     epc_address_uprn_crossref = pd.DataFrame(
         crossref_rows,
-        columns=["lmk_key", "query_address", "uprn", "match_score"]
+        columns=["lmk_key", "query_address", "uprn", "match_score", "match_date"]
     )
 
     logger.info(f"{len(crossref_rows)} records loading into postgres.")
